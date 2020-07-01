@@ -3,9 +3,8 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 
 
- const Button = (props) => {
+ const Button = ({ label, onPress }) => {
 
-    const { label, onPress } = this.props;
     return (
       <TouchableOpacity style={styles.container} onPress={onPress}>
         <Text style={styles.text}>{label}</Text>
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.DODGER_BLUE,
+    backgroundColor: colors.SILVER,
     marginBottom: 12,
     paddingVertical: 12,
     borderRadius: 4,

@@ -8,6 +8,7 @@ import GroupScreen from './src/screens/GroupScreen';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
+import AuthScreen from './src/screens/AuthScreen';
 
 const store = configureStore()
 
@@ -15,10 +16,12 @@ const store = configureStore()
 const navigator = createStackNavigator ({
   Search: SearchScreen,
   Group: GroupScreen,
+  Auth: AuthScreen,
 }, {
-  initialRouteName: 'Search',
+  initialRouteName: 'Auth',
+  headerMode: 'none' ,
   defaultNavigationOptions: {
-    title: "Trainings"
+    title: "Login"
   }
 });
 
