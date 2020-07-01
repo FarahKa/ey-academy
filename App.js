@@ -1,19 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+import SearchScreen from './src/screens/SearchScreen';
+import GroupScreen from './src/screens/GroupScreen';
+
+import { Provider } from 'react-redux';
+
+import configureStore from './store/configureStore';
+
+const store = configureStore()
+
+
+const navigator = createStackNavigator ({
+  Search: SearchScreen,
+  Group: GroupScreen,
+}, {
+  initialRouteName: 'Search',
+  defaultNavigationOptions: {
+    title: "Trainings"
+  }
+});
+
+const AppContainer = createAppContainer(navigator);
+
+const App = () => {
+    return (
+        <Provider store={store}>
+          <AppContainer/>
+        </Provider>
+    )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
