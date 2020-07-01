@@ -25,6 +25,7 @@ const AuthScreen = () => {
             onTermSubmit={() => {}}
             placeholder="Email"
             pwd={false}
+            keyboardType="email-address" 
           />
           <FormTextInput
             term={password}

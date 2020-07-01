@@ -5,7 +5,7 @@ import colors from "../config/colors";
 // We support all the TextInput props
 
 
-const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, pwd }) =>  {
+const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, pwd, ...otherProps }) =>  {
 
     return (
       <TextInput
@@ -21,6 +21,7 @@ const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, pwd }) =
           onTermSubmit()
       }}
         style={styles.textInput}
+        {...otherProps}
       />
     );
   
