@@ -24,12 +24,14 @@ const AuthScreen = () => {
             onTermChange={(newTerm) => setUsername(newTerm)}
             onTermSubmit={() => {}}
             placeholder="Email"
+            pwd={false}
           />
           <FormTextInput
             term={password}
             onTermChange={(newTerm) => setPassword(newTerm)}
             onTermSubmit={() => {}}
             placeholder="Password"
+            pwd={true}
           />
           <Button label="Login" onPress={handleLoginPress} />
         </View>
