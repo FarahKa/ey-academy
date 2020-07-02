@@ -5,12 +5,11 @@ import colors from "../config/colors";
 // We support all the TextInput props
 
 
-const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, pwd, ...otherProps }) =>  {
+const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, ...otherProps }) =>  {
 
+  
     return (
       <TextInput
-      secureTextEntry={pwd}
-      password={pwd} 
       autoCapitalize="none"
       autoCorrect={false}
       placeholder={placeholder}

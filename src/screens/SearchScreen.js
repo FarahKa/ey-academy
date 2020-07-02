@@ -37,7 +37,7 @@ const styles = StyleSheet.create({});
 const mapStateToProps = (state) => {
   console.log("yo");
   const { trainings } = state;
-  return {trainings:trainings};
+  return {trainings:trainings.trainings};
 };
 
 export default connect(mapStateToProps)(SearchScreen);

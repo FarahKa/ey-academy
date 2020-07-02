@@ -18,11 +18,11 @@ const navigator = createStackNavigator ({
   Group: GroupScreen,
   Auth: AuthScreen,
 }, {
-  initialRouteName: 'Auth',
+  initialRouteName: 'Search',
   headerMode: 'none' ,
-  defaultNavigationOptions: {
-    title: "Login"
-  }
+  // defaultNavigationOptions: {
+  //   title: "Login"
+  // }
 });
 
 const AppContainer = createAppContainer(navigator);
