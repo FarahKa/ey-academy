@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import {authentication} from './authenticationReducer';
 import eyAcademy from "../../api/ey-academy";
 
 //#region initial trainings
@@ -348,35 +349,8 @@ const testApiReducer = (state, action) => {
   return [{ test: "test" }];
 };
 
-
-const rootReducer = (
-  state = {
-    token: {},
-    loading: true,
-    error: null,
-  },
-  action
-) => {
-  switch (action.type) {
-    case "GET_TOKEN":
-      return { ...state, token: action.token };
-    case "SAVE_TOKEN":
-      return { ...state, token: action.token };
-    case "REMOVE_TOKEN":
-      return { ...state, token: action.token };
-    case "LOADING":
-      return { ...state, loading: action.isLoading };
-    case "ERROR":
-      return { ...state, error: action.error };
-    default:
-      return state;
-  }
-};
-
-
-
 export default combineReducers({
-  token: rootReducer,
+  authentication:authentication,
   testApi: testApiReducer,
   trainings: trainingReducer,
   selectedTraining: selectedTrainingReducer,

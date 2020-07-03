@@ -6,7 +6,6 @@ import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/logo.png";
 import colors from "../config/colors";
 import {userActions} from "../actions/index"
-import strings from "../config/strings";
 
 const AuthScreen = () => {
   const [email, setEmail] = useState("");
