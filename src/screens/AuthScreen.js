@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, View, KeyboardAvoidingView, StatusBar } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
 import Button from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/logo.png";
 import colors from "../config/colors";
+import {userActions} from "../actions/index"
 import strings from "../config/strings";
 
 const AuthScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+    const dispatch = useDispatch();
+
+    // // reset login status
+    // useEffect(() => { 
+    //     dispatch(userActions.logout()); 
+    // }, []);
+
   
   handleLoginPress = () => {
     console.log("Login button pressed");
+
+    setSubmitted(true);
+    if (email && password) {
+        dispatch(userActions.login(email, password));
   };
+}
+
 
   return (
     <>

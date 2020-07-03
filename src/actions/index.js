@@ -1,6 +1,11 @@
 import { AsyncStorage } from "react-native";
-import axios from 'axios';
-import eyAcademy from "../../api/ey-academy";
+import { userConstants } from '../constants';
+import { userService } from '../services/userService';
+
+
+export const userActions = {
+  login,
+}
 
 export const selectTraining = (training) => {
   // do api stuff
@@ -68,20 +73,27 @@ export const removeUserToken = () => (dispatch) =>
     });
 
 
-    //login function
-export const logIn = () => {
-  eyAcademy
-    .post("/users/login", {
-      email: "redjames@gmail.com",
-      password: "12346",
-    })
-    .then((response) => {
-      if (response.data.status) {
-        console.log(response.data);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+    function login(email, password) {
+        return dispatch => {
+            dispatch(request({ email }));
+    
+            userService.login(email, password)
+                .then(
+                    user => { 
+                        dispatch(success(user));
+                        history.push('/');
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                );
+        };
+    
+        function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+        function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+        function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    }
+
+
 

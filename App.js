@@ -18,7 +18,7 @@ const navigator = createStackNavigator ({
   Group: GroupScreen,
   Auth: AuthScreen,
 }, {
-  initialRouteName: 'Search',
+  initialRouteName: 'Auth',
   headerMode: 'none' ,
   // defaultNavigationOptions: {
   //   title: "Login"
