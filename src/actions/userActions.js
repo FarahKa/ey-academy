@@ -9,14 +9,16 @@ export const userActions = {
 
 function login(email, password) {
     return dispatch => {
-        dispatch(request({ email }));
+        dispatch(request({ email : email }));
 
         userService.login(email, password)
             .then(
                 user => { 
+                    //console.log(user);
                     dispatch(success(user));
                 },
                 error => {
+                    console.log(error.toString());
                     dispatch(failure(error.toString()));
                     //dispatch(alertActions.error(error.toString()));
                 }

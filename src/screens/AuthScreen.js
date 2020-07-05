@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet, View, KeyboardAvoidingView, StatusBar } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  Image,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  StatusBar,
+  AsyncStorage,
+} from "react-native";
+import { useDispatch, useSelector, connect } from "react-redux";
 import Button from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/logo.png";
 import colors from "../config/colors";
-import {userActions} from "../actions/index"
+import { userActions } from "../actions/index";
 
-const AuthScreen = () => {
+const AuthScreen = ({user}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    // // reset login status
-    // useEffect(() => { 
-    //     dispatch(userActions.logout()); 
-    // }, []);
+  // // reset login status
+  // useEffect(() => {
+  //     dispatch(userActions.logout());
+  // }, []);
 
-  
   handleLoginPress = () => {
     console.log("Login button pressed");
 
     setSubmitted(true);
     if (email && password) {
-        dispatch(userActions.login(email, password));
-  };
-}
+      dispatch(userActions.login(email, password));
+    }
+    console.log("aye aye");
 
+    AsyncStorage.getItem('user').then(user => console.log(user));
+
+  };
 
   return (
     <>
@@ -78,4 +87,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthScreen;
+const mapStateToProps = (state) => {
+  //console.log("yo");
+  const { user } = state;
+  return {user};
+};
+
+export default connect(mapStateToProps)(AuthScreen);
+
+//export default AuthScreen;

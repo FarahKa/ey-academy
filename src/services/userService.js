@@ -7,44 +7,61 @@ export const userService = {
   logout,
 };
 
+// //login function
+// export function login(email, password) {
+//   eyAcademy
+//     .post("/user/login", {
+//       email: email,
+//       password: password,
+//     })
+//     .then((response) => {
+//       // store user details and jwt token in local storage to keep user logged in between page refreshes
+//       const user = response.data;
+//       if(response.status !== 200){
+//         if (response.status === 401) {
+//           // auto logout if 401 response returned from api
+//           logout();
+//           console.log("connection failure with 401")
+//           //location.reload(true);
+//         }
+//         console.log("connection failure")
+//         const error = response.statusText;
+//         return Promise.reject(error);
+//       } else {
+//       console.log("connection success");
+
+//       console.log(user);
+//       return user;
+//       }
+//     }).then(user => {
+//       console.log(user);
+//       AsyncStorage.setItem("user", JSON.stringify(user));
+//       return user;
+//     });
+// }
+
 //login function
 export function login(email, password) {
-  eyAcademy
+  return eyAcademy
     .post("/user/login", {
       email: email,
       password: password,
     })
-    .then((response) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      
-      if(response.status !== 200){
-        if (response.status === 401) {
-          // auto logout if 401 response returned from api
-          logout();
-          console.log("connection failure with 401")
-          //location.reload(true);
-        }
-        console.log("connection failure")
-        const error = response.statusText;
-        return Promise.reject(error);
-      } else {
-      console.log("connection success");
-      user=response.data;
-      console.log(user);
+    .then(handleResponse).then(user => {
       AsyncStorage.setItem("user", JSON.stringify(user));
-      return user;
-      }
+      return JSON.stringify(user);
     });
 }
 
+
 function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
+  // return response.text().then((text) => {
+    const data = response.data;
+    if (response.status !== 200) {
       if (response.status === 401) {
         // auto logout if 401 response returned from api
         logout();
-        location.reload(true);
+        console.log("connection failure with 401");
       }
 
       const error = (data && data.message) || response.statusText;
@@ -52,7 +69,7 @@ function handleResponse(response) {
     }
 
     return data;
-  });
+  ;
 }
 
 function logout() {
