@@ -9,7 +9,8 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 import AuthScreen from './src/screens/AuthScreen';
-import QRScreen from './src/screens/QRScreen';
+import CodeScreen from './src/screens/CodeScreen';
+import { StyleSheet } from 'react-native';
 
 const store = configureStore()
 
@@ -18,9 +19,9 @@ const navigator = createStackNavigator ({
   Search: SearchScreen,
   Group: GroupScreen,
   Auth: AuthScreen,
-  QR: QRScreen,
+  Code: CodeScreen,
 }, {
-  initialRouteName: 'QR',
+  initialRouteName: 'Auth',
   headerMode: 'none' ,
   // defaultNavigationOptions: {
   //   title: "Login"
@@ -36,5 +37,7 @@ const App = () => {
         </Provider>
     )
 }
+
+
 
 export default App;

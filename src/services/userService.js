@@ -49,7 +49,7 @@ export function login(email, password) {
     })
     .then(handleResponse).then(user => {
       AsyncStorage.setItem("user", JSON.stringify(user));
-      return JSON.stringify(user);
+      return user;
     });
 }
 

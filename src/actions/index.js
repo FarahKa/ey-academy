@@ -1,6 +1,8 @@
 
 export * from './userActions';
 
+export * from './attendanceActions';
+
 export const selectTraining = (training) => {
   // do api stuff
   return {

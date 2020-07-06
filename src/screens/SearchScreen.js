@@ -4,11 +4,12 @@ import SearchBar from "../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import ResultsList from "../components/ResultsList";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchScreen = ({trainings}) => {
   const [term, setTerm] = useState("");
   return (
-    <>
+    <SafeAreaView style={{flex:1}}>
       <SearchBar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
@@ -28,7 +29,7 @@ const SearchScreen = ({trainings}) => {
             );
           }}
         />
-    </>
+    </SafeAreaView>
   );
 };
 

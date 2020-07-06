@@ -13,8 +13,9 @@ import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/logo.png";
 import colors from "../config/colors";
 import { userActions } from "../actions/index";
+import { withNavigation } from "react-navigation";
 
-const AuthScreen = ({user}) => {
+const AuthScreen = ({navigation, user}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -32,15 +33,13 @@ const AuthScreen = ({user}) => {
     if (email && password) {
       dispatch(userActions.login(email, password));
     }
-    console.log("aye aye");
-
-    AsyncStorage.getItem('user').then(user => console.log(user));
+    AsyncStorage.getItem('user').then(user =>{ /*console.log(user)*/ });
+    navigation.navigate("Code");
 
   };
 
   return (
-    <>
-      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+    
       <KeyboardAvoidingView style={styles.container}>
         <Image source={imageLogo} style={styles.logo} />
         <View style={styles.form}>
@@ -62,7 +61,7 @@ const AuthScreen = ({user}) => {
           <Button label="Login" onPress={handleLoginPress} />
         </View>
       </KeyboardAvoidingView>
-    </>
+    
   );
 };
 
@@ -89,10 +88,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   //console.log("yo");
-  const { user } = state;
+  //console.log(state.authentication);
+  const {loggedIn,  user } = state.authentication;
   return {user};
 };
 
-export default connect(mapStateToProps)(AuthScreen);
+export default withNavigation(connect(mapStateToProps)(AuthScreen));
 
 //export default AuthScreen;

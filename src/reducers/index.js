@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import {attendance} from './attendanceReducer';
 import {authentication} from './authenticationReducer';
 import eyAcademy from "../../api/ey-academy";
 
@@ -354,4 +355,5 @@ export default combineReducers({
   testApi: testApiReducer,
   trainings: trainingReducer,
   selectedTraining: selectedTrainingReducer,
+  attendance:attendance
 });
