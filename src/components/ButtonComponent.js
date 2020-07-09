@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#A9A9A9",
+    backgroundColor: colors.MISCHKA,
     marginBottom: 12,
     paddingVertical: 12,
     borderRadius: 4,
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.7)"
   },
   text: {
-    color: colors.WHITE,
+    color: colors.DARK_GREY,
     textAlign: "center",
-    height: 20
+    height: 22
   }
 });
 

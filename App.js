@@ -10,7 +10,9 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import AuthScreen from './src/screens/AuthScreen';
 import CodeScreen from './src/screens/CodeScreen';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ImageBackground } from 'react-native';
+
+
 
 const store = configureStore()
 
