@@ -6,16 +6,14 @@ import {
   KeyboardAvoidingView,
   StatusBar,
   AsyncStorage,
-  ImageBackground,
 } from "react-native";
 import { useDispatch, useSelector, connect } from "react-redux";
 import Button from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/white-logo.png";
-import background from "../../assets/buildings.jpg";
-import colors from "../config/colors";
 import { userActions } from "../actions/index";
 import { withNavigation } from "react-navigation";
+import ThemeComponent from "../components/ThemeComponent";
 
 const AuthScreen = ({ navigation, user }) => {
   const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -44,35 +42,29 @@ const AuthScreen = ({ navigation, user }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={background}
-        //imageStyle={{ resizeMode: "stretch" }}
-        style={styles.image}
-      >
-        <KeyboardAvoidingView style={styles.contenu}>
-          <Image source={imageLogo} style={styles.logo} />
-          <View style={styles.form}>
-            <FormTextInput
-              term={email}
-              onTermChange={(newTerm) => setEmail(newTerm)}
-              onTermSubmit={() => {}}
-              placeholder="Email"
-              keyboardType="email-address"
-            />
-            <FormTextInput
-              term={password}
-              onTermChange={(newTerm) => setPassword(newTerm)}
-              onTermSubmit={() => {}}
-              placeholder="Password"
-              password={true}
-              secureTextEntry={true}
-            />
-            <Button label="Login" onPress={handleLoginPress} />
-          </View>
-        </KeyboardAvoidingView>
-      </ImageBackground>
-    </View>
+    <ThemeComponent>
+      <KeyboardAvoidingView style={styles.contenu}>
+        <Image source={imageLogo} style={styles.logo} />
+        <View style={styles.form}>
+          <FormTextInput
+            term={email}
+            onTermChange={(newTerm) => setEmail(newTerm)}
+            onTermSubmit={() => {}}
+            placeholder="Email"
+            keyboardType="email-address"
+          />
+          <FormTextInput
+            term={password}
+            onTermChange={(newTerm) => setPassword(newTerm)}
+            onTermSubmit={() => {}}
+            placeholder="Password"
+            password={true}
+            secureTextEntry={true}
+          />
+          <Button label="Login" onPress={handleLoginPress} />
+        </View>
+      </KeyboardAvoidingView>
+    </ThemeComponent>
   );
 };
 
@@ -81,11 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: 'rgba(0,0,0,0.5)'
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column"
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   logo: {
     flex: 1,
@@ -98,11 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     width: "80%",
-  },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
   },
 });
 

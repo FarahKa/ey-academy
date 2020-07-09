@@ -5,18 +5,20 @@ import { FlatList } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ThemeComponent from "../components/ThemeComponent";
 
-const SearchScreen = ({trainings}) => {
+const SearchScreen = ({ trainings }) => {
   const [term, setTerm] = useState("");
   return (
-    <SafeAreaView style={{flex:1}}>
-      <SearchBar
-        term={term}
-        onTermChange={(newTerm) => setTerm(newTerm)}
-        onTermSubmit={() => {
-          // useResults.searchApi('everything');
-        }}
-      />
+    <ThemeComponent>
+      <SafeAreaView style={{ flex: 1 }}>
+        <SearchBar
+          term={term}
+          onTermChange={(newTerm) => setTerm(newTerm)}
+          onTermSubmit={() => {
+            // useResults.searchApi('everything');
+          }}
+        />
         <Text>
           We have found {trainings.length ? trainings.length : 0} trainings.
         </Text>
@@ -24,12 +26,11 @@ const SearchScreen = ({trainings}) => {
           data={trainings}
           keyExtractor={(training) => training.title}
           renderItem={({ item }) => {
-            return (
-              <ResultsList training={item}/>
-            );
+            return <ResultsList training={item} />;
           }}
         />
-    </SafeAreaView>
+      </SafeAreaView>
+    </ThemeComponent>
   );
 };
 
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({});
 const mapStateToProps = (state) => {
   console.log("yo");
   const { trainings } = state;
-  return {trainings:trainings.trainings};
+  return { trainings: trainings.trainings };
 };
 
 export default connect(mapStateToProps)(SearchScreen);
