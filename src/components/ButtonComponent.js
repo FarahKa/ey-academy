@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 
 
- const Button = ({ label, onPress }) => {
+ const ButtonComponent = ({ label, onPress }) => {
 
     return (
       <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Button;
+export default ButtonComponent;

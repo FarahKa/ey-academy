@@ -42,9 +42,9 @@ const CodeScreen = ({user, codeAttending, attending, navigation}) => {
 
   const handleNext = () => {
     if(!code) return null;
-    dispatch(attendanceActions.markAttendance(code, user.token));
+    dispatch(attendanceActions.markAttendance( parseInt(code), user.id));
     if(code === codeAttending && attending){
-      navigation.navigate("Group");
+      navigation.navigate("Checkin");
     } else {
       console.log("bad response");
       setError("Problem. Please repeat!")     

@@ -8,7 +8,7 @@ import {
   AsyncStorage,
 } from "react-native";
 import { useDispatch, useSelector, connect } from "react-redux";
-import Button from "../components/ButtonComponent";
+import ButtonComponent from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/white-logo.png";
 import { userActions } from "../actions/index";
@@ -35,10 +35,7 @@ const AuthScreen = ({ navigation, user }) => {
     if (email && password) {
       dispatch(userActions.login(email, password));
     }
-    AsyncStorage.getItem("user").then((user) => {
-      /*console.log(user)*/
-    });
-    navigation.navigate("Code");
+    navigation.navigate("Checkin");
   };
 
   return (
@@ -61,7 +58,7 @@ const AuthScreen = ({ navigation, user }) => {
             password={true}
             secureTextEntry={true}
           />
-          <Button label="Login" onPress={handleLoginPress} />
+          <ButtonComponent label="Login" onPress={handleLoginPress} />
         </View>
       </KeyboardAvoidingView>
     </ThemeComponent>
@@ -73,7 +70,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    //backgroundColor: "rgba(0,0,0,0.5)",
+
   },
   logo: {
     flex: 1,

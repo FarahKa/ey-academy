@@ -13,6 +13,7 @@ import CodeScreen from "./src/screens/CodeScreen";
 import { StyleSheet, ImageBackground } from "react-native";
 
 import ThemeComponent from "./src/components/ThemeComponent";
+import CheckinScreen from "./src/screens/CheckinScreen";
 
 const store = configureStore();
 
@@ -22,6 +23,7 @@ const navigator = createStackNavigator(
     Group: GroupScreen,
     Auth: AuthScreen,
     Code: CodeScreen,
+    Checkin:CheckinScreen,
   },
   {
     initialRouteName: "Search",

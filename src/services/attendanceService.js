@@ -6,9 +6,9 @@ export const attendanceService = {
 
 function attend(code, token) {
     return eyAcademy
-      .post("/user/attend", {
-        code: code,
-        token: token,
+      .post("/presence/checkin", {
+        QRCode: code,
+        UserId: token,
       })
       .then(response => {
         return response;

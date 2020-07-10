@@ -1,38 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { withNavigation } from "react-navigation";
-import { FlatList } from "react-native-gesture-handler";
-import ResultDetails from "./ResultDetails";
-import { BannerComponent } from "./BannerComponent";
+//import { FlatList, ScrollView } from "react-native-gesture-handler";
+import CardComponent from "./CardComponent";
 import colors from "../config/colors";
 
 const ResultsList = ({ training, navigation }) => {
-
-
-    return (
-    <View style={styles.container}>
-      <BannerComponent title={training.title}>
-        <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={training.groups}
-        keyExtractor={(group) => group.group}
-        renderItem={({ item }) => {
-          return (
+  return (
+    <FlatList
+      //showsHorizontalScrollIndicator={false}
+      //horizontal
+      data={training.groups}
+      keyExtractor={(group) => group.group}
+      renderItem={({ item }) => {
+        return (
+          //<ScrollView>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Group", { item: item });
-              }}             
+              }}
             >
-              <ResultDetails item={item} />
+              <CardComponent item={item} title={item.group} />
             </TouchableOpacity>
-          );
-        }}
-      />
-      </BannerComponent>
-      {/* <Text style={styles.number}>Groups: {training.groups.length}</Text> */}
-
-    </View>
+          //</ScrollView>
+        );
+      }}
+    />
   );
 };
 

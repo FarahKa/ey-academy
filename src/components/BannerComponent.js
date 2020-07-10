@@ -1,16 +1,31 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
+import ResultsList from "./ResultsList";
 
-export const BannerComponent = ({ title, children }) => {
+const BannerComponent = ({ training, children }) => {
+  const [toggle, setToggle] = useState(false);
+
+  const toggleStuff = () => {
+    if (toggle) {
+      setToggle(false);
+      console.log(toggle);
+    } else {
+      setToggle(true);
+      console.log(toggle);
+    }
+  };
+
   return (
     <View>
-      <View style={styles.background}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-      <View style= {styles.card}>
-          {children}
-      </View>
+      <TouchableOpacity style={styles.background} onPress={toggleStuff}>
+        <Text style={styles.title}>{training.title}</Text>
+      </TouchableOpacity>
+      {toggle ? (
+        <View style={styles.card}>
+          <ResultsList training={training} />
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -27,9 +42,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   card: {
-    backgroundColor: "rgba(0,0,0,0.7)",
-    height: 200,
+    backgroundColor: "rgba(0,0,0,0.3)",
+    flex: 1,
     marginHorizontal: 15,
+    marginBottom: 10,
   },
   title: {
     fontSize: 18,
@@ -39,13 +55,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: colors.DARK_GREY,
   },
-  inputStyle: {
-    flex: 1,
-    fontSize: 15,
-  },
   iconStyle: {
     fontSize: 40,
     alignSelf: "center",
     marginHorizontal: 15,
   },
 });
+
+export default BannerComponent;

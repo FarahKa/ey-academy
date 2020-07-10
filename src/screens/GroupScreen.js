@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+//import { FlatList } from "react-native-gesture-handler";
 import MemberCard from "../components/MemberCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 

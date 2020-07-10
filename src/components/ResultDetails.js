@@ -1,22 +1,18 @@
 import React from "react";
 
 import { View, Text, Image, StyleSheet } from "react-native";
-
+// NOT IN USE
 const ResultDetails = ({ item }) => {
   return (
-    <View style={styles.container}>
       <View style={styles.square}>
-        <View style={{ width: 150 }}>
           <Text style={styles.group}>{item.group}</Text>
-        </View>
       </View>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
   group: {
-    fontSize: 30,
+    fontSize: 25,
     alignSelf: 'center',
   },
   square: {
@@ -25,13 +21,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 5,
     backgroundColor: "#A9A9A9",
-    flex: 1,
+    //flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-  },
-  container: {
-    marginLeft: 15,
   },
   image: {
     width: 200,

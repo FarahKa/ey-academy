@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
+import BannerComponent from "../components/BannerComponent";
+import colors from "../config/colors";
 
 const SearchScreen = ({ trainings }) => {
   const [term, setTerm] = useState("");
@@ -19,14 +21,14 @@ const SearchScreen = ({ trainings }) => {
             // useResults.searchApi('everything');
           }}
         />
-        <Text>
+        <Text style={{color:colors.WHITE}}>
           We have found {trainings.length ? trainings.length : 0} trainings.
         </Text>
         <FlatList
           data={trainings}
           keyExtractor={(training) => training.title}
           renderItem={({ item }) => {
-            return <ResultsList training={item} />;
+            return <BannerComponent training={item} />;
           }}
         />
       </SafeAreaView>

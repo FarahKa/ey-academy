@@ -314,6 +314,144 @@ const initialState = {
           },
         ],
     },
+    {
+      title: "Formation 3",
+      groups: [
+        {
+          group: "Group 1",
+          members: [
+            { id: "1", name: "Foulen Falten" },
+            { id: "2", name: "Foulen Falten" },
+            { id: "3", name: "Foulen Falten" },
+            { id: "4", name: "Foulen Falten" },
+            { id: "5", name: "Foulen Falten" },
+            { id: "6", name: "Foulen Falten" },
+            { id: "7", name: "Foulen Falten" },
+            { id: "8", name: "Foulen Falten" },
+          ],
+        },
+        {
+          group: "Group 2",
+          members: [
+            {
+              id: "1",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "2",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "3",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "4",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "5",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+          ],
+        },
+        {
+          group: "Group 3",
+          members: [
+            {
+              id: "1",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "2",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "3",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "4",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "5",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+          ],
+        },
+        {
+          group: "Group 4",
+          members: [
+            {
+              id: "1",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "2",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "3",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "4",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "5",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+          ],
+        },
+        {
+          group: "Group 5",
+          members: [
+            {
+              id: "1",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "2",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "3",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "4",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+            {
+              id: "5",
+              name: "Foulen Falten",
+              image: "../../assets/placeholder.jpg",
+            },
+          ],
+        },
+      ],
+  },
   ],
 };
 
