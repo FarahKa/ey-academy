@@ -14,6 +14,7 @@ import { StyleSheet, ImageBackground } from "react-native";
 
 import ThemeComponent from "./src/components/ThemeComponent";
 import CheckinScreen from "./src/screens/CheckinScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 
 const store = configureStore();
 
@@ -24,9 +25,10 @@ const navigator = createStackNavigator(
     Auth: AuthScreen,
     Code: CodeScreen,
     Checkin:CheckinScreen,
+    Home:HomeScreen,
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: "Home",
     headerMode: "none",
     // defaultNavigationOptions: {
     //   title: "Login"

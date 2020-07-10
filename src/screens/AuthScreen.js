@@ -7,6 +7,7 @@ import {
   StatusBar,
   AsyncStorage,
 } from "react-native";
+import {dimmer} from "../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
 import ButtonComponent from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
@@ -35,12 +36,13 @@ const AuthScreen = ({ navigation, user }) => {
     if (email && password) {
       dispatch(userActions.login(email, password));
     }
+    
     navigation.navigate("Checkin");
   };
 
   return (
     <ThemeComponent>
-      <KeyboardAvoidingView style={styles.contenu}>
+      <KeyboardAvoidingView style={[styles.contenu, dimmer.dimmer]}>
         <Image source={imageLogo} style={styles.logo} />
         <View style={styles.form}>
           <FormTextInput

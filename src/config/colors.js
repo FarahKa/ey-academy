@@ -1,3 +1,13 @@
+import { StyleSheet } from "react-native";
+
+
+export const dimmer= StyleSheet.create({
+  dimmer : {
+    backgroundColor: "rgba(0,0,0,0.5)",
+  }
+})
+
+
 const colors = {
     BLACK: "#000",
     WHITE: "#FFF",
@@ -6,6 +16,7 @@ const colors = {
     TORCH_RED: "#F8262F",
     MISCHKA: "#E5E4E6",
     DARK_GREY: "#404040",
+    DIMMER: "rgba(0,0,0,0.6)",
   };
   
   export default colors;

@@ -12,7 +12,7 @@ function markAttendance(code, token) {
       type: MARK_ATTENDANCE,
       code: code,
     });
-    attendanceService.attend(code, token).then((reponse) => {
+    attendanceService.attend(code, token).then((response) => {
       if (response.status === 200) {
           dispatch({type: ATTENDANCE_MARKED, code:code})
       } else {

@@ -11,6 +11,7 @@ function attend(code, token) {
         UserId: token,
       })
       .then(response => {
+        
         return response;
       });
   }

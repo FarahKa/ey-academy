@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, Button, Vibration } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useDispatch, connect } from "react-redux";
 import { attendanceActions } from "../actions/index";
 import { withNavigation } from "react-navigation";
+//import {Haptic} from 'expo';
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const CodeScreen = ({user, codeAttending, attending, navigation}) => {
+const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     (async () => {
@@ -29,31 +29,37 @@ const CodeScreen = ({user, codeAttending, attending, navigation}) => {
     return <Text>No access to camera</Text>;
   }
   const handleBarCodeScanned = ({ type, data }) => {
-    setCode(data);
+    setCode(parseInt(data));
     console.log(
       `Bar code with type ${type} and data ${data} has been scanned!`
     );
+    if (!code) return null;
     setScanned(true);
+    dispatch(attendanceActions.markAttendance(code, user.id));
+    if (code === codeAttending && attending) {
+      //Vibration.vibrate(100);
+      console.log("yea");
+      navigation.navigate("Checkin");
+    } else {
+      console.log("bad response");
+      setError("Problem. Please repeat!");
+      setTimeout(function () {
+        setScanned(false);
+      }, 3000);
+      //setScanned(false);
+    }
 
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err)
     // );
   };
 
-  const handleNext = () => {
-    if(!code) return null;
-    dispatch(attendanceActions.markAttendance( parseInt(code), user.id));
-    if(code === codeAttending && attending){
-      navigation.navigate("Checkin");
-    } else {
-      console.log("bad response");
-      setError("Problem. Please repeat!")     
-    }
+  // const handleNext = () => {
 
-  }
+  // }
   return (
     <>
-      <SafeAreaView  style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Text style={styles.centerText}>
           {user ? `Hello ${user.displayName} \n` : null}
           Scan the <Text style={styles.textBold}>Code</Text> that you see.
@@ -61,29 +67,31 @@ const CodeScreen = ({user, codeAttending, attending, navigation}) => {
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={styles.cam}
-          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr, BarCodeScanner.Constants.BarCodeType.code128]}
+          barCodeTypes={[
+            BarCodeScanner.Constants.BarCodeType.qr,
+            BarCodeScanner.Constants.BarCodeType.code128,
+          ]}
         />
-        {scanned && (
+        {/* {scanned && (
           <Button
             title={`Code is ${code}. Scan again?`}
             onPress={() => setScanned(false)}
           />
-        )}
-        <TouchableOpacity style={styles.buttonTouchable}>
+        )} */}
+        {/* <TouchableOpacity style={styles.buttonTouchable}>
           <Text style={styles.buttonText} onPress={handleNext}>OK. Got it! Next? </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </SafeAreaView>
-      </>
-
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   cam: {
-    flex : 1,
+    flex: 1,
   },
   centerText: {
-    alignSelf:"center",
+    alignSelf: "center",
     fontSize: 16,
     padding: 10,
     color: "#777",
@@ -98,15 +106,15 @@ const styles = StyleSheet.create({
   },
   buttonTouchable: {
     padding: 13,
-    alignItems: 'center',
+    alignItems: "center",
   },
 });
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log(state.attendance);
   const { user } = state.authentication;
-  const {code : codeAttending, attending} = state.attendance;
-  return {user, codeAttending, attending};
+  const { code: codeAttending, attending } = state.attendance;
+  return { user, codeAttending, attending };
 };
 
 export default withNavigation(connect(mapStateToProps)(CodeScreen));

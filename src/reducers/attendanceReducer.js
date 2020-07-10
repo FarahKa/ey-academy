@@ -5,7 +5,7 @@ export function attendance(state = initialState, action) {
       case 'MARK_ATTENDANCE':
         return {
           code:action.code,
-          attending: false
+          attending: false,
         };
       case 'ATTENDANCE_MARKED':
         return {

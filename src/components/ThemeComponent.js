@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet, ImageBackground, View } from "react-native";
-import background from "../../assets/buildings.jpeg";
-//import background from "../../assets/ppl.jpg";
+//import background from "../../assets/buildings.jpeg";
+import background from "../../assets/ppl.jpg";
 //import background from "../../assets/pink.jpeg";
 import { SafeAreaView } from "react-native-safe-area-context";
+import colors from "../config/colors";
 
 const ThemeComponent = ({children}) => {
   return (
@@ -13,7 +14,7 @@ const ThemeComponent = ({children}) => {
         //imageStyle={{ resizeMode: "stretch" }}
         style={styles.image}
       >
-        {children}
+                  {children}
       </ImageBackground>    
     </View>
 
@@ -24,7 +25,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "rgba(0,0,0,0.5)",
+      
+      },
+      dimmer: {
+        backgroundColor : colors.DIMMER,
       },
       image: {
         flex: 1,
