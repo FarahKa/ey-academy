@@ -6,7 +6,7 @@ import { color } from "react-native-reanimated";
 // We support all the TextInput props
 
 
-const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, ...otherProps }) =>  {
+const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, additionalStyle, ...otherProps }) =>  {
 
   
     return (
@@ -20,7 +20,7 @@ const FormTextInput = ({ term, onTermChange, onTermSubmit, placeholder, ...other
       onEndEditing={() => {
           onTermSubmit()
       }}
-        style={styles.textInput}
+        style={[styles.textInput, additionalStyle]}
         {...otherProps}
       />
     );

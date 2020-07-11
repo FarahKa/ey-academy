@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 import ResultsList from "./ResultsList";
 
-const BannerComponent = ({ training, children }) => {
+const List = ({ training, children }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleStuff = () => {
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BannerComponent;
+export default List;

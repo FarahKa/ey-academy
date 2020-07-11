@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
-import BannerComponent from "../components/BannerComponent";
+import List from "../components/ListComponent";
 import colors from "../config/colors";
 
 const SearchScreen = ({ trainings }) => {
@@ -28,7 +28,7 @@ const SearchScreen = ({ trainings }) => {
           data={trainings}
           keyExtractor={(training) => training.title}
           renderItem={({ item }) => {
-            return <BannerComponent training={item} />;
+            return <List training={item} />;
           }}
         />
       </SafeAreaView>

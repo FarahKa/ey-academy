@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Button, Vibration } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Button,
+  Vibration,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useDispatch, connect } from "react-redux";
 import { attendanceActions } from "../actions/index";
 import { withNavigation } from "react-navigation";
 //import {Haptic} from 'expo';
 import { SafeAreaView } from "react-native-safe-area-context";
+import colors from "../config/colors";
 
 const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -31,23 +39,27 @@ const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   const handleBarCodeScanned = ({ type, data }) => {
     setCode(parseInt(data));
     console.log(
-      `Bar code with type ${type} and data ${data} has been scanned!`
+      `Bar code with type ${type} and data ${code} has been scanned!`
     );
     if (!code) return null;
     setScanned(true);
-    dispatch(attendanceActions.markAttendance(code, user.id));
-    if (code === codeAttending && attending) {
-      //Vibration.vibrate(100);
-      console.log("yea");
-      navigation.navigate("Checkin");
-    } else {
-      console.log("bad response");
-      setError("Problem. Please repeat!");
-      setTimeout(function () {
-        setScanned(false);
-      }, 3000);
-      //setScanned(false);
-    }
+    dispatch(attendanceActions.markAttendance(code, user.id)).then(() => {
+      console.log(
+        "\n \n \n code attending:" + codeAttending + "\n attending:" + attending
+      );
+      if (attending) {
+        //Vibration.vibrate(100);
+        console.log("yea");
+        navigation.navigate("Checkin");
+      } else {
+        console.log("bad response");
+        setError("Problem. Please repeat!");
+        setTimeout(function () {
+          setScanned(false);
+        }, 5000);
+        //setScanned(false);
+      }
+    });
 
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err)
@@ -59,11 +71,11 @@ const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   // }
   return (
     <>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text style={styles.centerText}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.DARK_GREY }}>
+        {/* <Text style={styles.centerText}>
           {user ? `Hello ${user.displayName} \n` : null}
           Scan the <Text style={styles.textBold}>Code</Text> that you see.
-        </Text>
+        </Text> */}
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={styles.cam}

@@ -1,55 +1,69 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, Button, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useDispatch, connect } from "react-redux";
 import { attendanceActions } from "../actions/index";
 import { withNavigation } from "react-navigation";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonComponent from "../components/ButtonComponent";
-import colors from "../config/colors";
+import colors, { dimmer } from "../config/colors";
 import FormTextInput from "../components/FormTextInputComponent";
 import ThemeComponent from "../components/ThemeComponent";
+import Dark from "../components/DarkComponent";
 
-const CheckinScreen = ({user, codeAttending, attending, navigation}) => {
-    const [code, setCode] = useState("");
-    const dispatch = useDispatch();
-    const [error, setError] = useState("");
-    function goToCode () {
-        navigation.navigate("Code");
+
+const DeviceWidth = Dimensions.get("window").width;
+
+const CheckinScreen = ({ user, codeAttending, attending, navigation }) => {
+  const [code, setCode] = useState("");
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  function goToCode() {
+    navigation.navigate("Code");
+  }
+  function submitCode() {
+    if (!code) return null;
+    dispatch(attendanceActions.markAttendance(parseInt(code), user.id));
+    if (code === codeAttending && attending) {
+      navigation.navigate("Search");
+    } else {
+      console.log("bad response");
+      setError("Problem. Please repeat!");
     }
-    function submitCode() {
-        if(!code) return null;
-        dispatch(attendanceActions.markAttendance(parseInt(code), user.id));
-        if(code === codeAttending && attending){
-          navigation.navigate("Search");
-        } else {
-          console.log("bad response");
-          setError("Problem. Please repeat!")     
-        }
-    }
+  }
   return (
     <ThemeComponent>
-      <SafeAreaView  style={{ flex: 1 }}>
-        <Text style={styles.centerText}>
-          {user ? `Hello ${user.displayName} \n` : null}
-        </Text>
-        <ButtonComponent label={"Scan a QRCode"} onPress={goToCode}/>       
-        <Text style={styles.centerText}>
-          OR enter code manually:
-        </Text>
-        <FormTextInput term={code} onTermChange={setCode} onTermSubmit={submitCode} placeholder= {"Code here"}/>
+      <SafeAreaView style={[{ flex: 1 }, , dimmer.dimmer]}>
+        <Dark>
+          <Text style={styles.centerText}>
+            {user ? `Hello ${user.displayName}. \n` : null}To check in, either
+            enter the code manually or scan the QR Code.
+          </Text>
+        </Dark>
+        <View style={{ marginHorizontal: 15 }}>
+          <View style={{ marginHorizontal: DeviceWidth * 0.3 }}>
+            <FormTextInput
+              term={code}
+              onTermChange={setCode}
+              onTermSubmit={submitCode}
+              placeholder={"Code here"}
+              additionalStyle={{textAlign : 'center'}}
+            />
+          </View>
+          <Text style={styles.centerText}>OR:</Text>
+          <ButtonComponent label={"Scan a QRCode"} onPress={goToCode} />
+        </View>
       </SafeAreaView>
-      </ThemeComponent>
-
+    </ThemeComponent>
   );
 };
 
 const styles = StyleSheet.create({
   cam: {
-    flex : 1,
+    flex: 1,
   },
   centerText: {
-    alignSelf:"center",
+    alignSelf: "center",
     fontSize: 16,
     padding: 10,
     color: colors.WHITE,
@@ -64,15 +78,15 @@ const styles = StyleSheet.create({
   },
   buttonTouchable: {
     padding: 13,
-    alignItems: 'center',
+    alignItems: "center",
   },
 });
 
 const mapStateToProps = (state) => {
-  console.log(state.authentification + " "+ state.attending);
+  console.log(state.authentification + " " + state.attending);
   const { user } = state.authentication;
-  const {code : codeAttending, attending} = state.attendance;
-  return {user, codeAttending, attending};
+  const { code: codeAttending, attending } = state.attendance;
+  return { user, codeAttending, attending };
 };
 
 export default withNavigation(connect(mapStateToProps)(CheckinScreen));

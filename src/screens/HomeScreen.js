@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { View, Dimensions, Text, StyleSheet, ScrollView } from "react-native";
-import SearchBar from "../components/SearchBar";
-import { FlatList } from "react-native-gesture-handler";
-import { connect } from "react-redux";
-import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuItem from "../components/MenuItemComponent";
 import ThemeComponent from "../components/ThemeComponent";
-import MenuItemComponent from "../components/MenuItemComponent";
+import  LogoMenuItem from "../components/LogoMenuItem";
 import {dimmer} from "../config/colors";
+import colors from "../config/colors";
+
+
+
 const DeviceWidth = Dimensions.get("window").width;
 const HomeScreen = ({ trainings }) => {
   const [term, setTerm] = useState("");
+  //, dimmer.dimmer
   return (
     <ThemeComponent>
-      <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
-        <View style={styles.row}>
-          <View>
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+      <SafeAreaView style={[{ flex: 1 }, , dimmer.dimmer]}>
+        <View style={styles.container}>
+          <View style={styles.menu}>
+            <MenuItem icon="user-check" title="Check In" to="Checkin" />
+            <MenuItem icon="star" title="My Marks" to="" />
+            <MenuItem icon="message-square" title="Messaging" to="" />
           </View>
-          <View>
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+          <View style={styles.menu}>
+            <MenuItem icon="clock" title="Schedule" to="" />
+            <LogoMenuItem />
+            <MenuItem icon="settings" title="Settings" to=""/>
           </View>
-          <View>
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+          <View style={styles.menu}>
+            <MenuItem icon="users" title="My Groups" to="" />
+            <MenuItem icon="smile" title="Feedback" to="" />
+            <MenuItem icon="log-out" title="Log Out" to="Auth" />
           </View>
         </View>
       </SafeAreaView>
@@ -38,17 +39,16 @@ const HomeScreen = ({ trainings }) => {
 };
 
 const styles = StyleSheet.create({
-  row: {
+  container: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
+  menu: {
+    backgroundColor: colors.DIMMER,
+  }
 });
 
-const mapStateToProps = (state) => {
-  const { trainings } = state;
-  return { trainings: trainings.trainings };
-};
 
-export default connect(mapStateToProps)(HomeScreen);
+export default HomeScreen;

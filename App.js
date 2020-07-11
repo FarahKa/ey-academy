@@ -28,7 +28,7 @@ const navigator = createStackNavigator(
     Home:HomeScreen,
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Auth",
     headerMode: "none",
     // defaultNavigationOptions: {
     //   title: "Login"

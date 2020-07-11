@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, ImageBackground, View } from "react-native";
 //import background from "../../assets/buildings.jpeg";
 import background from "../../assets/ppl.jpg";
-//import background from "../../assets/pink.jpeg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../config/colors";
 

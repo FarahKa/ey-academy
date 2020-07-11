@@ -37,7 +37,7 @@ const AuthScreen = ({ navigation, user }) => {
       dispatch(userActions.login(email, password));
     }
     
-    navigation.navigate("Checkin");
+    navigation.navigate("Home");
   };
 
   return (
