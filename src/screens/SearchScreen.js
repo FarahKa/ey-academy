@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
 import List from "../components/ListComponent";
 import colors from "../config/colors";
 import {dimmer} from "../config/colors"
+import { trainingActions } from "../actions/index";
 
-const SearchScreen = ({ trainings }) => {
+const SearchScreen = ({ trainings, user }) => {
   const [term, setTerm] = useState("");
+  const dispatch = useDispatch();
 
-  
+  useEffect(() => {
+    dispatch(trainingActions.getTrainings(user.id));
+  }, []);
 
   return (
     <ThemeComponent>
@@ -30,7 +34,7 @@ const SearchScreen = ({ trainings }) => {
         </Text>
         <FlatList
           data={trainings}
-          keyExtractor={(training) => training.title}
+          keyExtractor={(training) => training.training.id}
           renderItem={({ item }) => {
             return <List training={item} />;
           }}
@@ -44,8 +48,9 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
   console.log("yo");
-  const { trainings } = state;
-  return { trainings: trainings.trainings };
+  const { trainings } = state.trainings;
+  const { user } = state.authentication;
+  return { trainings, user};
 };
 
 export default connect(mapStateToProps)(SearchScreen);

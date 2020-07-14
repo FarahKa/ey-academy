@@ -6,12 +6,14 @@ import CardComponent from "./CardComponent";
 import colors from "../config/colors";
 
 const ResultsList = ({ training, navigation }) => {
+
+
   return (
     <FlatList
       //showsHorizontalScrollIndicator={false}
       //horizontal
       data={training.groups}
-      keyExtractor={(group) => group.group}
+      keyExtractor={(group) => group.id}
       renderItem={({ item }) => {
         return (
           //<ScrollView>
@@ -20,7 +22,7 @@ const ResultsList = ({ training, navigation }) => {
                 navigation.navigate("Group", { item: item });
               }}
             >
-              <CardComponent item={item} title={item.group} />
+              <CardComponent item={item} title={item.name} />
             </TouchableOpacity>
           //</ScrollView>
         );

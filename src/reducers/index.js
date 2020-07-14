@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import {attendance} from './attendanceReducer';
 import {authentication} from './authenticationReducer';
+import {trainings, selectedTraining} from './trainingReducer';
 import eyAcademy from "../../api/ey-academy";
 
 //#region initial trainings
@@ -454,6 +455,7 @@ const initialState = {
   },
   ],
 };
+//#endregion
 
 
 const trainingReducer = (state, action) => {
@@ -466,14 +468,8 @@ const trainingReducer = (state, action) => {
   return state;
 };
 
-//#endregion
 
-const selectedTrainingReducer = (selectedTraining = null, action) => {
-  if (action.type === "TRAINING_SELECTED") {
-    return action.payload;
-  }
-  return selectedTraining;
-};
+
 
 const testApiReducer = (state, action) => {
   // try {
@@ -491,7 +487,7 @@ const testApiReducer = (state, action) => {
 export default combineReducers({
   authentication:authentication,
   testApi: testApiReducer,
-  trainings: trainingReducer,
-  selectedTraining: selectedTrainingReducer,
+  trainings: trainings,
+  selectedTraining: selectedTraining,
   attendance:attendance
 });

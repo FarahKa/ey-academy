@@ -19,7 +19,7 @@ const List = ({ training, children }) => {
   return (
     <View>
       <TouchableOpacity style={styles.background} onPress={toggleStuff}>
-        <Text style={styles.title}>{training.title}</Text>
+        <Text style={styles.title}>{training.training.trainingName}</Text>
       </TouchableOpacity>
       {toggle ? (
         <View style={styles.card}>
