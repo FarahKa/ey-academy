@@ -2,7 +2,7 @@ import { userConstants } from '../constants';
 import { AsyncStorage } from 'react-native';
 
 let user = AsyncStorage.getItem('user');
-const initialState = user ? { loggedIn: true, user } : {};
+const initialState = user ? { loggedIn: false, user } : {};
 
 export function authentication(state = initialState, action) {
   switch (action.type) {

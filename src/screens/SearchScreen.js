@@ -8,12 +8,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
 import List from "../components/ListComponent";
 import colors from "../config/colors";
+import {dimmer} from "../config/colors"
 
 const SearchScreen = ({ trainings }) => {
   const [term, setTerm] = useState("");
+
+  
+
   return (
     <ThemeComponent>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <SearchBar
           term={term}
           onTermChange={(newTerm) => setTerm(newTerm)}
