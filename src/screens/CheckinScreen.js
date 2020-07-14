@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Button, Dimensions } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import React, { useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useDispatch, connect } from "react-redux";
 import { attendanceActions } from "../actions/index";
 import { withNavigation } from "react-navigation";
@@ -10,7 +14,6 @@ import colors, { dimmer } from "../config/colors";
 import FormTextInput from "../components/FormTextInputComponent";
 import ThemeComponent from "../components/ThemeComponent";
 import Dark from "../components/DarkComponent";
-
 
 const DeviceWidth = Dimensions.get("window").width;
 
@@ -23,13 +26,22 @@ const CheckinScreen = ({ user, codeAttending, attending, navigation }) => {
   }
   function submitCode() {
     if (!code) return null;
-    dispatch(attendanceActions.markAttendance(parseInt(code), user.id));
-    if (code === codeAttending && attending) {
-      navigation.navigate("Search");
-    } else {
-      console.log("bad response");
-      setError("Problem. Please repeat!");
-    }
+    dispatch(attendanceActions.markAttendance(parseInt(code), user.id)).then(
+      () => {
+        if (code === codeAttending && attending) {
+          console.log(
+            "ATTENDANCE LOGGED WITH CODE " +
+              codeAttending +
+              " and attending= " +
+              attending
+          );
+          navigation.navigate("Checkin");
+        } else {
+          console.log("bad response");
+          setError("Problem. Please repeat!");
+        }
+      }
+    );
   }
   return (
     <ThemeComponent>
@@ -47,7 +59,7 @@ const CheckinScreen = ({ user, codeAttending, attending, navigation }) => {
               onTermChange={setCode}
               onTermSubmit={submitCode}
               placeholder={"Code here"}
-              additionalStyle={{textAlign : 'center'}}
+              additionalStyle={{ textAlign: "center" }}
             />
           </View>
           <Text style={styles.centerText}>OR:</Text>

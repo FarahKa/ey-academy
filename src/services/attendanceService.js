@@ -10,8 +10,20 @@ function attend(code, token) {
         QRCode: code,
         UserId: token,
       })
-      .then(response => {
-        //console.log(response);       
-        return response;
-      });
+      // .then(response => {
+      //   console.log(response);       
+      //   return response;
+      // });
   }
+
+  function handleResponse(response) {
+      // return response.text().then((text) => {
+        if (response.status !== 200) {   
+          const error = response.error;
+          dispatch({type: ATTENDACE_FAILED, code:code});
+          return Promise.reject(error);
+        } 
+        dispatch({type: ATTENDANCE_MARKED, code:code});   
+        return response;
+      ;
+}

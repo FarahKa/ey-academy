@@ -43,27 +43,23 @@ const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
     );
     if (!code) return null;
     setScanned(true);
-    dispatch(attendanceActions.markAttendance(code, user.id)).then(() => {
-      console.log(
-        "\n \n \n code attending:" + codeAttending + "\n attending:" + attending
-      );
-      if (attending) {
+    dispatch(attendanceActions.markAttendance(code, user.id)).then(
+      () => {
+        console.log(
+          "\n \n \n code attending:" +
+            codeAttending +
+            "\n attending:" +
+            attending
+        );
         //Vibration.vibrate(100);
-        console.log("yea");
         navigation.navigate("Checkin");
-      } else {
-        console.log("bad response");
-        setError("Problem. Please repeat!");
-        setTimeout(function () {
-          setScanned(false);
-        }, 5000);
-        //setScanned(false);
+        setScanned(false);
+      },
+      (error) => {
+        console.log("ERROR = " + error);
+        navigation.navigate("Checkin");
       }
-    });
-
-    // Linking.openURL(e.data).catch(err =>
-    //   console.error('An error occured', err)
-    // );
+    );
   };
 
   // const handleNext = () => {

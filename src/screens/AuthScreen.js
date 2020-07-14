@@ -34,10 +34,17 @@ const AuthScreen = ({ navigation, user }) => {
 
     setSubmitted(true);
     if (email && password) {
-      dispatch(userActions.login(email, password));
+      dispatch(userActions.login(email, password)).then(() => {
+        console.log("GOT INTO THE THEN HERE")
+        
+        console.log("AAAAAAAAAAAAAAAAAAAAAlogged in!");
+        navigation.navigate('Home');
+      },
+      (error) => {console.log(error)});
+
     }
     
-    navigation.navigate("Home");
+    //navigation.navigate("Home");
   };
 
   return (
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   //console.log("yo");
   //console.log(state.authentication);
-  const { loggedIn, user } = state.authentication;
+  const { user } = state.authentication;
   return { user };
 };
 

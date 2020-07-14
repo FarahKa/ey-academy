@@ -47,10 +47,13 @@ export function login(email, password) {
       email: email,
       password: password,
     })
-    .then(handleResponse).then(user => {
-      AsyncStorage.setItem("user", JSON.stringify(user));
-      return user;
-    });
+    .then(handleResponse)
+    // .then(user => {
+    //   AsyncStorage.setItem("user", JSON.stringify(user));
+    //   return user;
+    // },
+    // error => {return error}
+    // );
 }
 
 
@@ -64,7 +67,8 @@ function handleResponse(response) {
         console.log("connection failure with 401");
       }
 
-      const error = (data && data.message) || response.statusText;
+      //const error = (data && data.message) || response.statusText;
+      const error = response.error;
       return Promise.reject(error);
     }
 
