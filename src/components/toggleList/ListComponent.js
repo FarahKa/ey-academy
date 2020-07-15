@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 import ResultsList from "./ResultsList";
 
 const List = ({ training, children }) => {

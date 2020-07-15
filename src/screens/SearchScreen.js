@@ -3,10 +3,9 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
 import { connect, useDispatch } from "react-redux";
-import ResultsList from "../components/ResultsList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
-import List from "../components/ListComponent";
+import List from "../components/toggleList/ListComponent";
 import colors from "../config/colors";
 import {dimmer} from "../config/colors"
 import { trainingActions } from "../actions/index";

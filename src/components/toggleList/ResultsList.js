@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native
 import { withNavigation } from "react-navigation";
 //import { FlatList, ScrollView } from "react-native-gesture-handler";
 import CardComponent from "./CardComponent";
-import colors from "../config/colors";
 
 const ResultsList = ({ training, navigation }) => {
 
