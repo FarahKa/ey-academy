@@ -2,11 +2,11 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import colors from "../../config/colors";
 
-const CardComponent = ({ item, title }) => {
+const CardComponent = ({ status, title }) => {
   return (
       <View style= {styles.card}>          
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.date}>When the training happened.</Text>
+        {/* <Text style={styles.date}>When the training happened.</Text> */}
       </View>
   );
 };

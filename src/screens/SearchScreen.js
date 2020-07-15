@@ -33,7 +33,7 @@ const SearchScreen = ({ trainings, user }) => {
         </Text>
         <FlatList
           data={trainings}
-          keyExtractor={(training) => training.training.id}
+          keyExtractor={(training) => training.id}
           renderItem={({ item }) => {
             return <List training={item} />;
           }}
@@ -46,7 +46,6 @@ const SearchScreen = ({ trainings, user }) => {
 const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
-  console.log("yo");
   const { trainings } = state.trainings;
   const { user } = state.authentication;
   return { trainings, user};

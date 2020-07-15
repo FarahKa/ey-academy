@@ -3,6 +3,8 @@ import { trainingService } from "../services/trainingsService";
 
 export const trainingActions = {
   getTrainings,
+  selectGroup,
+  clearGroup
 };
 
 function getTrainings(userId) {
@@ -17,6 +19,7 @@ function getTrainings(userId) {
             type: trainingConstants.TRAININGS_SUCCESS,
             trainings: trainings,
           });
+          console.log(trainings);
           resolve(trainings);
         },
         (error) => {
@@ -29,6 +32,22 @@ function getTrainings(userId) {
   };
 }
 
+function selectGroup(group) {
+  return (dispatch) => {
+    dispatch({
+      type: trainingConstants.TRAINING_GROUP_SELECT,
+      group: group
+    });
+  };
+}
+
+function clearGroup() {
+  return (dispatch) => {
+    dispatch({
+      type: trainingConstants.TRAINING_GROUP_CLEAR
+    });
+  };
+}
 //   const trainings = response.data;
 //   const array;
 //   trainings.forEach(training =>       {

@@ -4,6 +4,8 @@ export const trainingConstants = {
   TRAININGS_REQUEST: "TRAININGS_REQUEST",
   TRAININGS_SUCCESS: "TRAININGS_SUCCESS",
   TRAININGS_FAILURE: "TRAININGS_FAILURE",
+  TRAINING_GROUP_SELECT: "TRAINING_GROUP_SELECT",
+  TRAINING_GROUP_CLEAR: "TRAINING_GROUP_CLEAR",
 };
 
 export function trainings(state = initialState, action) {
@@ -19,15 +21,21 @@ export function trainings(state = initialState, action) {
         trainings: action.trainings,
       };
     case trainingConstants.TRAININGS_FAILURE:
-      return { fetching: false, trainings: [], error:action.error };
+      return { fetching: false, trainings: [], error: action.error };
     default:
       return state;
   }
 }
 
-export function selectedTraining(selectedTraining = null, action) {
-    if (action.type === "TRAINING_SELECTED") {
-      return action.payload;
+export function selectGroup(group = {}, action) {
+  switch (action.type) {
+    case trainingConstants.TRAINING_GROUP_SELECT: {
+      return { group: action.group };
     }
-    return selectedTraining;
-  };
+    case trainingConstants.TRAINING_GROUP_CLEAR: {
+      return {group:{}};
+    }
+    default:
+      return group;
+  }
+}

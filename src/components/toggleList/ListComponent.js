@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 import ResultsList from "./ResultsList";
 
-const List = ({ training, children }) => {
+const List = ({ training }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleStuff = () => {
@@ -19,7 +19,7 @@ const List = ({ training, children }) => {
   return (
     <View>
       <TouchableOpacity style={styles.background} onPress={toggleStuff}>
-        <Text style={styles.title}>{training.training.trainingName}</Text>
+        <Text style={styles.title}>{training.name}</Text>
       </TouchableOpacity>
       {toggle ? (
         <View style={styles.card}>
