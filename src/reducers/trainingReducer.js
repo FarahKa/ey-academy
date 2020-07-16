@@ -39,3 +39,7 @@ export function selectGroup(group = {}, action) {
       return group;
   }
 }
+
+const initialAssessmentState = {
+  
+}

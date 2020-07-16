@@ -28,3 +28,14 @@ function getTemplateTrainer() {
     });
   };
 }
+
+
+const SAVE_CRITERION = "SAVE_CRITERION";
+
+function saveCriterion(criterionId, criterionRating, criterionComment){
+  return {
+    type: SAVE_CRITERION,
+    criterionId
+
+  }
+}
