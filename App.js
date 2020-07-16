@@ -16,6 +16,7 @@ import ThemeComponent from "./src/components/ThemeComponent";
 import CheckinScreen from "./src/screens/CheckinScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import TrainerHomeScreen from "./src/screens/TrainerHomeScreen";
+import EvalScreen from "./src/screens/EvalScreen";
 
 const store = configureStore();
 
@@ -28,6 +29,7 @@ const navigator = createStackNavigator(
     Checkin:CheckinScreen,
     Home:HomeScreen,
     HomeTrainer:TrainerHomeScreen,
+    Eval: EvalScreen,
   },
   {
     initialRouteName: "Auth",

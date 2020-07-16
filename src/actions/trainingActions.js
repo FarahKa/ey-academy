@@ -19,7 +19,6 @@ function getTrainings(userId) {
             type: trainingConstants.TRAININGS_SUCCESS,
             trainings: trainings,
           });
-          console.log(trainings);
           resolve(trainings);
         },
         (error) => {

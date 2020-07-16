@@ -9,10 +9,8 @@ const List = ({ training }) => {
   const toggleStuff = () => {
     if (toggle) {
       setToggle(false);
-      console.log(toggle);
     } else {
       setToggle(true);
-      console.log(toggle);
     }
   };
 

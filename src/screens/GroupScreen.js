@@ -6,17 +6,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../components/ThemeComponent";
 import colors, {dimmer} from "../config/colors";
 import ButtonComponent from "../components/ButtonComponent";
+import { trainingActions } from "../actions";
 
 import { withNavigation } from "react-navigation";
 const GroupScreen = ({ navigation }) => {
   const item = navigation.getParam("item");
-  console.log(item);
   return (
     <ThemeComponent>
          <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
       <View style={styles.container}>
 
         <ButtonComponent label={`Evaluate ${item.name}`} onPress={() => {
+          dispatch(trainingActions.selectGroup(item));
           navigation.navigate("Eval");
         }} />
 

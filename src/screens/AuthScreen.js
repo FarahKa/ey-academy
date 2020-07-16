@@ -35,8 +35,6 @@ const AuthScreen = ({ navigation, user }) => {
     setSubmitted(true);
     if (email && password) {
       dispatch(userActions.login(email, password)).then((response) => {
-        console.log("GOT INTO THE THEN HERE")
-        console.log("AAAAAAAAAAAAAAAAAAAAAlogged in!");
         switch(response.role) {
           case 'consultant':
             navigation.navigate('Home');

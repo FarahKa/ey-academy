@@ -4,7 +4,7 @@ import { withNavigation } from "react-navigation";
 //import { FlatList, ScrollView } from "react-native-gesture-handler";
 import CardComponent from "./CardComponent";
 import { useDispatch } from "react-redux";
-import { trainingActions } from "../../actions";
+
 
 const ResultsList = ({ training, navigation }) => {
   dispatch=useDispatch();
@@ -20,7 +20,6 @@ const ResultsList = ({ training, navigation }) => {
           //<ScrollView>
             <TouchableOpacity
               onPress={() => {
-                dispatch(trainingActions.selectGroup(item));
                 navigation.navigate("Group", { item: item });
               }}
             >

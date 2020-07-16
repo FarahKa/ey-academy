@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: "rgba(0,0,0,0.6)",
         //flex: 1,
+        padding:5,
         marginHorizontal: 15,
         marginVertical: 10,
       },

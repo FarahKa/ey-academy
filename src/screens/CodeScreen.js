@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state.attendance);
   const { user } = state.authentication;
   const { code: codeAttending, attending } = state.attendance;
   return { user, codeAttending, attending };

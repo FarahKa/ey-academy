@@ -5,6 +5,8 @@ export * from './attendanceActions';
 
 export * from './trainingActions';
 
+export * from './evalTrainerActions';
+
 export const selectTraining = (training) => {
   // do api stuff
   return {
