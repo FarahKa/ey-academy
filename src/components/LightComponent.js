@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import colors from "../config/colors";
 
-const Dark= ({ children }) => {
+const Light= ({ children }) => {
   return (
     <View style={styles.card}>
         {children}
@@ -19,6 +19,7 @@ const Dark= ({ children }) => {
 
 const styles = StyleSheet.create({
     card: {
+      padding:8,
         backgroundColor: colors.MISCHKA,
         //flex: 1,
         marginHorizontal: 15,
@@ -27,4 +28,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Dark;
+export default Light;

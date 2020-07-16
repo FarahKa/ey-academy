@@ -5,11 +5,14 @@ import {
   View,
   KeyboardAvoidingView,
   StatusBar,
+  ScrollView,
   AsyncStorage,
-  //FlatList
+  Text,
+  FlatList,
+  TouchableOpacity
 } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import {dimmer} from "../config/colors";
+import {} from "react-native-gesture-handler";
+import { dimmer } from "../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
 import ButtonComponent from "../components/ButtonComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,65 +20,80 @@ import { withNavigation } from "react-navigation";
 import ThemeComponent from "../components/ThemeComponent";
 import { evalActions } from "../actions/evalTrainerActions";
 import Theme from "../components/form/ThemeComponent";
+import colors from "../config/colors";
 
 const EvalScreen = ({ navigation, form, group }) => {
-    
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
-  }, [])
+  }, []);
 
-  function handleSubmitPress () {
-      console.log("submit was pressed")
+  function handleSubmitPress() {
+    console.log("submit was pressed");
+  }
+  function handleQuitPress() {
+    console.log("quit was pressed");
   }
 
   return (
     <ThemeComponent>
       <SafeAreaView style={[styles.contenu, dimmer.dimmer]}>
-
-       <FlatList
-          data={form.themes}
-          keyExtractor={(theme) => theme.id}
-          renderItem={({ item }) => {
-            return <Theme theme={item} />;
-          }}
-        />
-        <View style={styles.form}>
-          <ButtonComponent label="Submit" onPress={handleSubmitPress} />
-        </View>
+          <FlatList
+          
+            data={form.themes}
+            keyExtractor={(theme) => theme.id}
+            renderItem={({ item }) => {
+              return <Theme theme={item} />;
+            }}
+          />
+          <View style={styles.form}>
+            <LittleButton color={colors.SILVER} label="Quit" onPress={handleQuitPress} />
+            <LittleButton color={colors.MISCHKA} label="Submit" onPress={handleSubmitPress} />
+          </View>
       </SafeAreaView>
     </ThemeComponent>
   );
 };
 
+const LittleButton = ({color, label, onPress}) => {
+    return (
+        <TouchableOpacity style={[styles.container, {backgroundColor: color}]} onPress={onPress}>
+          <Text style={styles.text}>{label}</Text>
+        </TouchableOpacity>
+      );
+}
+
 const styles = StyleSheet.create({
+    container: {
+        width: "40%",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 5,
+        paddingVertical: 12,
+        borderRadius: 4,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: "rgba(255,255,255,0.7)"
+    },
   contenu: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
     //backgroundColor: "rgba(0,0,0,0.5)",
-
-  },
-  logo: {
-    flex: 1,
-    width: "100%",
-    resizeMode: "contain",
-    alignSelf: "center",
-    marginVertical: 25,
   },
   form: {
-    flex: 1,
+    //flex: 1,
+    flexDirection: "row",
     justifyContent: "center",
-    width: "90%",
+    width: "100%",
+    backgroundColor:colors.DARK_GREY,
   },
 });
 
 const mapStateToProps = (state) => {
   //console.log(state);
-  const {form} = state.templateTrainer;
+  const { form } = state.templateTrainer;
   const { group } = state.selectGroup;
   return { form, group };
 };
