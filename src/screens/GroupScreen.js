@@ -14,22 +14,6 @@ import { withNavigation } from "react-navigation";
 const GroupScreen = ({ navigation }) => {
   const item = navigation.getParam("item");
 
-  useEffect(() => {
-    const navListener = Navigation.events().bindComponent(this, componentId)
-
-    // remove the listener during cleanup
-    return () => {
-      navListener.remove()
-    }
-  }, [item.id])
-
-  const componentDidAppear = () => {
-    console.log("component just appeared");
-  }
-
-  componentDidDisappear = () => {
-    // do stuff when component disappears
-  }
 
 
   return (

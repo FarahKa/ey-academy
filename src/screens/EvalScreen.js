@@ -37,8 +37,14 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
 
   useEffect(() => {
     console.log("normal effect");
-    if(form == {}){
+    console.log(form);
+    if(Object.keys(form).length === 0){
+          console.log("getting template")
           dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
+    }
+    if(criteria != []){
+      dispatch({type:"REFRESH_CRITERIA"});
+      console.log("refreshed criteria = " + criteria)
     }
 
   }, []);

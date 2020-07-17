@@ -29,6 +29,10 @@ export function templateTrainer(state = initialState, action) {
         console.log(missing);
         return missing;
 
+      case "REFRESH_CRITERIA" :
+        console.log("emptying criteria");
+        return [];
+
         default:
           return state;
     }
