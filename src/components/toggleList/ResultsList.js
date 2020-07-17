@@ -23,7 +23,7 @@ const ResultsList = ({ training, navigation }) => {
                 navigation.navigate("Group", { item: item });
               }}
             >
-              <CardComponent title={item.name} />
+              <CardComponent title={item.name} status={item.evaluated} />
             </TouchableOpacity>
           //</ScrollView>
         );

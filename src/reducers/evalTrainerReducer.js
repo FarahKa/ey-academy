@@ -20,7 +20,6 @@ export function templateTrainer(state = initialState, action) {
   export function criteria(state = [], action) {
     switch(action.type){
       case "ADD_CRITERION" :
-        console.log(action.criterion);
         var missing = state.filter(function(criterion) {
           return criterion.CriterionId !== action.criterion.CriterionId;
         });

@@ -37,7 +37,6 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
 
   useEffect(() => {
     console.log("normal effect");
-    console.log(form);
     if(Object.keys(form).length === 0){
           console.log("getting template")
           dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
@@ -63,19 +62,20 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
       TrainerId : user.id,
     }
 
-    console.log(send);
 
     evalTrainerService.submitAssessmentTrainer(send).then((reponse) => {
-      navigation.goBack(null);
+      navigation.navigate("Search");
     });
 
   }
   function handleQuitPress() {
     console.log("quit was pressed");
+    navigation.navigate("Search");
   }
 
   return (
     <ThemeComponent>
+      
       <SafeAreaView style={[styles.contenu, dimmer.dimmer]}>
         <FlatList
           ListHeaderComponent={<></>}

@@ -3,6 +3,7 @@ import eyAcademy from "../../api/ey-academy";
 export const evalTrainerService = {
  getTemplateTrainer,
  submitAssessmentTrainer,
+ deleteAssessmentTrainer,
 }
 
 function getTemplateTrainer(code, token) {
@@ -17,5 +18,11 @@ function getTemplateTrainer(code, token) {
 function submitAssessmentTrainer(request) {
 
   return eyAcademy.post("/mobile/submitAssessmentTrainer", request)
+
+}
+
+
+function deleteAssessmentTrainer(request) {
+  return eyAcademy.post("/mobile/deleteAssessment", request)
 
 }

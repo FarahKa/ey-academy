@@ -9,18 +9,30 @@ import List from "../components/toggleList/ListComponent";
 import colors from "../config/colors";
 import {dimmer} from "../config/colors"
 import { trainingActions } from "../actions/index";
+import { NavigationEvents } from "react-navigation";
 
-const SearchScreen = ({ trainings, user }) => {
+const SearchScreen = ({ trainings, user, a }) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(trainingActions.getTrainings(user.id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(trainingActions.getTrainings(user.id));
+  // }, []);
+
+  function refresh() {
+
+  }
 
   return (
     <ThemeComponent>
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
+      <NavigationEvents
+      onWillFocus={payload => 
+        {console.log('will focus', payload);     dispatch(trainingActions.getTrainings(user.id));}}
+      onDidFocus={payload => console.log('did focus', payload)}
+      onWillBlur={payload => console.log('will blur', payload)}
+      onDidBlur={payload => console.log('did blur', payload)}
+    />
         <SearchBar
           term={term}
           onTermChange={(newTerm) => setTerm(newTerm)}
