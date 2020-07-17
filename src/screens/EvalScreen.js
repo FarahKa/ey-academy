@@ -14,7 +14,6 @@ import {
 //import {} from "react-native-gesture-handler";
 import { dimmer } from "../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
-import ButtonComponent from "../components/ButtonComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { withNavigation } from "react-navigation";
 import ThemeComponent from "../components/ThemeComponent";
@@ -23,18 +22,47 @@ import Theme from "../components/form/ThemeComponent";
 import colors from "../config/colors";
 import Dark from "../components/DarkComponent";
 import FormTextInput from "../components/FormTextInputComponent";
+import { evalTrainerService } from "../services/evalTrainerService";
 
-const EvalScreen = ({ navigation, form, group }) => {
+
+
+
+const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   const [submitted, setSubmitted] = useState(false);
   const [remarkable, setRemarkable] = useState("");
+  const [commentRemarkable, setCommentRemarkable] = useState("");
   const dispatch = useDispatch();
 
+
+
   useEffect(() => {
-    dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
+    console.log("normal effect");
+    if(form == {}){
+          dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
+    }
+
   }, []);
+
+
 
   function handleSubmitPress() {
     console.log("submit was pressed");
+
+    const send = {
+      Marks : criteria,
+      RemarkablePerformance: remarkable,
+      RemarkablePerformanceComment: commentRemarkable,
+      TFAId: form.id,
+      groupByTrainingId:group.gbtId,
+      TrainerId : user.id,
+    }
+
+    console.log(send);
+
+    evalTrainerService.submitAssessmentTrainer(send).then((reponse) => {
+      navigation.goBack(null);
+    });
+
   }
   function handleQuitPress() {
     console.log("quit was pressed");
@@ -58,6 +86,13 @@ const EvalScreen = ({ navigation, form, group }) => {
                   onTermChange={(newTerm) => setRemarkable(newTerm)}
                   onTermSubmit={() => {}}
                   placeholder="Remarkable Performance"
+                  additionalStyle={{ width: "70%", alignSelf: "center" }}
+                />
+                <FormTextInput
+                  term={commentRemarkable}
+                  onTermChange={(newTerm) => setCommentRemarkable(newTerm)}
+                  onTermSubmit={() => {}}
+                  placeholder="Comment"
                   additionalStyle={{ width: "70%", alignSelf: "center" }}
                 />
               </Dark>
@@ -119,10 +154,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
+  const criteria = state.criteria;
   //console.log(state);
   const { form } = state.templateTrainer;
   const { group } = state.selectGroup;
-  return { form, group };
+  const {user} = state.authentication;
+  return { form, group, criteria, user };
 };
 
 export default withNavigation(connect(mapStateToProps)(EvalScreen));

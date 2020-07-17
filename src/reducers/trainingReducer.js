@@ -40,6 +40,6 @@ export function selectGroup(group = {}, action) {
   }
 }
 
-const initialAssessmentState = {
-  
-}
+
+
+

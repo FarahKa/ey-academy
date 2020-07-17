@@ -2,6 +2,7 @@ import { evalTrainerService } from "../services/evalTrainerService";
 
 export const evalActions = {
   getTemplateTrainer,
+  saveCriterion
 };
 const GET_TEMPLATE = "GET_TEMPLATE";
 const TEMPLATE_SUCCESS = "TEMPLATE_SUCCESS";
@@ -32,10 +33,9 @@ function getTemplateTrainer() {
 
 const SAVE_CRITERION = "SAVE_CRITERION";
 
-function saveCriterion(criterionId, criterionRating, criterionComment){
+function saveCriterion(criterion){
   return {
     type: SAVE_CRITERION,
-    criterionId
-
+    criterion: criterion
   }
 }

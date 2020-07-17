@@ -15,3 +15,21 @@ export function templateTrainer(state = initialState, action) {
         return state
     }
   }
+
+
+  export function criteria(state = [], action) {
+    switch(action.type){
+      case "ADD_CRITERION" :
+        console.log(action.criterion);
+        var missing = state.filter(function(criterion) {
+          return criterion.CriterionId !== action.criterion.CriterionId;
+        });
+        missing = [...missing, action.criterion];
+        console.log("new critera:")
+        console.log(missing);
+        return missing;
+
+        default:
+          return state;
+    }
+  }

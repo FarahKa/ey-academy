@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import {attendance} from './attendanceReducer';
 import {authentication} from './authenticationReducer';
 import {trainings, selectGroup} from './trainingReducer';
-import {templateTrainer} from './evalTrainerReducer';
+import {templateTrainer, criteria} from './evalTrainerReducer';
 import eyAcademy from "../../api/ey-academy";
 
 //#region initial trainings
@@ -491,5 +491,6 @@ export default combineReducers({
   testApi: testApiReducer,
   trainings: trainings,
   selectGroup: selectGroup,
-  attendance:attendance
+  attendance:attendance,
+  criteria:criteria,
 });
