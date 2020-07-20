@@ -18,6 +18,7 @@ import { trainingActions } from "../actions";
 import { connect } from "react-redux";
 import { withNavigation, NavigationEvents } from "react-navigation";
 import { evalTrainerService } from "../services/evalTrainerService";
+import { loadingActions } from "../actions/loadingActions";
 
 const GroupScreen = ({ navigation, user }) => {
   const [label, setLabel] = useState("");
@@ -31,6 +32,10 @@ const GroupScreen = ({ navigation, user }) => {
     }
   }, []);
 
+    useEffect(() => {
+    console.log(navigation.dangerouslyGetParent().state.routes);
+  }, []);
+
   return (
     <ThemeComponent>
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
@@ -39,6 +44,7 @@ const GroupScreen = ({ navigation, user }) => {
             label={label}
             onPress={() => {
               if (!item.evaluated) {
+                dispatch(loadingActions.startLoading());
                 dispatch(trainingActions.selectGroup(item));
                 navigation.navigate("Eval");
               } else {
@@ -56,6 +62,8 @@ const GroupScreen = ({ navigation, user }) => {
                     {
                       text: "Yes",
                       onPress: () => {
+                        dispatch(loadingActions.startLoading());
+                        dispatch(trainingActions.selectGroup(item));
                         console.log("OK Pressed");
                         evalTrainerService
                           .deleteAssessmentTrainer({

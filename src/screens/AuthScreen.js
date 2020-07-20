@@ -6,15 +6,17 @@ import {
   KeyboardAvoidingView,
   StatusBar,
   AsyncStorage,
+  BackHandler,
 } from "react-native";
-import {dimmer} from "../config/colors";
+import { dimmer } from "../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
 import ButtonComponent from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/white-logo.png";
 import { userActions } from "../actions/index";
-import { withNavigation } from "react-navigation";
+import { withNavigation, NavigationEvents } from "react-navigation";
 import ThemeComponent from "../components/ThemeComponent";
+import { loadingActions } from "../actions/loadingActions";
 
 const AuthScreen = ({ navigation, user }) => {
   const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -24,38 +26,83 @@ const AuthScreen = ({ navigation, user }) => {
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
 
-  // // reset login status
-  // useEffect(() => {
-  //     dispatch(userActions.logout());
+
+    // useEffect(() => {
+  //   const backAction = () => {
+  //     if (
+  //       navigation.dangerouslyGetParent().state.routes &&
+  //       navigation.dangerouslyGetParent().state.routes[
+  //         navigation.dangerouslyGetParent().state.routes.length - 2
+  //       ].routeName === "Auth"
+  //     ) {
+  //       console.log("danger")
+  //       return true;
+  //     } else {
+  //       navigation.goBack();
+  //       return true;
+  //     }
+  //   };
+
+  //   const backHandler = BackHandler.addEventListener(
+  //     "hardwareBackPress",
+  //     backAction
+  //   );
+
+  //   return () => backHandler.remove();
   // }, []);
+
+
+  // reset login status
+  useEffect(() => {
+      dispatch(userActions.logout());
+  }, []);
 
   handleLoginPress = () => {
     console.log("Login button pressed");
 
     setSubmitted(true);
     if (email && password) {
-      dispatch(userActions.login(email, password)).then((response) => {
-        switch(response.role) {
-          case 'consultant':
-            navigation.navigate('Home');
-            break;
-          case 'trainer':
-            navigation.navigate('HomeTrainer');
-            break;
-          default:
-            console.log(response.role);
+      dispatch(loadingActions.startLoading());
+      dispatch(userActions.login(email, password)).then(
+        (response) => {
+          switch (response.role) {
+            case "consultant":
+              navigation.navigate("Home");
+              break;
+            case "trainer":
+              navigation.navigate("HomeTrainer");
+              break;
+            default:
+              console.log(response.role);
+          }
+          //navigation.navigate('Home');
+        },
+        (error) => {
+          console.log(error);
         }
-        //navigation.navigate('Home');
-      },
-      (error) => {console.log(error)});
-
+      );
     }
-    
+
     //navigation.navigate("Home");
   };
 
   return (
     <ThemeComponent>
+      <NavigationEvents onDidFocus={() => {dispatch(loadingActions.stopLoading()); console.log(user);
+      if(user){
+        console.log(user);
+        switch (user.role) {
+          case "consultant":
+            navigation.navigate("Home");
+            break;
+          case "trainer":
+            navigation.navigate("HomeTrainer");
+            break;
+          default:
+            console.log(response.role);
+        }
+
+      }}}/>
       <KeyboardAvoidingView style={[styles.contenu, dimmer.dimmer]}>
         <Image source={imageLogo} style={styles.logo} />
         <View style={styles.form}>
@@ -87,7 +134,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     //backgroundColor: "rgba(0,0,0,0.5)",
-
   },
   logo: {
     flex: 1,

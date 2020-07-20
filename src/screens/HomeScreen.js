@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch} from "react-redux";
 import { View, Dimensions, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuItem from "../components/MenuItemComponent";
@@ -6,14 +7,22 @@ import ThemeComponent from "../components/ThemeComponent";
 import  LogoMenuItem from "../components/LogoMenuItem";
 import {dimmer} from "../config/colors";
 import colors from "../config/colors";
+import { NavigationEvents } from "react-navigation";
+import { loadingActions } from "../actions/loadingActions";
 
 
 
 const DeviceWidth = Dimensions.get("window").width;
 const HomeScreen = ({ trainings }) => {
+  const dispatch = useDispatch();
   const [term, setTerm] = useState("");
+
+  useEffect(() => {
+    dispatch(loadingActions.stopLoading());
+  }, [])
   //, dimmer.dimmer
   return (
+
     <ThemeComponent>
       <SafeAreaView style={[{ flex: 1 }, , dimmer.dimmer]}>
         <View style={styles.container}>

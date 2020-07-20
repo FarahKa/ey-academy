@@ -23,6 +23,8 @@ import colors from "../config/colors";
 import Dark from "../components/DarkComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import { evalTrainerService } from "../services/evalTrainerService";
+import { trainingActions } from "../actions";
+import { loadingActions } from "../actions/loadingActions";
 
 
 
@@ -39,7 +41,9 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
     console.log("normal effect");
     if(Object.keys(form).length === 0){
           console.log("getting template")
-          dispatch(evalActions.getTemplateTrainer()).then(() => console.log(""));
+          dispatch(evalActions.getTemplateTrainer()).then(() =>  dispatch(loadingActions.stopLoading()), () =>  dispatch(loadingActions.stopLoading()));
+    } else {
+      dispatch(loadingActions.stopLoading());
     }
     if(criteria != []){
       dispatch({type:"REFRESH_CRITERIA"});
@@ -52,7 +56,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
 
   function handleSubmitPress() {
     console.log("submit was pressed");
-
+    dispatch(loadingActions.startLoading());
     const send = {
       Marks : criteria,
       RemarkablePerformance: remarkable,
@@ -64,8 +68,9 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
 
 
     evalTrainerService.submitAssessmentTrainer(send).then((reponse) => {
+      //dispatch(trainingActions.markDone(group.groupId));
       navigation.navigate("Search");
-    });
+    }, (error) => error);
 
   }
   function handleQuitPress() {

@@ -4,6 +4,7 @@ import { trainingService } from "../services/trainingsService";
 export const trainingActions = {
   getTrainings,
   selectGroup,
+  markDone,
   clearGroup
 };
 
@@ -31,6 +32,15 @@ function getTrainings(userId) {
   };
 }
 
+function markDone(groupId) {
+  return (dispatch) => {
+    dispatch({
+      type: trainingConstants.MARK_DONE,
+      groupId: groupId
+    })
+  }
+}
+
 function selectGroup(group) {
   return (dispatch) => {
     dispatch({
@@ -47,39 +57,4 @@ function clearGroup() {
     });
   };
 }
-//   const trainings = response.data;
-//   const array;
-//   trainings.forEach(training =>       {
-//     console.log(training);
-//     eyAcademy.get(`/training/listGroupFormer/${training.id}`).then(
-//       (response) => {
-//         training.group= response.data;
-//         return training;
-//       },
-//       (error) => {
-//         console.log(error);
-//         training.group=response.data;
-//         return training;
-//       }
-//     ).then((training) => {array.push(training)});
-//    })
 
-//   // trainings = trainings.map((training) => {
-//   //   console.log(training);
-//   //   eyAcademy.get(`/training/listGroupFormer/${training.id}`).then(
-//   //     (response) => {
-//   //       training = { ...training, groups: response.data.groups };
-//   //       return training;
-//   //     },
-//   //     (error) => {
-//   //       console.log(error);
-//   //       training = { ...training, groups: [] };
-//   //       return training;
-//   //     }
-//   //   );
-//   // });
-//   // console.log(trainings);
-//   return trainings;
-// },
-// (error) => error
-// );

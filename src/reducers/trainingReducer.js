@@ -6,6 +6,7 @@ export const trainingConstants = {
   TRAININGS_FAILURE: "TRAININGS_FAILURE",
   TRAINING_GROUP_SELECT: "TRAINING_GROUP_SELECT",
   TRAINING_GROUP_CLEAR: "TRAINING_GROUP_CLEAR",
+  MARK_DONE: "MARK_DONE",
 };
 
 export function trainings(state = initialState, action) {
@@ -22,6 +23,18 @@ export function trainings(state = initialState, action) {
       };
     case trainingConstants.TRAININGS_FAILURE:
       return { fetching: false, trainings: [], error: action.error };
+
+    // case trainingConstants.MARK_DONE:
+    //   for (var i in state) {
+    //       for (var x in i.groups) {
+    //         if (x.groupId === action.groupId) {
+    //           x.evaluated = true;
+    //           return state;
+    //         }
+    //       }
+    //   }
+    //   return state;
+
     default:
       return state;
   }
@@ -33,13 +46,9 @@ export function selectGroup(group = {}, action) {
       return { group: action.group };
     }
     case trainingConstants.TRAINING_GROUP_CLEAR: {
-      return {group:{}};
+      return { group: {} };
     }
     default:
       return group;
   }
 }
-
-
-
-

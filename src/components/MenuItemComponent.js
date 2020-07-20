@@ -5,14 +5,20 @@ import { withNavigation } from "react-navigation";
 
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { loadingActions } from "../actions/loadingActions";
+import { useDispatch } from "react-redux";
 
 const DeviceWidth = Dimensions.get("window").width;
 
-const MenuItem = ({ title, icon, navigation, to }) => {
-
+const MenuItem = ({ title, icon, navigation, to, before }) => {
+const dispatch = useDispatch();
   return (
     <TouchableOpacity
     onPress={() => {
+      dispatch(loadingActions.startLoading());
+      if(before){
+        before();
+      }
       navigation.navigate(to)
     }}>
       <View style={styles.square}>
