@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useFocusEffect } from "react-navigation";
+import {
+  useFocusEffect,
+  NavigationActions,
+  withNavigation,
+  StackActions,
+} from "react-navigation";
 import { View, Dimensions, Text, StyleSheet, BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuItem from "../components/MenuItemComponent";
@@ -12,28 +17,39 @@ import { loadingActions } from "../actions/loadingActions";
 import { userActions } from "../actions";
 
 const DeviceWidth = Dimensions.get("window").width;
-const TrainerHomeScreen = () => {
+const TrainerHomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
+    // dispatch(loadingActions.stopLoading());
+    // navigation.dispatch(
+    //   StackActions.reset({
+    //     index: 0,
+    //     actions: [NavigationActions.navigate({ routeName: 'HomeTrainer' }),],
+    //   })
+    // );
     dispatch(loadingActions.stopLoading());
   }, []);
 
   return (
     <ThemeComponent>
-      <SafeAreaView style={[{ flex: 1 }, , dimmer.dimmer]}>
+      <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <View style={styles.container}>
           <View style={styles.menu}>
             <MenuItem icon="star" title="Marking" to="Search" />
-            <MenuItem icon="clock" title="Schedule" to="" />
-            <MenuItem icon="message-square" title="Messaging" to="" />
-          </View>
-          <View style={styles.menu}>
             <MenuItem icon="user-check" title="CheckIn Codes" to="" />
-            <LogoMenuItem />
-            <MenuItem icon="settings" title="Settings" to="" />
+            <MenuItem />
+
+            {/* <MenuItem icon="message-square" title="Messaging" to="" /> */}
           </View>
           <View style={styles.menu}>
-            <MenuItem icon="users" title="Groups" to="" />
+            <MenuItem icon="clock" title="Schedule" to="" />
+            <MenuItem icon="settings" title="My Profile" to="" />
+            {/* <LogoMenuItem /> */}
+            <MenuItem />
+
+          </View>
+          <View style={styles.menu}>
+            <MenuItem icon="users" title="My Groups" to="" />
             <MenuItem icon="smile" title="Feedback" to="" />
             <MenuItem
               icon="log-out"
@@ -63,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TrainerHomeScreen;
+export default withNavigation(TrainerHomeScreen);

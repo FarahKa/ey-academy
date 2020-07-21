@@ -1,10 +1,14 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import colors from "../config/colors";
 
 const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
+  const image = require("../../assets/qr.png");
+
   return (
-    <View style={styles.background}>
+    <View style={styles.container}>
+          <View style={styles.background}>
       <Feather name="search" style={styles.iconStyle} />
       <TextInput
         autoCapitalize="none"
@@ -17,14 +21,16 @@ const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
             onTermSubmit()
         }}
       />
+      <Image style={styles.qricon} source={image}/>
     </View>
+    </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   background: {
-    marginTop: 10,
-    marginBottom: 5,
+    marginVertical: 10,
     backgroundColor: "#DCDCDC",
     height: 50,
     borderRadius: 5,
@@ -36,10 +42,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   iconStyle: {
-    fontSize: 40,
+    fontSize: 30,
     alignSelf: "center",
-    marginHorizontal: 15,
+    marginHorizontal: 10,
+    color: colors.DARK_GREY
   },
+  qricon: {
+    width: 30,
+    height: 30,
+    alignSelf: "center",
+    marginRight: 10
+    //resizeMode: "contain"
+  },
+  container: {
+    backgroundColor: colors.DARK_GREY
+  }
 });
 
 export default SearchBar;

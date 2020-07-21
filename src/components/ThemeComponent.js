@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ImageBackground, View } from "react-native";
+import { StyleSheet, ImageBackground, View, StatusBar } from "react-native";
 //import background from "../../assets/buildings.jpeg";
 import background from "../../assets/ppl.jpg";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,6 +10,7 @@ const ThemeComponent = ({ children }) => {
   return (
     <>
       <Loading/>
+      <StatusBar color={colors.DARK_GREY}></StatusBar>
       <View style={styles.container}>
         <ImageBackground
           source={background}

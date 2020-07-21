@@ -14,7 +14,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import imageLogo from "../../assets/white-logo.png";
 import { userActions } from "../actions/index";
-import { withNavigation, NavigationEvents } from "react-navigation";
+import {StackActions, NavigationActions , withNavigation, NavigationEvents } from "react-navigation";
 import ThemeComponent from "../components/ThemeComponent";
 import { loadingActions } from "../actions/loadingActions";
 
@@ -67,10 +67,20 @@ const AuthScreen = ({ navigation, user }) => {
         (response) => {
           switch (response.role) {
             case "consultant":
-              navigation.navigate("Home");
+              const resetAction1 = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Home' })],
+              });
+              navigation.dispatch(resetAction1);
+              //navigation.navigate("Home");
               break;
             case "trainer":
-              navigation.navigate("HomeTrainer");
+              const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'HomeTrainer' })],
+              });
+              navigation.dispatch(resetAction);
+              //navigation.navigate("HomeTrainer");
               break;
             default:
               console.log(response.role);
