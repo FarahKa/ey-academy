@@ -15,12 +15,19 @@ import FormTextInput from "../components/FormTextInputComponent";
 import ThemeComponent from "../components/ThemeComponent";
 import Dark from "../components/DarkComponent";
 
+import {loadingActions} from '../actions/loadingActions'
+
 const DeviceWidth = Dimensions.get("window").width;
 
 const CheckinScreen = ({ user, codeAttending, attending, navigation }) => {
   const [code, setCode] = useState("");
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+
+  useEffect(() => {
+   dispatch(loadingActions.stopLoading());
+  }, [])
+
   function goToCode() {
     navigation.navigate("Code");
   }
@@ -65,6 +72,7 @@ const CheckinScreen = ({ user, codeAttending, attending, navigation }) => {
           <Text style={styles.centerText}>OR:</Text>
           <ButtonComponent label={"Scan a QRCode"} onPress={goToCode} />
         </View>
+        
       </SafeAreaView>
     </ThemeComponent>
   );
