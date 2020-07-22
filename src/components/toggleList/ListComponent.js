@@ -5,7 +5,7 @@ import ResultsList from "./ResultsList";
 import { Feather } from "@expo/vector-icons";
 
 
-const List = ({ training }) => {
+const List = ({ training, role }) => {
   const [toggle, setToggle] = useState(false);
   const [name, setName] = useState("chevron-up");
   
@@ -28,7 +28,7 @@ const List = ({ training }) => {
       </TouchableOpacity>
       {toggle ? (
         <View style={styles.card}>
-          <ResultsList training={training} />
+          <ResultsList training={training} role={role} />
         </View>
       ) : null}
     </View>

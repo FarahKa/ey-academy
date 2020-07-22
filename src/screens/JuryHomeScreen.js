@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { loadingActions } from "../actions/loadingActions";
 import { userActions } from "../actions";
 
-const JuryHomeScreen = ({ navigation }) => {
+const JuryHomeScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadingActions.stopLoading());
@@ -23,7 +23,7 @@ const JuryHomeScreen = ({ navigation }) => {
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <View style={styles.container}>
           <View style={styles.menu}>
-            <MenuItem icon="star" title="Marking" to="JurySearch" />
+            <MenuItem icon="star" title="Marking" to="SearchJury" />
             <MenuItem />
             <MenuItem />
           </View>

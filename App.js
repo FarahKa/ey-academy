@@ -17,6 +17,9 @@ import CheckinScreen from "./src/screens/CheckinScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import TrainerHomeScreen from "./src/screens/TrainerHomeScreen";
 import EvalScreen from "./src/screens/EvalScreen";
+import JuryHomeScreen from "./src/screens/JuryHomeScreen";
+import GroupJuryScreen from "./src/screens/GroupJuryScreen";
+import JurySearchScreen from "./src/screens/JurySearchScreen";
 
 const store = configureStore();
 
@@ -30,6 +33,10 @@ const navigator = createStackNavigator(
     Home:HomeScreen,
     HomeTrainer:TrainerHomeScreen,
     Eval: EvalScreen,
+    HomeJury: JuryHomeScreen,
+    SearchJury: JurySearchScreen,
+    GroupJury: GroupJuryScreen,
+
   },
   {
     initialRouteName: "Auth",

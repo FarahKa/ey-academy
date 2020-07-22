@@ -82,6 +82,13 @@ const AuthScreen = ({ navigation, user }) => {
               navigation.dispatch(resetAction);
               //navigation.navigate("HomeTrainer");
               break;
+            case "jury":
+              const resetActionJ = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'HomeJury' })],
+              });
+              navigation.dispatch(resetActionJ);
+                break;
             default:
               console.log(response.role);
           }
@@ -107,6 +114,9 @@ const AuthScreen = ({ navigation, user }) => {
             break;
           case "trainer":
             navigation.navigate("HomeTrainer");
+            break;
+          case "jury":
+            navigation.navigate("HomeJury");
             break;
           default:
             console.log(response.role);

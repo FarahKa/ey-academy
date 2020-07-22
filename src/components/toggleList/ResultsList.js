@@ -6,7 +6,7 @@ import CardComponent from "./CardComponent";
 import { useDispatch } from "react-redux";
 
 
-const ResultsList = ({ training, navigation }) => {
+const ResultsList = ({ training, navigation, role }) => {
   dispatch=useDispatch();
 
   return (
@@ -20,7 +20,12 @@ const ResultsList = ({ training, navigation }) => {
           //<ScrollView>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Group", { item: item });
+                if(role === "jury"){
+                  navigation.navigate("GroupJury", {item:item})
+                } else {
+                  navigation.navigate("Group", { item: item });
+                }
+
               }}
             >
               <CardComponent title={item.name} status={item.evaluated} />

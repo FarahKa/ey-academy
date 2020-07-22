@@ -50,7 +50,7 @@ const JurySearchScreen = ({ trainings, user }) => {
           data={trainings}
           keyExtractor={(training) => training.id}
           renderItem={({ item }) => {
-            return <List training={item} />;
+            return <List training={item} role={user.role} />;
           }}
         />
       </SafeAreaView>
