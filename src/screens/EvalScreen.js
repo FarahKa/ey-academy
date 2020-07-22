@@ -25,9 +25,8 @@ import FormTextInput from "../components/FormTextInputComponent";
 import { evalTrainerService } from "../services/evalTrainerService";
 import { trainingActions } from "../actions";
 import { loadingActions } from "../actions/loadingActions";
-
-
-
+import CardComponent from "../components/toggleList/CardComponent";
+import Remarkable from "../components/RemarkableComponent"
 
 const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -35,43 +34,42 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   const [commentRemarkable, setCommentRemarkable] = useState("");
   const dispatch = useDispatch();
 
-
-
   useEffect(() => {
     console.log("normal effect");
-    if(Object.keys(form).length === 0){
-          console.log("getting template")
-          dispatch(evalActions.getTemplateTrainer()).then(() =>  dispatch(loadingActions.stopLoading()), () =>  dispatch(loadingActions.stopLoading()));
+    if (Object.keys(form).length === 0) {
+      console.log("getting template");
+      dispatch(evalActions.getTemplateTrainer()).then(
+        () => dispatch(loadingActions.stopLoading()),
+        () => dispatch(loadingActions.stopLoading())
+      );
     } else {
       dispatch(loadingActions.stopLoading());
     }
-    if(criteria != []){
-      dispatch({type:"REFRESH_CRITERIA"});
-      console.log("refreshed criteria = " + criteria)
+    if (criteria != []) {
+      dispatch({ type: "REFRESH_CRITERIA" });
+      console.log("refreshed criteria = " + criteria);
     }
-
   }, []);
-
-
 
   function handleSubmitPress() {
     console.log("submit was pressed");
     dispatch(loadingActions.startLoading());
     const send = {
-      Marks : criteria,
+      Marks: criteria,
       RemarkablePerformance: remarkable,
       RemarkablePerformanceComment: commentRemarkable,
       TFAId: form.id,
-      groupByTrainingId:group.gbtId,
-      TrainerId : user.id,
-    }
+      groupByTrainingId: group.gbtId,
+      TrainerId: user.id,
+    };
 
-
-    evalTrainerService.submitAssessmentTrainer(send).then((reponse) => {
-      //dispatch(trainingActions.markDone(group.groupId));
-      navigation.navigate("Search");
-    }, (error) => error);
-
+    evalTrainerService.submitAssessmentTrainer(send).then(
+      (reponse) => {
+        //dispatch(trainingActions.markDone(group.groupId));
+        navigation.navigate("Search");
+      },
+      (error) =>{console.log(error); navigation.navigate("Search");}
+    );
   }
   function handleQuitPress() {
     console.log("quit was pressed");
@@ -80,7 +78,6 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
 
   return (
     <ThemeComponent>
-      
       <SafeAreaView style={[styles.contenu, dimmer.dimmer]}>
         <FlatList
           ListHeaderComponent={<></>}
@@ -92,12 +89,23 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
           ListFooterComponent={
             <>
               <Dark>
-                <FormTextInput
-                  term={remarkable}
-                  onTermChange={(newTerm) => setRemarkable(newTerm)}
-                  onTermSubmit={() => {}}
-                  placeholder="Remarkable Performance"
-                  additionalStyle={{ width: "70%", alignSelf: "center" }}
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: colors.MISCHKA,
+                    alignSelf: "center",
+                  }}
+                >
+                  Remarkable Performance:
+                </Text>
+                <FlatList
+                data={group.consultants}
+                keyExtractor={(consultant) => consultant.id}
+                renderItem={({item}) => {
+                  return (
+                    <Remarkable remarkable={remarkable} setRemarkable={setRemarkable} item={item}/>
+                  )
+                }}
                 />
                 <FormTextInput
                   term={commentRemarkable}
@@ -169,7 +177,8 @@ const mapStateToProps = (state) => {
   //console.log(state);
   const { form } = state.templateTrainer;
   const { group } = state.selectGroup;
-  const {user} = state.authentication;
+  console.log(group);
+  const { user } = state.authentication;
   return { form, group, criteria, user };
 };
 
