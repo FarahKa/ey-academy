@@ -1,18 +1,23 @@
 import eyAcademy from "../../api/ey-academy";
 
-export const evalTrainerService = {
+export const evalService = {
  getTemplateTrainer,
  submitAssessmentTrainer,
  deleteAssessmentTrainer,
+ getTemplateJury
 }
 
-function getTemplateTrainer(code, token) {
+function getTemplateTrainer() {
     return eyAcademy
       .get("/mobile/templateTrainer")
       // .then(response => {
       //   console.log(response);       
       //   return response;
       // });
+  }
+
+  function getTemplateJury(){
+    return eyAcademy.get("/mobile/templateJury")
   }
 
 function submitAssessmentTrainer(request) {

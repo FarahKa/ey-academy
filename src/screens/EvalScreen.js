@@ -16,7 +16,7 @@ import Theme from "../components/form/ThemeComponent";
 import colors from "../config/colors";
 import Dark from "../components/DarkComponent";
 import FormTextInput from "../components/FormTextInputComponent";
-import { evalTrainerService } from "../services/evalTrainerService";
+import { evalService } from "../services/evalService";
 import { loadingActions } from "../actions/loadingActions";
 import Remarkable from "../components/RemarkableComponent"
 
@@ -55,7 +55,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
       TrainerId: user.id,
     };
 
-    evalTrainerService.submitAssessmentTrainer(send).then(
+    evalService.submitAssessmentTrainer(send).then(
       (reponse) => {
         //dispatch(trainingActions.markDone(group.groupId));
         navigation.navigate("Search");

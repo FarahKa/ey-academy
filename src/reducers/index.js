@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import {attendance} from './attendanceReducer';
 import {authentication} from './authenticationReducer';
-import {trainings, selectGroup} from './trainingReducer';
+import {trainings, selectGroup, trainingsJury, selectGroupJury} from './trainingReducer';
 import {templateTrainer, criteria} from './evalTrainerReducer';
 import {loading} from './loadingReducer';
 
@@ -474,6 +474,8 @@ export default combineReducers({
   authentication:authentication,
   trainings: trainings,
   selectGroup: selectGroup,
+  selectGroupJury:selectGroupJury,
+  trainingsJury:trainingsJury,
   attendance:attendance,
   criteria:criteria,
   loading:loading

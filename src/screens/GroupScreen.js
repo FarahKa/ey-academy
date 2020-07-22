@@ -17,7 +17,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import { trainingActions } from "../actions";
 import { connect } from "react-redux";
 import { withNavigation, NavigationEvents } from "react-navigation";
-import { evalTrainerService } from "../services/evalTrainerService";
+import { evalService } from "../services/evalService";
 import { loadingActions } from "../actions/loadingActions";
 
 const GroupScreen = ({ navigation, user }) => {
@@ -65,7 +65,7 @@ const GroupScreen = ({ navigation, user }) => {
                         dispatch(loadingActions.startLoading());
                         dispatch(trainingActions.selectGroup(item));
                         console.log("OK Pressed");
-                        evalTrainerService
+                        evalService
                           .deleteAssessmentTrainer({
                             gbtId: item.gbtId,
                             UserId: user.id,

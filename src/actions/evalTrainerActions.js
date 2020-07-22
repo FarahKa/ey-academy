@@ -1,4 +1,4 @@
-import { evalTrainerService } from "../services/evalTrainerService";
+import { evalService } from "../services/evalService";
 
 export const evalActions = {
   getTemplateTrainer,
@@ -14,7 +14,7 @@ function getTemplateTrainer() {
       type: GET_TEMPLATE,
     });
     return new Promise((resolve, reject) => {
-      evalTrainerService.getTemplateTrainer().then(
+      evalService.getTemplateTrainer().then(
         (response) => {
           dispatch({ type: TEMPLATE_SUCCESS, form: response.data });
           resolve(response.data);
