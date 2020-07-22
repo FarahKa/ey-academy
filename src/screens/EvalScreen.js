@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-  Image,
   StyleSheet,
   View,
-  KeyboardAvoidingView,
-  StatusBar,
-  ScrollView,
-  AsyncStorage,
   Text,
   FlatList,
   TouchableOpacity,
 } from "react-native";
-//import {} from "react-native-gesture-handler";
 import { dimmer } from "../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,9 +17,7 @@ import colors from "../config/colors";
 import Dark from "../components/DarkComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import { evalTrainerService } from "../services/evalTrainerService";
-import { trainingActions } from "../actions";
 import { loadingActions } from "../actions/loadingActions";
-import CardComponent from "../components/toggleList/CardComponent";
 import Remarkable from "../components/RemarkableComponent"
 
 const EvalScreen = ({ navigation, form, group, criteria, user }) => {

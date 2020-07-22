@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import colors from "../../config/colors";
 import { Feather } from "@expo/vector-icons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const CardComponent = ({ status, title }) => {
   return (
