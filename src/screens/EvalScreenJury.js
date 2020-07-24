@@ -20,7 +20,7 @@ import { evalService } from "../services/evalService";
 import { loadingActions } from "../actions/loadingActions";
 import Remarkable from "../components/RemarkableComponent"
 
-const EvalScreen = ({ navigation, form, group, criteria, user }) => {
+const EvalScreenJury = ({ navigation, form, group, criteria, user }) => {
   const [submitted, setSubmitted] = useState(false);
   const [remarkable, setRemarkable] = useState("");
   const [commentRemarkable, setCommentRemarkable] = useState("");
@@ -30,7 +30,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
     console.log("normal effect");
     if (Object.keys(form).length === 0) {
       console.log("getting template");
-      dispatch(evalActions.getTemplateTrainer()).then(
+      dispatch(evalActions.getTemplateJury()).then(
         () => dispatch(loadingActions.stopLoading()),
         () => dispatch(loadingActions.stopLoading())
       );
@@ -38,7 +38,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
       dispatch(loadingActions.stopLoading());
     }
     if (criteria != []) {
-      dispatch({ type: "REFRESH_CRITERIA" });
+      dispatch({ type: "REFRESH_CRITERIA_J" });
       console.log("refreshed criteria = " + criteria);
     }
   }, []);
@@ -50,22 +50,22 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
       Marks: criteria,
       RemarkablePerformance: remarkable,
       RemarkablePerformanceComment: commentRemarkable,
-      TFAId: form.id,
+      TJAId: form.id,
       groupByTrainingId: group.gbtId,
-      TrainerId: user.id,
+      JuryId: user.id,
     };
 
-    evalService.submitAssessmentTrainer(send).then(
+    evalService.submitAssessmentJury(send).then(
       (reponse) => {
         //dispatch(trainingActions.markDone(group.groupId));
-        navigation.navigate("Search");
+        navigation.navigate("SearchJury");
       },
-      (error) =>{console.log(error); navigation.navigate("Search");}
+      (error) =>{console.log(error); navigation.navigate("SearchJury");}
     );
   }
   function handleQuitPress() {
     console.log("quit was pressed");
-    navigation.navigate("Search");
+    navigation.navigate("SearchJury");
   }
 
   return (
@@ -76,7 +76,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
           data={form.themes}
           keyExtractor={(theme) => theme.id}
           renderItem={({ item }) => {
-            return <Theme theme={item} />;
+            return <Theme theme={item} role={user.role} />;
           }}
           ListFooterComponent={
             <>
@@ -165,13 +165,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const criteria = state.criteria;
+  const criteria = state.criteriaJury;
   //console.log(state);
-  const { form } = state.templateTrainer;
-  const { group } = state.selectGroup;
-  console.log(group);
+  const { form } = state.templateJury;
+  const { group } = state.selectGroupJury;
+  //console.log(group);
   const { user } = state.authentication;
   return { form, group, criteria, user };
 };
 
-export default withNavigation(connect(mapStateToProps)(EvalScreen));
+export default withNavigation(connect(mapStateToProps)(EvalScreenJury));

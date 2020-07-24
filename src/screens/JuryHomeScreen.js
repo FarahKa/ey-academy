@@ -24,18 +24,10 @@ const JuryHomeScreen = () => {
         <View style={styles.container}>
           <View style={styles.menu}>
             <MenuItem icon="star" title="Marking" to="SearchJury" />
-            <MenuItem />
-            <MenuItem />
+            <MenuItem icon="settings" title="My Profile" to="" />
           </View>
           <View style={styles.menu}>
             <MenuItem icon="clock" title="Schedule" to="" />
-            <MenuItem icon="settings" title="My Profile" to="" />
-            <MenuItem />
-
-          </View>
-          <View style={styles.menu}>
-            {/* <MenuItem icon="users" title="My Groups" to="" />
-            <MenuItem icon="smile" title="Feedback" to="" /> */}
             <MenuItem
               icon="log-out"
               title="Log Out"
@@ -45,7 +37,15 @@ const JuryHomeScreen = () => {
                 dispatch(userActions.logout());
               }}
             />
+
+
           </View>
+          {/* <View style={styles.menu}>
+            <MenuItem icon="users" title="My Groups" to="" />
+            <MenuItem icon="smile" title="Feedback" to="" />
+            <MenuItem/>
+
+          </View> */}
         </View>
       </SafeAreaView>
     </ThemeComponent>

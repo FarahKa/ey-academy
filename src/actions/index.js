@@ -5,7 +5,7 @@ export * from './attendanceActions';
 
 export * from './trainingActions';
 
-export * from './evalTrainerActions';
+export * from './evalActions';
 
 export const selectTraining = (training) => {
   // do api stuff

@@ -4,7 +4,7 @@ import colors from "../../config/colors";
 import Criterion from "./CriterionComponent";
 import Light from "../LightComponent";
 
-const Theme = ({ theme }) => {
+const Theme = ({ theme, role }) => {
   return (
     <>
       <Light>
@@ -23,7 +23,7 @@ const Theme = ({ theme }) => {
         data={theme.criteria}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          return <Criterion criterion={item} />;
+          return <Criterion criterion={item} role={role} />;
         }}
       />
     </>

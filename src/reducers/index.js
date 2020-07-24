@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import {attendance} from './attendanceReducer';
 import {authentication} from './authenticationReducer';
 import {trainings, selectGroup, trainingsJury, selectGroupJury} from './trainingReducer';
-import {templateTrainer, criteria} from './evalTrainerReducer';
+import {templateTrainer, criteria, templateJury, criteriaJury} from './evalReducer';
 import {loading} from './loadingReducer';
 
 //#region initial trainings
@@ -471,6 +471,7 @@ import {loading} from './loadingReducer';
 
 export default combineReducers({
   templateTrainer: templateTrainer,
+  templateJury:templateJury,
   authentication:authentication,
   trainings: trainings,
   selectGroup: selectGroup,
@@ -478,5 +479,6 @@ export default combineReducers({
   trainingsJury:trainingsJury,
   attendance:attendance,
   criteria:criteria,
+  criteriaJury:criteriaJury,
   loading:loading
 });

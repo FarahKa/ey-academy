@@ -5,9 +5,9 @@ import colors from "../../config/colors";
 import Dark from "../DarkComponent";
 import { Rating, AirbnbRating } from "../rating/src/index";
 import FormTextInput from "../FormTextInputComponent";
-import { evalActions } from "../../actions/evalTrainerActions";
+import { evalActions } from "../../actions/evalActions";
 
-const Criterion = ({ criterion }) => {
+const Criterion = ({ criterion, role }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -15,7 +15,8 @@ const Criterion = ({ criterion }) => {
   function handleRatingGiven(rating) {
     setRating(rating);
     console.log("setRating : rating is : " + rating);
-    dispatch({
+    if(role === "trainer"){
+          dispatch({
       type: "ADD_CRITERION",
       criterion: {
         CriterionId: criterion.id,
@@ -23,6 +24,19 @@ const Criterion = ({ criterion }) => {
         comment: comment,
       },
     });
+    } else if (role==="jury") {
+      console.log("indeed a jury")
+      dispatch({
+        type: "ADD_CRITERION_J",
+        criterion: {
+          CriterionId: criterion.id,
+          CriterionJAId : criterion.id,
+          NoteJA: rating,
+          comment: comment,
+        },
+      });
+    }
+
   }
   function handleCommentSubmit() {
     console.log("setcomment : comment is : " + comment);
@@ -65,9 +79,5 @@ const Criterion = ({ criterion }) => {
 
 const styles = StyleSheet.create({});
 
-const mapStateToProps = (state) => {
-  const { criteria } = state.criteria;
-  return { criteria };
-};
 
 export default Criterion;

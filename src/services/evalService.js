@@ -4,7 +4,9 @@ export const evalService = {
  getTemplateTrainer,
  submitAssessmentTrainer,
  deleteAssessmentTrainer,
- getTemplateJury
+ getTemplateJury,
+ submitAssessmentJury,
+ deleteAssessmentJury,
 }
 
 function getTemplateTrainer() {
@@ -26,8 +28,18 @@ function submitAssessmentTrainer(request) {
 
 }
 
+function submitAssessmentJury(request) {
+
+  return eyAcademy.post("/mobile/submitAssessmentJury", request)
+
+}
+
 
 function deleteAssessmentTrainer(request) {
   return eyAcademy.post("/mobile/deleteAssessment", request)
 
+}
+
+function deleteAssessmentJury(request){
+  return eyAcademy.post("/mobile/deleteAssessmentJury", request)
 }

@@ -20,6 +20,7 @@ import EvalScreen from "./src/screens/EvalScreen";
 import JuryHomeScreen from "./src/screens/JuryHomeScreen";
 import GroupJuryScreen from "./src/screens/GroupJuryScreen";
 import JurySearchScreen from "./src/screens/JurySearchScreen";
+import EvalScreenJury from "./src/screens/EvalScreenJury";
 
 const store = configureStore();
 
@@ -36,6 +37,7 @@ const navigator = createStackNavigator(
     HomeJury: JuryHomeScreen,
     SearchJury: JurySearchScreen,
     GroupJury: GroupJuryScreen,
+    EvalJury:EvalScreenJury,
 
   },
   {
