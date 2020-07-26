@@ -31,14 +31,16 @@ const EvalScreenJury = ({ navigation, form, group, criteria, user }) => {
     if (Object.keys(form).length === 0) {
       console.log("getting template");
       dispatch(evalActions.getTemplateJury()).then(
-        () => dispatch(loadingActions.stopLoading()),
+        (response) => {
+          dispatch(loadingActions.stopLoading());
+          dispatch({ type: "REFRESH_CRITERIA_J", themes: response.themes });
+        },
         () => dispatch(loadingActions.stopLoading())
       );
     } else {
       dispatch(loadingActions.stopLoading());
-    }
-    if (criteria != []) {
-      dispatch({ type: "REFRESH_CRITERIA_J" });
+      console.log(form.id);
+      dispatch({ type: "REFRESH_CRITERIA_J", themes: form.themes });
       console.log("refreshed criteria = " + criteria);
     }
   }, []);

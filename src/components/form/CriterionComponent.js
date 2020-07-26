@@ -15,7 +15,43 @@ const Criterion = ({ criterion, role }) => {
   function handleRatingGiven(rating) {
     setRating(rating);
     console.log("setRating : rating is : " + rating);
-    if(role === "trainer"){
+    if (role === "trainer") {
+      console.log("role is trainer yo");
+      dispatch({
+        type: "ADD_CRITERION",
+        criterion: {
+          CriterionId: criterion.id,
+          NoteFA: rating,
+          comment: comment,
+        },
+      });
+    } else if (role === "jury") {
+      console.log("indeed a jury");
+      dispatch({
+        type: "ADD_CRITERION_J",
+        criterion: {
+          CriterionId: criterion.id,
+          CriterionJAId: criterion.id,
+          NoteJA: rating,
+          comment: comment,
+        },
+      });
+    } else {
+      console.log("no role found");
+    }
+  }
+  function handleCommentSubmit() {
+    console.log("setcomment : comment is : " + comment);
+    if(role === "jury"){
+      dispatch({
+        type: "ADD_CRITERION_J",
+        criterion: {
+          CriterionId: criterion.id,
+          NoteFA: rating,
+          comment: comment,
+        },
+      });
+    } else if (role === "trainer") {
           dispatch({
       type: "ADD_CRITERION",
       criterion: {
@@ -24,30 +60,9 @@ const Criterion = ({ criterion, role }) => {
         comment: comment,
       },
     });
-    } else if (role==="jury") {
-      console.log("indeed a jury")
-      dispatch({
-        type: "ADD_CRITERION_J",
-        criterion: {
-          CriterionId: criterion.id,
-          CriterionJAId : criterion.id,
-          NoteJA: rating,
-          comment: comment,
-        },
-      });
+    } else {
+      console.log("role not found")
     }
-
-  }
-  function handleCommentSubmit() {
-    console.log("setcomment : comment is : " + comment);
-    dispatch({
-      type: "ADD_CRITERION",
-      criterion: {
-        CriterionId: criterion.id,
-        NoteFA: rating,
-        comment: comment,
-      },
-    });
 
   }
   return (
@@ -78,6 +93,5 @@ const Criterion = ({ criterion, role }) => {
 };
 
 const styles = StyleSheet.create({});
-
 
 export default Criterion;

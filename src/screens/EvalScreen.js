@@ -18,7 +18,7 @@ import Dark from "../components/DarkComponent";
 import FormTextInput from "../components/FormTextInputComponent";
 import { evalService } from "../services/evalService";
 import { loadingActions } from "../actions/loadingActions";
-import Remarkable from "../components/RemarkableComponent"
+import Remarkable from "../components/RemarkableComponent";
 
 const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -29,16 +29,18 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   useEffect(() => {
     console.log("normal effect");
     if (Object.keys(form).length === 0) {
-      console.log("getting template");
+      console.log("AAAAAAAAAAAAgetting template");
       dispatch(evalActions.getTemplateTrainer()).then(
-        () => dispatch(loadingActions.stopLoading()),
-        () => dispatch(loadingActions.stopLoading())
+        (response) => {
+          dispatch(loadingActions.stopLoading());
+          dispatch({ type: "REFRESH_CRITERIA", themes: response.themes });
+        },
+        () => {dispatch(loadingActions.stopLoading())}
       );
     } else {
       dispatch(loadingActions.stopLoading());
-    }
-    if (criteria != []) {
-      dispatch({ type: "REFRESH_CRITERIA" });
+      console.log(form.id);
+      dispatch({ type: "REFRESH_CRITERIA", themes: form.themes });
       console.log("refreshed criteria = " + criteria);
     }
   }, []);
@@ -60,7 +62,10 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
         //dispatch(trainingActions.markDone(group.groupId));
         navigation.navigate("Search");
       },
-      (error) =>{console.log(error); navigation.navigate("Search");}
+      (error) => {
+        console.log(error);
+        navigation.navigate("Search");
+      }
     );
   }
   function handleQuitPress() {
@@ -76,7 +81,7 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
           data={form.themes}
           keyExtractor={(theme) => theme.id}
           renderItem={({ item }) => {
-            return <Theme theme={item} />;
+            return <Theme theme={item} role={user.role} />;
           }}
           ListFooterComponent={
             <>
@@ -91,13 +96,17 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
                   Remarkable Performance:
                 </Text>
                 <FlatList
-                data={group.consultants}
-                keyExtractor={(consultant) => consultant.id}
-                renderItem={({item}) => {
-                  return (
-                    <Remarkable remarkable={remarkable} setRemarkable={setRemarkable} item={item}/>
-                  )
-                }}
+                  data={group.consultants}
+                  keyExtractor={(consultant) => consultant.id}
+                  renderItem={({ item }) => {
+                    return (
+                      <Remarkable
+                        remarkable={remarkable}
+                        setRemarkable={setRemarkable}
+                        item={item}
+                      />
+                    );
+                  }}
                 />
                 <FormTextInput
                   term={commentRemarkable}
@@ -169,7 +178,6 @@ const mapStateToProps = (state) => {
   //console.log(state);
   const { form } = state.templateTrainer;
   const { group } = state.selectGroup;
-  console.log(group);
   const { user } = state.authentication;
   return { form, group, criteria, user };
 };
