@@ -42,24 +42,26 @@ const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
       `Bar code with type ${type} and data ${code} has been scanned!`
     );
     if (!code) return null;
-    setScanned(true);
-    dispatch(attendanceActions.markAttendance(code, user.id)).then(
-      () => {
-        console.log(
-          "\n \n \n code attending:" +
-            codeAttending +
-            "\n attending:" +
-            attending
-        );
-        //Vibration.vibrate(100);
-        navigation.navigate("Checkin");
-        setScanned(false);
-      },
-      (error) => {
-        console.log("ERROR = " + error);
-        navigation.navigate("Checkin");
-      }
-    );
+    if (!scanned) {
+      setScanned(true);
+      dispatch(attendanceActions.markAttendance(code, user.id)).then(
+        () => {
+          console.log(
+            "\n \n \n code attending:" +
+              codeAttending +
+              "\n attending:" +
+              attending
+          );
+          //Vibration.vibrate(100);
+          navigation.navigate("Checkin");
+          setScanned(false);
+        },
+        (error) => {
+          console.log("ERROR = " + error);
+          navigation.navigate("Checkin");
+        }
+      );
+    }
   };
 
   // const handleNext = () => {
