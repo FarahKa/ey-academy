@@ -6,16 +6,16 @@ import {
   Dimensions,
 } from "react-native";
 import { useDispatch, connect } from "react-redux";
-import { attendanceActions } from "../actions/index";
+import { attendanceActions } from "../../actions/index";
 import { withNavigation } from "react-navigation";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonComponent from "../components/ButtonComponent";
-import colors, { dimmer } from "../config/colors";
-import FormTextInput from "../components/FormTextInputComponent";
-import ThemeComponent from "../components/ThemeComponent";
-import Dark from "../components/DarkComponent";
+import ButtonComponent from "../../components/ButtonComponent";
+import colors, { dimmer } from "../../config/colors";
+import FormTextInput from "../../components/FormTextInputComponent";
+import ThemeComponent from "../../components/ThemeComponent";
+import Dark from "../../components/DarkComponent";
 
-import {loadingActions} from '../actions/loadingActions'
+import {loadingActions} from '../../actions/loadingActions'
 
 const DeviceWidth = Dimensions.get("window").width;
 

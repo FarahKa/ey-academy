@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
-  Image,
   StyleSheet,
-  TouchableOpacity,
   FlatList,
   Alert,
 } from "react-native";
 //import { FlatList } from "react-native-gesture-handler";
-import MemberCard from "../components/MemberCard";
+import MemberCard from "../../components/MemberCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ThemeComponent from "../components/ThemeComponent";
-import colors, { dimmer } from "../config/colors";
-import ButtonComponent from "../components/ButtonComponent";
-import { trainingActions } from "../actions";
+import ThemeComponent from "../../components/ThemeComponent";
+import colors, { dimmer } from "../../config/colors";
+import ButtonComponent from "../../components/ButtonComponent";
+import { trainingActions } from "../../actions";
 import { connect } from "react-redux";
-import { withNavigation, NavigationEvents } from "react-navigation";
-import { evalService } from "../services/evalService";
-import { loadingActions } from "../actions/loadingActions";
+import { withNavigation } from "react-navigation";
+import { evalService } from "../../services/evalService";
+import { loadingActions } from "../../actions/loadingActions";
 
-const GroupScreen = ({ navigation, user }) => {
+const GroupJuryScreen = ({ navigation, user }) => {
   const [label, setLabel] = useState("");
   const item = navigation.getParam("item");
 
@@ -45,8 +42,8 @@ const GroupScreen = ({ navigation, user }) => {
             onPress={() => {
               if (!item.evaluated) {
                 dispatch(loadingActions.startLoading());
-                dispatch(trainingActions.selectGroup(item));
-                navigation.navigate("Eval");
+                dispatch(trainingActions.selectGroupJury(item));
+                navigation.navigate("EvalJury");
               } else {
                 Alert.alert(
                   "Warning",
@@ -63,16 +60,16 @@ const GroupScreen = ({ navigation, user }) => {
                       text: "Yes",
                       onPress: () => {
                         dispatch(loadingActions.startLoading());
-                        dispatch(trainingActions.selectGroup(item));
+                        dispatch(trainingActions.selectGroupJury(item));
                         console.log("OK Pressed");
                         evalService
-                          .deleteAssessmentTrainer({
+                          .deleteAssessmentJury({
                             gbtId: item.gbtId,
                             UserId: user.id,
                           })
                           .then(
                             () => {
-                              navigation.navigate("Eval");
+                              navigation.navigate("EvalJury");
                             },
                             (error) => {
                               console.log(error);
@@ -120,9 +117,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  //const { group } = state.selectGroup;
+  //const { group } = state.selectGroupJury;
   const { user } = state.authentication;
   return { user };
 };
 
-export default withNavigation(connect(mapStateToProps)(GroupScreen));
+export default withNavigation(connect(mapStateToProps)(GroupJuryScreen));

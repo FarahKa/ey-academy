@@ -4,13 +4,13 @@ import {
 } from "react-navigation";
 import { View, Dimensions, Text, StyleSheet, BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import MenuItem from "../components/MenuItemComponent";
-import ThemeComponent from "../components/ThemeComponent";
-import { dimmer } from "../config/colors";
-import colors from "../config/colors";
+import MenuItem from "../../components/MenuItemComponent";
+import ThemeComponent from "../../components/ThemeComponent";
+import { dimmer } from "../../config/colors";
+import colors from "../../config/colors";
 import { useDispatch } from "react-redux";
-import { loadingActions } from "../actions/loadingActions";
-import { userActions } from "../actions";
+import { loadingActions } from "../../actions/loadingActions";
+import { userActions } from "../../actions";
 
 const JuryHomeScreen = () => {
   const dispatch = useDispatch();

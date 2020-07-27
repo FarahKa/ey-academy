@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch} from "react-redux";
 import { View, Dimensions, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import MenuItem from "../components/MenuItemComponent";
-import ThemeComponent from "../components/ThemeComponent";
-import  LogoMenuItem from "../components/LogoMenuItem";
-import {dimmer} from "../config/colors";
-import colors from "../config/colors";
+import MenuItem from "../../components/MenuItemComponent";
+import ThemeComponent from "../../components/ThemeComponent";
+import  LogoMenuItem from "../../components/LogoMenuItem";
+import {dimmer} from "../../config/colors";
+import colors from "../../config/colors";
 import { NavigationEvents } from "react-navigation";
-import { loadingActions } from "../actions/loadingActions";
+import { loadingActions } from "../../actions/loadingActions";
 
 
 
@@ -29,7 +29,7 @@ const HomeScreen = ({ trainings }) => {
           <View style={styles.menu}>
             <MenuItem icon="user-check" title="Check In" to="Checkin" />
             <MenuItem icon="star" title="My Marks" to="" />
-            <MenuItem icon="message-square" title="Messaging" to="" />
+            <MenuItem icon="message-square" title="Peer Review" to="" />
           </View>
           <View style={styles.menu}>
             <MenuItem icon="clock" title="Schedule" to="" />

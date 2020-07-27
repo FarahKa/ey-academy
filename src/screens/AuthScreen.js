@@ -96,6 +96,7 @@ const AuthScreen = ({ navigation, user }) => {
         },
         (error) => {
           console.log(error);
+          dispatch(loadingActions.stopLoading())
         }
       );
     }

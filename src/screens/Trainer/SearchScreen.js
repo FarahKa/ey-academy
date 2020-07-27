@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Text, StyleSheet} from "react-native";
-import SearchBar from "../components/SearchBar";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import SearchBar from "../../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
 import { connect, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ThemeComponent from "../components/ThemeComponent";
-import List from "../components/toggleList/ListComponent";
-import colors from "../config/colors";
-import { dimmer } from "../config/colors";
-import { trainingActions } from "../actions/index";
+import ThemeComponent from "../../components/ThemeComponent";
+import List from "../../components/toggleList/ListComponent";
+import colors from "../../config/colors";
+import { dimmer } from "../../config/colors";
+import { trainingActions } from "../../actions/index";
 import { NavigationEvents } from "react-navigation";
-import { loadingActions } from "../actions/loadingActions";
+import { loadingActions } from "../../actions/loadingActions";
 
-const JurySearchScreen = ({ trainings, user }) => {
+const SearchScreen = ({ trainings, user, a }) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const JurySearchScreen = ({ trainings, user }) => {
         <NavigationEvents
           onWillFocus={(payload) => {
             console.log("will focus");
-            dispatch(trainingActions.getTrainingsJury(user.id)).then(
+            dispatch(trainingActions.getTrainings(user.id)).then(
               () => {
                 dispatch(loadingActions.stopLoading());
               },
@@ -50,7 +50,7 @@ const JurySearchScreen = ({ trainings, user }) => {
           data={trainings}
           keyExtractor={(training) => training.id}
           renderItem={({ item }) => {
-            return <List training={item} role={user.role} />;
+            return <List training={item} />;
           }}
         />
       </SafeAreaView>
@@ -61,9 +61,9 @@ const JurySearchScreen = ({ trainings, user }) => {
 const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
-  const { trainings } = state.trainingsJury;
+  const { trainings } = state.trainings;
   const { user } = state.authentication;
   return { trainings, user };
 };
 
-export default connect(mapStateToProps)(JurySearchScreen);
+export default connect(mapStateToProps)(SearchScreen);

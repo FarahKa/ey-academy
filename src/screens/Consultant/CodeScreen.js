@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useDispatch, connect } from "react-redux";
-import { attendanceActions } from "../actions/index";
+import { attendanceActions } from "../../actions/index";
 import { withNavigation } from "react-navigation";
 //import {Haptic} from 'expo';
 import { SafeAreaView } from "react-native-safe-area-context";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
 const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);

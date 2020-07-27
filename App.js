@@ -2,25 +2,28 @@ import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
-import SearchScreen from "./src/screens/SearchScreen";
-import GroupScreen from "./src/screens/GroupScreen";
+
 
 import { Provider } from "react-redux";
 
 import configureStore from "./store/configureStore";
 import AuthScreen from "./src/screens/AuthScreen";
-import CodeScreen from "./src/screens/CodeScreen";
-import { StyleSheet, ImageBackground } from "react-native";
 
-import ThemeComponent from "./src/components/ThemeComponent";
-import CheckinScreen from "./src/screens/CheckinScreen";
-import HomeScreen from "./src/screens/HomeScreen";
-import TrainerHomeScreen from "./src/screens/TrainerHomeScreen";
-import EvalScreen from "./src/screens/EvalScreen";
-import JuryHomeScreen from "./src/screens/JuryHomeScreen";
-import GroupJuryScreen from "./src/screens/GroupJuryScreen";
-import JurySearchScreen from "./src/screens/JurySearchScreen";
-import EvalScreenJury from "./src/screens/EvalScreenJury";
+
+import CodeScreen from "./src/screens/Consultant/CodeScreen";
+import CheckinScreen from "./src/screens/Consultant/CheckinScreen";
+import HomeScreen from "./src/screens/Consultant/HomeScreen";
+
+import SearchScreen from "./src/screens/Trainer/SearchScreen";
+import GroupScreen from "./src/screens/Trainer/GroupScreen";
+import TrainerHomeScreen from "./src/screens/Trainer/TrainerHomeScreen";
+import EvalScreen from "./src/screens/Trainer/EvalScreen";
+
+
+import JuryHomeScreen from "./src/screens/Jury/JuryHomeScreen";
+import GroupJuryScreen from "./src/screens/Jury/GroupJuryScreen";
+import JurySearchScreen from "./src/screens/Jury/JurySearchScreen";
+import EvalScreenJury from "./src/screens/Jury/EvalScreenJury";
 
 const store = configureStore();
 

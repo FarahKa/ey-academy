@@ -6,21 +6,21 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { dimmer } from "../config/colors";
+import { dimmer } from "../../config/colors";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { withNavigation } from "react-navigation";
-import ThemeComponent from "../components/ThemeComponent";
-import { evalActions } from "../actions/evalActions";
-import Theme from "../components/form/ThemeComponent";
-import colors from "../config/colors";
-import Dark from "../components/DarkComponent";
-import FormTextInput from "../components/FormTextInputComponent";
-import { evalService } from "../services/evalService";
-import { loadingActions } from "../actions/loadingActions";
-import Remarkable from "../components/RemarkableComponent";
+import ThemeComponent from "../../components/ThemeComponent";
+import { evalActions } from "../../actions/evalActions";
+import Theme from "../../components/form/ThemeComponent";
+import colors from "../../config/colors";
+import Dark from "../../components/DarkComponent";
+import FormTextInput from "../../components/FormTextInputComponent";
+import { evalService } from "../../services/evalService";
+import { loadingActions } from "../../actions/loadingActions";
+import Remarkable from "../../components/RemarkableComponent"
 
-const EvalScreen = ({ navigation, form, group, criteria, user }) => {
+const EvalScreenJury = ({ navigation, form, group, criteria, user }) => {
   const [submitted, setSubmitted] = useState(false);
   const [remarkable, setRemarkable] = useState("");
   const [commentRemarkable, setCommentRemarkable] = useState("");
@@ -29,18 +29,18 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
   useEffect(() => {
     console.log("normal effect");
     if (Object.keys(form).length === 0) {
-      console.log("AAAAAAAAAAAAgetting template");
-      dispatch(evalActions.getTemplateTrainer()).then(
+      console.log("getting template");
+      dispatch(evalActions.getTemplateJury()).then(
         (response) => {
           dispatch(loadingActions.stopLoading());
-          dispatch({ type: "REFRESH_CRITERIA", themes: response.themes });
+          dispatch({ type: "REFRESH_CRITERIA_J", themes: response.themes });
         },
-        () => {dispatch(loadingActions.stopLoading())}
+        () => dispatch(loadingActions.stopLoading())
       );
     } else {
       dispatch(loadingActions.stopLoading());
       console.log(form.id);
-      dispatch({ type: "REFRESH_CRITERIA", themes: form.themes });
+      dispatch({ type: "REFRESH_CRITERIA_J", themes: form.themes });
       console.log("refreshed criteria = " + criteria);
     }
   }, []);
@@ -52,25 +52,22 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
       Marks: criteria,
       RemarkablePerformance: remarkable,
       RemarkablePerformanceComment: commentRemarkable,
-      TFAId: form.id,
+      TJAId: form.id,
       groupByTrainingId: group.gbtId,
-      TrainerId: user.id,
+      JuryId: user.id,
     };
 
-    evalService.submitAssessmentTrainer(send).then(
+    evalService.submitAssessmentJury(send).then(
       (reponse) => {
         //dispatch(trainingActions.markDone(group.groupId));
-        navigation.navigate("Search");
+        navigation.navigate("SearchJury");
       },
-      (error) => {
-        console.log(error);
-        navigation.navigate("Search");
-      }
+      (error) =>{console.log(error); navigation.navigate("SearchJury");}
     );
   }
   function handleQuitPress() {
     console.log("quit was pressed");
-    navigation.navigate("Search");
+    navigation.navigate("SearchJury");
   }
 
   return (
@@ -96,17 +93,13 @@ const EvalScreen = ({ navigation, form, group, criteria, user }) => {
                   Remarkable Performance:
                 </Text>
                 <FlatList
-                  data={group.consultants}
-                  keyExtractor={(consultant) => consultant.id}
-                  renderItem={({ item }) => {
-                    return (
-                      <Remarkable
-                        remarkable={remarkable}
-                        setRemarkable={setRemarkable}
-                        item={item}
-                      />
-                    );
-                  }}
+                data={group.consultants}
+                keyExtractor={(consultant) => consultant.id}
+                renderItem={({item}) => {
+                  return (
+                    <Remarkable remarkable={remarkable} setRemarkable={setRemarkable} item={item}/>
+                  )
+                }}
                 />
                 <FormTextInput
                   term={commentRemarkable}
@@ -174,12 +167,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const criteria = state.criteria;
+  const criteria = state.criteriaJury;
   //console.log(state);
-  const { form } = state.templateTrainer;
-  const { group } = state.selectGroup;
+  const { form } = state.templateJury;
+  const { group } = state.selectGroupJury;
+  //console.log(group);
   const { user } = state.authentication;
   return { form, group, criteria, user };
 };
 
-export default withNavigation(connect(mapStateToProps)(EvalScreen));
+export default withNavigation(connect(mapStateToProps)(EvalScreenJury));
