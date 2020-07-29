@@ -7,13 +7,8 @@ export * from './trainingActions';
 
 export * from './evalActions';
 
-export const selectTraining = (training) => {
-  // do api stuff
-  return {
-    type: "TRAINING_SELECTED",
-    payload: training,
-  };
-};
+export * from './peerReviewActions';
+
 
 
 // export const getUserToken = () => (dispatch) =>
