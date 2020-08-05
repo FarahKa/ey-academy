@@ -32,16 +32,16 @@ export function trainingsPR(state = initialState, action) {
   }
 }
 
-export function selectConsultantPR(consultant = {}, action) {
+export function selectConsultantPR(group = {}, action) {
   switch (action.type) {
     case "CONSULTANT_SELECT_PR": {
-      return { ...action.consultant, gbtId: action.gbtId };
+      return action.group;
     }
     case "CONSULTANT_CLEAR_PR": {
       return {};
     }
     default:
-      return consultant;
+      return group;
   }
 }
 

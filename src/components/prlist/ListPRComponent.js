@@ -7,6 +7,7 @@ import {peerReviewActions} from "../../actions/peerReviewActions"
 import { useDispatch } from "react-redux";
 import { loadingActions } from "../../actions/loadingActions";
 import { withNavigation } from "react-navigation";
+import ButtonComponent from "../ButtonComponent";
 
 
 const ListPR = ({ training, navigation }) => {
@@ -38,11 +39,15 @@ const ListPR = ({ training, navigation }) => {
             keyExtractor={(member) => member.id}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity
-                onPress={() => {
-                  if (!item.evaluated) {
+
+                <MemberCardPR item={item} />
+              );
+            }}
+          />
+          <ButtonComponent label="Evaluate this group" onPress={() => {
+                  if (!training.groups[0].evaluated) {
                     dispatch(loadingActions.startLoading());
-                    dispatch(peerReviewActions.selectConsultantPR(item, training.groups[0].gbtId));
+                    dispatch(peerReviewActions.selectConsultantPR(training.groups[0]));
                     navigation.navigate("PeerReview");
                   } else {
                     Alert.alert(
@@ -60,7 +65,7 @@ const ListPR = ({ training, navigation }) => {
                           text: "Yes",
                           onPress: () => {
                             dispatch(loadingActions.startLoading());
-                            dispatch(peerReviewActions.selectConsultantPR(item));
+                            dispatch(peerReviewActions.selectConsultantPR(training.groups[0]));
                             //STOPPED HERE
                             console.log("OK Pressed");
                             evalService
@@ -83,13 +88,7 @@ const ListPR = ({ training, navigation }) => {
                       { cancelable: false }
                     );
                   }
-                }}
-                >
-                <MemberCardPR item={item} />
-                </TouchableOpacity>
-              );
-            }}
-          />
+                }}/>
         </View>
       ) : null}
     </View>

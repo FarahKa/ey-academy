@@ -9,6 +9,7 @@ import { peerReviewActions } from "../../actions/index";
 import { NavigationEvents } from "react-navigation";
 import { loadingActions } from "../../actions/loadingActions";
 import ListPR from "../../components/prlist/ListPRComponent";
+import ButtonComponent from "../../components/ButtonComponent";
 
 
 const PeerReviewSearchScreen = ({trainings, user}) => {
@@ -22,6 +23,7 @@ const PeerReviewSearchScreen = ({trainings, user}) => {
         <NavigationEvents
           onWillFocus={(payload) => {
             console.log("will focus");
+            dispatch({type : "CLEAR_CRITERIA_PR"})
             dispatch(peerReviewActions.getTrainingsPR(user.id)).then(
               () => {
                 dispatch(loadingActions.stopLoading());

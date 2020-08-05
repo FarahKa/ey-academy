@@ -7,7 +7,7 @@ import { Rating, AirbnbRating } from "../rating/src/index";
 import FormTextInput from "../FormTextInputComponent";
 import { evalActions } from "../../actions/evalActions";
 
-const Category = ({ category }) => {
+const Category = ({ category, consultantId }) => {
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
 
@@ -19,6 +19,7 @@ const Category = ({ category }) => {
         criterion: {
           CategoryId: category.id,
           NoteCA: rating,
+          consultantId: consultantId
         },
       });
   }

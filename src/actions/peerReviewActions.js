@@ -36,12 +36,11 @@ function getTrainingsPR(userId) {
   }
   
   
-  function selectConsultantPR(consultant, gbtId) {
+  function selectConsultantPR(group) {
     return (dispatch) => {
       dispatch({
         type: "CONSULTANT_SELECT_PR",
-        consultant,
-        gbtId
+        group
       });
     };
   }

@@ -120,13 +120,22 @@ export function criteriaJury(state = [], action) {
 export function criteriaPeer(state = [], action) {
   switch (action.type) {
     case "ADD_CRITERION_PR":
-      var missing = state.filter(function (criterion) {
+      var spec = state.filter(function (eva) {
+        return eva.consultantId !== action.consultantId;
+      });
+
+      var e = state.filter(function (ev) {
+        return ev.consultantId === action.consultantId;
+      });
+
+      var missing = e.criteria.filter(function (criterion) {
         return criterion.CategoryId !== action.criterion.CategoryId;
       });
       missing = [...missing, action.criterion];
-      console.log("new critera:");
-      console.log(missing);
-      return missing;
+      e.criteria = missing;
+      state = [...spec, e];
+      console.log(state);
+      return state;
 
     case "REFRESH_CRITERIA_PR":
       console.log("using categories to make new criteria list");
@@ -141,8 +150,12 @@ export function criteriaPeer(state = [], action) {
             },
           ];
       });
-      console.log(JSON.stringify(crit))
-      return crit;
+      var cons = {consultantId: action.consultantId, criteria:crit}
+      var state = [...state, cons]
+      return state;
+      case "CLEAR_CRITERIA_PR":
+        console.log("clearing criteria pr");
+        return [];
 
     default:
       return state;

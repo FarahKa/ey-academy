@@ -17,8 +17,9 @@ import colors from "../../config/colors";
 //import { peerReviewService } from "../../services/peerReviewService";
 import { loadingActions } from "../../actions/loadingActions";
 import Category from "../../components/form/CategoryComponent";
+import MemberCardPR from "../../components/prlist/MemberCardPR";
 
-const PeerReviewScreen = ({ navigation, form, consultant, criteria, user }) => {
+const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,14 +29,26 @@ const PeerReviewScreen = ({ navigation, form, consultant, criteria, user }) => {
       dispatch(evalActions.getTemplatePR()).then(
         (response) => {
           dispatch(loadingActions.stopLoading());
-          dispatch({ type: "REFRESH_CRITERIA_PR", categories: response.categories });
+          group.consultants.forEach((consultant) => {
+            dispatch({
+              type: "REFRESH_CRITERIA_PR",
+              categories: response.categories,
+              consultantId: consultant.id
+            });
+          });
         },
         () => dispatch(loadingActions.stopLoading())
       );
     } else {
       dispatch(loadingActions.stopLoading());
       console.log(form.TCAId);
-      dispatch({ type: "REFRESH_CRITERIA_PR", categories: form.categories });
+      group.consultants.forEach((consultant) => {
+        dispatch({
+          type: "REFRESH_CRITERIA_PR",
+          categories: form.categories,
+          consultantId: consultant.id
+        });
+      });
       console.log("refreshed criteria = " + criteria);
     }
   }, []);
@@ -48,7 +61,7 @@ const PeerReviewScreen = ({ navigation, form, consultant, criteria, user }) => {
       TCAId: form.TCAId,
       ConsultantNoteId: consultant.id,
       UserId: user.id,
-      GroupTrainingId: consultant.gbtId
+      GroupTrainingId: consultant.gbtId,
     };
 
     // peerReviewService.submitAssessmentPR(send).then(
@@ -68,10 +81,19 @@ const PeerReviewScreen = ({ navigation, form, consultant, criteria, user }) => {
     <ThemeComponent>
       <SafeAreaView style={[styles.contenu, dimmer.dimmer]}>
         <FlatList
-          data={form.categories}
-          keyExtractor={(category) => category.id}
-          renderItem={({ item }) => {
-            return <Category category={item} />;
+          data={group.consultants}
+          keyExtractor={(consultant) => consultant.id}
+          renderItem={({ consultant }) => {
+            <View>
+              <MemberCardPR item={consultant} />
+              <FlatList
+                data={form.categories}
+                keyExtractor={(category) => category.id}
+                renderItem={({ item }) => {
+                  return <Category category={item} consultantId={consultant.id} />;
+                }}
+              />
+            </View>;
           }}
           ListFooterComponent={
             <>
@@ -134,11 +156,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const criteria = state.criteriaPeer;
-  //console.log(state);
+  console.log("________________________________________________________")
   const { form } = state.templatePeer;
-  const consultant = state.selectConsultantPR;
+  const group = state.selectConsultantPR;
+  console.log(group);
+  console.log(form);
   const { user } = state.authentication;
-  return { form, consultant, criteria, user };
+  return { form, group, criteria, user };
 };
 
 export default withNavigation(connect(mapStateToProps)(PeerReviewScreen));
