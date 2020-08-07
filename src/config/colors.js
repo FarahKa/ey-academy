@@ -17,6 +17,7 @@ const colors = {
     MISCHKA: "#E5E4E6",
     DARK_GREY: "#404040",
     DIMMER: "rgba(0,0,0,0.6)",
+    S_DIMMER: "rgba(0,0,0,0.9)",
   };
   
   export default colors;

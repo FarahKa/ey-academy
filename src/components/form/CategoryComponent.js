@@ -19,8 +19,8 @@ const Category = ({ category, consultantId }) => {
         criterion: {
           CategoryId: category.id,
           NoteCA: rating,
-          consultantId: consultantId
         },
+        consultantId: consultantId
       });
   }
 

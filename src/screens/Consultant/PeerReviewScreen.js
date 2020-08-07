@@ -33,7 +33,7 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
             dispatch({
               type: "REFRESH_CRITERIA_PR",
               categories: response.categories,
-              consultantId: consultant.id
+              consultantId: consultant.id,
             });
           });
         },
@@ -46,7 +46,7 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
         dispatch({
           type: "REFRESH_CRITERIA_PR",
           categories: form.categories,
-          consultantId: consultant.id
+          consultantId: consultant.id,
         });
       });
       console.log("refreshed criteria = " + criteria);
@@ -83,17 +83,23 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
         <FlatList
           data={group.consultants}
           keyExtractor={(consultant) => consultant.id}
-          renderItem={({ consultant }) => {
-            <View>
-              <MemberCardPR item={consultant} />
-              <FlatList
-                data={form.categories}
-                keyExtractor={(category) => category.id}
-                renderItem={({ item }) => {
-                  return <Category category={item} consultantId={consultant.id} />;
-                }}
-              />
-            </View>;
+          renderItem={({item : consultant }) => {
+            //console.log(group.consultants)
+            console.log(consultant)
+            return (
+              <View>
+                <MemberCardPR item={consultant} />
+                <FlatList
+                  data={form.categories}
+                  keyExtractor={(category) => category.id}
+                  renderItem={({ item }) => {
+                    return (
+                      <Category category={item} consultantId={consultant.id} />
+                    );
+                  }}
+                />
+              </View>
+            );
           }}
           ListFooterComponent={
             <>
@@ -156,11 +162,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const criteria = state.criteriaPeer;
-  console.log("________________________________________________________")
   const { form } = state.templatePeer;
   const group = state.selectConsultantPR;
-  console.log(group);
-  console.log(form);
   const { user } = state.authentication;
   return { form, group, criteria, user };
 };

@@ -120,13 +120,20 @@ export function criteriaJury(state = [], action) {
 export function criteriaPeer(state = [], action) {
   switch (action.type) {
     case "ADD_CRITERION_PR":
+      console.log("avant : " + JSON.stringify(state))
+      console.log(action.consultantId)
       var spec = state.filter(function (eva) {
         return eva.consultantId !== action.consultantId;
       });
+      console.log(spec)
 
       var e = state.filter(function (ev) {
         return ev.consultantId === action.consultantId;
       });
+
+      e = e[0];
+
+      console.log(e)
 
       var missing = e.criteria.filter(function (criterion) {
         return criterion.CategoryId !== action.criterion.CategoryId;

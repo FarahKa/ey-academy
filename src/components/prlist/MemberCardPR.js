@@ -42,9 +42,11 @@ const styles = StyleSheet.create({
   memberCard: {
     height: 100,
     borderRadius: 25,
-    marginVertical: 2,
+    marginVertical: 4,
     marginLeft: 5,
-    backgroundColor: colors.DIMMER,
+    backgroundColor: colors.S_DIMMER,
+    borderColor:"rgb(245, 200, 66)",
+    borderWidth: 2,
     justifyContent: "flex-start",
     flexDirection: "row",
     alignItems: "center",

@@ -48,6 +48,7 @@ const ListPR = ({ training, navigation }) => {
                   if (!training.groups[0].evaluated) {
                     dispatch(loadingActions.startLoading());
                     dispatch(peerReviewActions.selectConsultantPR(training.groups[0]));
+                    console.log("selected the group");
                     navigation.navigate("PeerReview");
                   } else {
                     Alert.alert(

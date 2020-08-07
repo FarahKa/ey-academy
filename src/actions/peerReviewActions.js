@@ -40,7 +40,7 @@ function getTrainingsPR(userId) {
     return (dispatch) => {
       dispatch({
         type: "CONSULTANT_SELECT_PR",
-        group
+        group:group
       });
     };
   }
