@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import colors from "../../config/colors";
 import { Feather } from "@expo/vector-icons";
 import MemberCardPR from "./MemberCardPR";
@@ -8,12 +8,24 @@ import { useDispatch } from "react-redux";
 import { loadingActions } from "../../actions/loadingActions";
 import { withNavigation } from "react-navigation";
 import ButtonComponent from "../ButtonComponent";
+import { evalService } from "../../services/evalService";
+import { connect } from "react-redux";
+import MemberCard from "../MemberCard";
 
 
-const ListPR = ({ training, navigation }) => {
+const ListPR = ({ training, navigation, user }) => {
   const [toggle, setToggle] = useState(false);
   const [name, setName] = useState("chevron-up");
   const dispatch = useDispatch();
+
+  const [label, setLabel] = useState("");
+  useEffect(() => {
+    if (training.groups[0].evaluated) {
+      setLabel("Reevaluate this group");
+    } else {
+      setLabel("Evaluate this group");
+    }
+  }, []);
 
   
   const toggleStuff = () => {
@@ -40,11 +52,12 @@ const ListPR = ({ training, navigation }) => {
             renderItem={({ item }) => {
               return (
 
-                <MemberCardPR item={item} />
+                <MemberCard item={item} />
               );
             }}
           />
-          <ButtonComponent label="Evaluate this group" onPress={() => {
+          <View style={{marginHorizontal:10}}>
+          <ButtonComponent label={label} onPress={() => {
                   if (!training.groups[0].evaluated) {
                     dispatch(loadingActions.startLoading());
                     dispatch(peerReviewActions.selectConsultantPR(training.groups[0]));
@@ -72,7 +85,6 @@ const ListPR = ({ training, navigation }) => {
                             evalService
                               .deletePeerReview({
                                 gbtId: training.groups[0].gbtId,
-                                consultantId : item.id,
                                 UserId: user.id,
                               })
                               .then(
@@ -81,6 +93,7 @@ const ListPR = ({ training, navigation }) => {
                                 },
                                 (error) => {
                                   console.log(error);
+                                  dispatch(loadingActions.stopLoading());
                                 }
                               );
                           },
@@ -90,6 +103,9 @@ const ListPR = ({ training, navigation }) => {
                     );
                   }
                 }}/>
+
+          </View>
+
         </View>
       ) : null}
     </View>
@@ -133,4 +149,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(ListPR);
+const mapStateToProps = (state) => {
+  //const { group } = state.selectGroupJury;
+  const { user } = state.authentication;
+  return { user };
+};
+
+export default withNavigation(connect(mapStateToProps)(ListPR));

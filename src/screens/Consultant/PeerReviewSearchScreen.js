@@ -16,6 +16,8 @@ const PeerReviewSearchScreen = ({trainings, user}) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
+
+
   return (
 
         <ThemeComponent>
@@ -45,7 +47,6 @@ const PeerReviewSearchScreen = ({trainings, user}) => {
           data={trainings}
           keyExtractor={(training) => training.id}
           renderItem={({item}) => {
-            console.log(item)
             return <ListPR training={item} />;
           }}
         />

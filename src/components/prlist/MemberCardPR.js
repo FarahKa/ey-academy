@@ -26,8 +26,8 @@ const MemberCardPR = ({ item }) => {
         <Image style={styles.image} source={{ uri: image }} />
         <Text style={styles.name}>
           {item.displayName} {`\n`}
-          {/* Email: {item.email} {`\n`}
-          Number: {item.phoneNumber ? item.phoneNumber : "not provided"} */}
+          Email: {item.email} {`\n`}
+          Number: {item.phoneNumber ? item.phoneNumber : "not provided"}
         </Text>
         {item.evaluated ? <Feather name="check-circle" style={styles.iconStyle} color={colors.MISCHKA}/> : null}
       </View>

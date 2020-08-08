@@ -18,6 +18,7 @@ import colors from "../../config/colors";
 import { loadingActions } from "../../actions/loadingActions";
 import Category from "../../components/form/CategoryComponent";
 import MemberCardPR from "../../components/prlist/MemberCardPR";
+import { evalService } from "../../services/evalService";
 
 const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,6 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
       );
     } else {
       dispatch(loadingActions.stopLoading());
-      console.log(form.TCAId);
       group.consultants.forEach((consultant) => {
         dispatch({
           type: "REFRESH_CRITERIA_PR",
@@ -59,18 +59,18 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
     const send = {
       Marks: criteria,
       TCAId: form.TCAId,
-      ConsultantNoteId: consultant.id,
       UserId: user.id,
-      GroupTrainingId: consultant.gbtId,
+      GroupTrainingId: group.gbtId,
     };
 
-    // peerReviewService.submitAssessmentPR(send).then(
-    //   (reponse) => {
-    //     //dispatch(trainingActions.markDone(group.groupId));
-    //     navigation.navigate("SearchJury");
-    //   },
-    //   (error) =>{console.log(error); navigation.navigate("SearchJury");}
-    // );
+    evalService.submitAssessmentPR(send).then(
+      (response) => {
+        //dispatch(trainingActions.markDone(group.groupId));
+        console.log(response);
+        navigation.navigate("PeerReviewSearch");
+      },
+      (error) =>{console.log(error); navigation.navigate("PeerReviewSearch");}
+    );
   }
   function handleQuitPress() {
     console.log("quit was pressed");

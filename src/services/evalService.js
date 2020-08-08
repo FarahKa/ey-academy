@@ -9,7 +9,8 @@ export const evalService = {
   deleteAssessmentJury,
 
   getTemplatePR,
-  deletePeerReview
+  deletePeerReview,
+  submitAssessmentPR,
 };
 
 function getTemplateTrainer() {
@@ -45,6 +46,10 @@ function submitAssessmentTrainer(request) {
 
 function submitAssessmentJury(request) {
   return eyAcademy.post("/mobile/submitAssessmentJury", request);
+}
+
+function submitAssessmentPR(request){
+  return eyAcademy.post("/mobile/submitAssessmentPR", request);
 }
 
 function deleteAssessmentTrainer(request) {
