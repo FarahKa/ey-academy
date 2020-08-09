@@ -48,10 +48,10 @@ const PeerReviewSearchScreen = ({ trainings, user }) => {
               return Sgroup !== undefined;
             });
             if (Array.isArray(selection) && selection.length) {
-              var selectgroup = selection[0].groups.filter((group) => {
-                return group.code === newTerm;
-              });
-              selection[0].groups = selectgroup;
+              // var selectgroup = selection[0].groups.filter((group) => {
+              //   return group.code === newTerm;
+              // });
+              // selection[0].groups = selectgroup;
               setselectedTraining(selection);
             } else {
               setselectedTraining([]);
