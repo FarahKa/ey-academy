@@ -15,11 +15,14 @@ const dispatch = useDispatch();
   return (
     <TouchableOpacity
     onPress={() => {
-      dispatch(loadingActions.startLoading());
+      if(to){
+       dispatch(loadingActions.startLoading());
       if(before){
         before();
       }
       navigation.navigate(to)
+      }
+
     }}>
       <View style={styles.square}>
         <Feather name={icon} style={styles.iconStyle} />
