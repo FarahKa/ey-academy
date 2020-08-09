@@ -16,6 +16,7 @@ const SearchScreen = ({ trainings, user, a }) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
+  const [selectedTraining, setselectedTraining] = useState([]);
 
   return (
     <ThemeComponent>
@@ -38,7 +39,29 @@ const SearchScreen = ({ trainings, user, a }) => {
         />
         <SearchBar
           term={term}
-          onTermChange={(newTerm) => setTerm(newTerm)}
+          onTermChange={(newTerm) => {
+            setTerm(newTerm);
+            var selection = trainings.filter((training) => {
+              var Sgroup = undefined;
+              training.groups.forEach((group) => {
+                if (group.code === newTerm) {
+                  console.log(group);
+                  Sgroup = group;
+                }
+              });
+              return Sgroup !== undefined;
+            });
+            if (Array.isArray(selection) && selection.length) {
+              var selectgroup = selection[0].groups.filter((group) => {
+                return group.code === newTerm;
+              });
+              var clone = JSON.parse(JSON.stringify(selection));
+              clone[0].groups = selectgroup;
+              setselectedTraining(clone);
+            } else {
+              setselectedTraining([]);
+            }
+          }}
           onTermSubmit={() => {
             // useResults.searchApi('everything');
           }}
@@ -46,13 +69,23 @@ const SearchScreen = ({ trainings, user, a }) => {
         <Text style={{ color: colors.WHITE }}>
           We have found {trainings.length ? trainings.length : 0} trainings.
         </Text>
-        <FlatList
-          data={trainings}
-          keyExtractor={(training) => training.id}
-          renderItem={({ item }) => {
-            return <List training={item} />;
-          }}
-        />
+        {Array.isArray(selectedTraining) && selectedTraining.length ? (
+          <FlatList
+            data={selectedTraining}
+            keyExtractor={(training) => training.id}
+            renderItem={({ item }) => {
+              return <List training={item} />;
+            }}
+          />
+        ) : (
+          <FlatList
+            data={trainings}
+            keyExtractor={(training) => training.id}
+            renderItem={({ item }) => {
+              return <List training={item} />;
+            }}
+          />
+        )}
       </SafeAreaView>
     </ThemeComponent>
   );
