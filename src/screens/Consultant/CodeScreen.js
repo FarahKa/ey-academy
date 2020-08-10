@@ -34,7 +34,7 @@ const CodeScreen = ({ user, codeAttending, attending, navigation }) => {
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to camera, please check permissions in settings.</Text>;
   }
   const handleBarCodeScanned = ({ type, data }) => {
     setCode(parseInt(data));

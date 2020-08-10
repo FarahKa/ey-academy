@@ -26,6 +26,7 @@ import JurySearchScreen from "./src/screens/Jury/JurySearchScreen";
 import EvalScreenJury from "./src/screens/Jury/EvalScreenJury";
 import PeerReviewSearchScreen from "./src/screens/Consultant/PeerReviewSearchScreen";
 import PeerReviewScreen from "./src/screens/Consultant/PeerReviewScreen";
+import QRScanner from "./src/screens/QRScanner";
 
 const store = configureStore();
 
@@ -44,7 +45,9 @@ const navigator = createStackNavigator(
     GroupJury: GroupJuryScreen,
     EvalJury:EvalScreenJury,
     PeerReviewSearch : PeerReviewSearchScreen,
-    PeerReview : PeerReviewScreen
+    PeerReview : PeerReviewScreen,
+
+    QRScanner: QRScanner
 
   },
   {

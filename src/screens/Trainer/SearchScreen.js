@@ -12,11 +12,22 @@ import { trainingActions } from "../../actions/index";
 import { NavigationEvents } from "react-navigation";
 import { loadingActions } from "../../actions/loadingActions";
 
-const SearchScreen = ({ trainings, user, a }) => {
+import { withNavigation } from "react-navigation";
+import QRScanner from "../QRScanner";
+
+
+const SearchScreen = ({ trainings, user, navigation }) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
+
   const [selectedTraining, setselectedTraining] = useState([]);
+
+
+
+  const handleCode = (code) => {
+
+  }
 
   return (
     <ThemeComponent>
@@ -32,12 +43,42 @@ const SearchScreen = ({ trainings, user, a }) => {
                 dispatch(loadingActions.stopLoading());
               }
             );
+            //code part
+            const code = navigation.getParam("code");
+            console.log("code is" + code)
+            if(code){
+              setTerm(code);
+              console.log("set term as" + term)
+              var selection = trainings.filter((training) => {
+                var Sgroup = undefined;
+                training.groups.forEach((group) => {
+                  if (group.code === code) {
+                    console.log(group);
+                    Sgroup = group;
+                  }
+                });
+                return Sgroup !== undefined;
+              });
+              if (Array.isArray(selection) && selection.length) {
+                var selectgroup = selection[0].groups.filter((group) => {
+                  return group.code === code;
+                });
+                var clone = JSON.parse(JSON.stringify(selection));
+                clone[0].groups = selectgroup;
+                setselectedTraining(clone);
+              } else {
+                setselectedTraining([]);
+              }        
+            }
           }}
           onDidFocus={(payload) => {}}
           onWillBlur={(payload) => {}}
           onDidBlur={(payload) => {}}
         />
         <SearchBar
+          qrpressed={() => {
+            navigation.navigate("QRScanner", {back: "Search"})
+          }}
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
@@ -99,4 +140,4 @@ const mapStateToProps = (state) => {
   return { trainings, user };
 };
 
-export default connect(mapStateToProps)(SearchScreen);
+export default withNavigation(connect(mapStateToProps)(SearchScreen));
