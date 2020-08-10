@@ -61,7 +61,8 @@ function markAttendance(code, token) {
         },
 
         (error) => {
-          console.log(error)
+          console.log("original error:")
+          console.log("response is:" + JSON.stringify(error.response.data))
           dispatch({ type: ATTENDACE_FAILED, code: code, error: error });
           reject(error)
         }
