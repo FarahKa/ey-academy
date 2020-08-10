@@ -103,7 +103,7 @@ export function criteriaJury(state = [], action) {
             ...crit,
             {
               CriterionId: criterion.id,
-              NoteFA: 0,
+              NoteJA: 0,
               comment: "",
             },
           ];

@@ -15,7 +15,7 @@ import MemberCard from "../MemberCard";
 
 const ListPR = ({ training, navigation, user }) => {
   const [toggle, setToggle] = useState(false);
-  const [name, setName] = useState("chevron-up");
+  const [name, setName] = useState("chevron-down");
   const dispatch = useDispatch();
 
   const [label, setLabel] = useState("");
@@ -31,10 +31,10 @@ const ListPR = ({ training, navigation, user }) => {
   const toggleStuff = () => {
     if (toggle) {
       setToggle(false);
-      setName("chevron-up");
+      setName("chevron-down");
     } else {
       setToggle(true);
-      setName("chevron-down");
+      setName("chevron-up");
     }
   };
 

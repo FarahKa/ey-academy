@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 
 const List = ({ training, role }) => {
   const [toggle, setToggle] = useState(false);
-  const [name, setName] = useState("chevron-up");
+  const [name, setName] = useState("chevron-down");
   
 
   const toggleStuff = () => {

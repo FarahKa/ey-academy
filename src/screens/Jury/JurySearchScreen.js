@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Alert } from "react-native";
 import SearchBar from "../../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
 import { connect, useDispatch } from "react-redux";
@@ -9,14 +9,93 @@ import List from "../../components/toggleList/ListComponent";
 import colors from "../../config/colors";
 import { dimmer } from "../../config/colors";
 import { trainingActions } from "../../actions/index";
-import { NavigationEvents } from "react-navigation";
+import { NavigationEvents, withNavigation } from "react-navigation";
 import { loadingActions } from "../../actions/loadingActions";
+import { evalService } from "../../services/evalService";
 
-const JurySearchScreen = ({ trainings, user }) => {
+const JurySearchScreen = ({ trainings, user, navigation }) => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
 
   const [selectedTraining, setselectedTraining] = useState([]);
+
+  const handleCode = (code, setScanned) => {
+    console.log("code is" + code)
+
+    if(code){
+      dispatch(loadingActions.startLoading())
+      var selection = trainings.filter((training) => {
+        var Sgroup = undefined;
+        training.groups.forEach((group) => {
+          if (group.code === code) {
+            console.log(group);
+            Sgroup = group;
+          }
+        });
+        return Sgroup !== undefined;
+      });
+      if (Array.isArray(selection) && selection.length) {
+        console.log("got into this if");
+        var selectgroup = selection[0].groups.filter((group) => {
+          return group.code === code;
+        });
+
+        selectgroup = selectgroup[0]
+        dispatch(loadingActions.stopLoading());
+        if (!selectgroup.evaluated) {
+          console.log("SELECTED GROUP IS : "+selectgroup)
+          dispatch(loadingActions.startLoading());
+          dispatch(trainingActions.selectGroupJury(selectgroup));
+          navigation.navigate("EvalJury");
+        } else {
+          Alert.alert(
+            "Warning",
+            "Reevaluating deletes previous evaluations. Continue?",
+            [
+              {
+                text: "Cancel",
+                onPress: () => {
+                  console.log("Cancel Pressed");
+                  navigation.goBack();
+                },
+                style: "cancel",
+              },
+              {
+                text: "Yes",
+                onPress: () => {
+                  dispatch(loadingActions.startLoading());
+                  dispatch(trainingActions.selectGroupJury(selectgroup));
+                  console.log("OK Pressed");
+                  evalService
+                    .deleteAssessmentJury({
+                      gbtId: selectgroup.gbtId,
+                      UserId: user.id,
+                    })
+                    .then(
+                      () => {
+                        navigation.navigate("EvalJury");
+                      },
+                      (error) => {
+                        console.log(error);
+                      }
+                    );
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      }  else {
+        dispatch(loadingActions.stopLoading());
+        console.log("stopped loading")
+        setScanned(false);        
+      }      
+    } else {
+      dispatch(loadingActions.stopLoading());
+      console.log("stopped loading")
+      setScanned(false);       
+    } 
+  }
 
   return (
     <ThemeComponent>
@@ -38,6 +117,11 @@ const JurySearchScreen = ({ trainings, user }) => {
           onDidBlur={(payload) => {}}
         />
         <SearchBar
+
+          qrpressed={() => {
+            navigation.navigate("QRScanner", { handleCode: handleCode });
+          }}
+
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
@@ -55,7 +139,7 @@ const JurySearchScreen = ({ trainings, user }) => {
               var selectgroup = selection[0].groups.filter((group) => {
                 return group.code === newTerm;
               });
-              var clone = JSON.parse(JSON.stringify(selection))
+              var clone = JSON.parse(JSON.stringify(selection));
               clone[0].groups = selectgroup;
               setselectedTraining(clone);
             } else {
@@ -101,4 +185,4 @@ const mapStateToProps = (state) => {
   return { trainings, user };
 };
 
-export default connect(mapStateToProps)(JurySearchScreen);
+export default withNavigation(connect(mapStateToProps)(JurySearchScreen));
