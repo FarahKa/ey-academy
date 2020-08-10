@@ -1,20 +1,100 @@
 import React, { useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Alert } from "react-native";
 import SearchBar from "../../components/SearchBar";
 import { connect, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemeComponent from "../../components/ThemeComponent";
 import { dimmer } from "../../config/colors";
-import { peerReviewActions } from "../../actions/index";
-import { NavigationEvents } from "react-navigation";
+import { peerReviewActions, trainingActions } from "../../actions/index";
+import { NavigationEvents, withNavigation } from "react-navigation";
 import { loadingActions } from "../../actions/loadingActions";
 import ListPR from "../../components/prlist/ListPRComponent";
 import ButtonComponent from "../../components/ButtonComponent";
+import { evalService } from "../../services/evalService";
 
-const PeerReviewSearchScreen = ({ trainings, user }) => {
+const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
   const [term, setTerm] = useState("");
   const [selectedTraining, setselectedTraining] = useState([]);
   const dispatch = useDispatch();
+
+  const handleCode = (code, setScanned) => {
+    console.log("code is" + code)
+
+    if(code){
+      dispatch(loadingActions.startLoading())
+      var selection = trainings.filter((training) => {
+        var Sgroup = undefined;
+        training.groups.forEach((group) => {
+          if (group.code === code) {
+            console.log(group);
+            Sgroup = group;
+          }
+        });
+        return Sgroup !== undefined;
+      });
+      if (Array.isArray(selection) && selection.length) {
+        console.log("got into this if");
+        var selectgroup = selection[0].groups.filter((group) => {
+          return group.code === code;
+        });
+
+        selectgroup = selectgroup[0]
+        dispatch(loadingActions.stopLoading());
+        if (!selectgroup.evaluated) {
+          console.log("SELECTED GROUP IS : "+selectgroup)
+          dispatch(loadingActions.startLoading());
+          dispatch(peerReviewActions.selectConsultantPR(selectgroup));
+          navigation.navigate("PeerReview");
+        } else {
+          Alert.alert(
+            "Warning",
+            "Reevaluating deletes previous evaluations. Continue?",
+            [
+              {
+                text: "Cancel",
+                onPress: () => {
+                  console.log("Cancel Pressed");
+                  navigation.goBack();
+                },
+                style: "cancel",
+              },
+              {
+                text: "Yes",
+                onPress: () => {
+                  dispatch(loadingActions.startLoading());
+                  dispatch(peerReviewActions.selectConsultantPR(selectgroup));
+                  console.log("OK Pressed");
+                  evalService
+                  .deletePeerReview({
+                    gbtId: selectgroup.gbtId,
+                    UserId: user.id,
+                  })
+                    .then(
+                      () => {
+                        navigation.navigate("PeerReview");
+                      },
+                      (error) => {
+                        console.log(error);
+                      }
+                    );
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      }  else {
+        dispatch(loadingActions.stopLoading());
+        console.log("stopped loading")
+        setScanned(false);        
+      }      
+    } else {
+      dispatch(loadingActions.stopLoading());
+      console.log("stopped loading")
+      setScanned(false);       
+    } 
+  }
+
 
   return (
     <ThemeComponent>
@@ -34,6 +114,12 @@ const PeerReviewSearchScreen = ({ trainings, user }) => {
           }}
         />
         <SearchBar
+
+qrpressed={() => {
+  navigation.navigate("QRScanner", { handleCode: handleCode });
+}}
+
+
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
@@ -90,4 +176,4 @@ const mapStateToProps = (state) => {
   return { trainings, user };
 };
 
-export default connect(mapStateToProps)(PeerReviewSearchScreen);
+export default withNavigation(connect(mapStateToProps)(PeerReviewSearchScreen));
