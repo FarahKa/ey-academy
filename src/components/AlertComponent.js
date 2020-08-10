@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Animated, Dimensions } from "react-native";
+import React, { useRef, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Animated, Dimensions, Easing } from "react-native";
 import colors from "../config/colors";
 import { Feather } from "@expo/vector-icons";
 
@@ -23,9 +23,10 @@ const Alert = ({ message, state }) => {
         Animated.timing(xPosition, {
             toValue: 0,
             easing: Easing.back(),
-            duration: 2000
+            duration: 20000,
+            useNativeDriver: true,
           }).start();
-    }, [xPosition, icon, color])
+    }, [xPosition, icon, color, message])
 
   return (
     <Animated.View style={[styles.container, {backgroundColor:color}]}>
@@ -37,7 +38,7 @@ const Alert = ({ message, state }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height:100,
+    height:75,
     width: DeviceWidth,
     flexDirection: "row",
     alignContent:"space-around",
@@ -46,9 +47,11 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf: "center",
+    margin:10,
     color: colors.MISCHKA,
   },
   iconStyle: {
+    margin:10,
     fontSize: 40,
     alignSelf: "center",
     color: colors.MISCHKA,
