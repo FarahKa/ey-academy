@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-} from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { withNavigation } from "react-navigation";
 //import {Haptic} from 'expo';
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../config/colors";
+import Loading from "../components/LoadingComponent";
 
 const QRScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
-  const back = navigation.getParam("back")
+  const handleCode = navigation.getParam("handleCode");
 
   useEffect(() => {
     (async () => {
@@ -28,7 +25,9 @@ const QRScanner = ({ navigation }) => {
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera, please check permissions in settings.</Text>;
+    return (
+      <Text>No access to camera, please check permissions in settings.</Text>
+    );
   }
   const handleBarCodeScanned = ({ type, data }) => {
     console.log(
@@ -37,18 +36,23 @@ const QRScanner = ({ navigation }) => {
     if (!data) return null;
     if (!scanned) {
       setScanned(true);
-      navigation.navigate(back, {code : data});
+      handleCode(data, setScanned);
     }
   };
   return (
     <>
+      <Loading />
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.DARK_GREY }}>
         <BarCodeScanner
-          onBarCodeScanned={scanned ? () => {console.log("already scanned")} : handleBarCodeScanned}
+          onBarCodeScanned={
+            scanned
+              ? () => {
+                  console.log("already scanned");
+                }
+              : handleBarCodeScanned
+          }
           style={styles.cam}
-          barCodeTypes={[
-            BarCodeScanner.Constants.BarCodeType.qr,
-          ]}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
         />
       </SafeAreaView>
     </>
@@ -78,6 +82,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
 
 export default withNavigation(QRScanner);

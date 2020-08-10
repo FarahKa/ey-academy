@@ -32,9 +32,9 @@ const GroupScreen = ({ navigation, user }) => {
     }
   }, []);
 
-    useEffect(() => {
-    console.log(navigation.dangerouslyGetParent().state.routes);
-  }, []);
+  //   useEffect(() => {
+  //   console.log(navigation.dangerouslyGetParent().state.routes);
+  // }, []);
 
   return (
     <ThemeComponent>

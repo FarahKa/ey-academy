@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
 import SearchBar from "../../components/SearchBar";
 import { FlatList } from "react-native-gesture-handler";
 import { connect, useDispatch } from "react-redux";
@@ -14,6 +14,8 @@ import { loadingActions } from "../../actions/loadingActions";
 
 import { withNavigation } from "react-navigation";
 import QRScanner from "../QRScanner";
+import { evalService } from "../../services/evalService";
+import { set } from "react-native-reanimated";
 
 
 const SearchScreen = ({ trainings, user, navigation }) => {
@@ -25,8 +27,82 @@ const SearchScreen = ({ trainings, user, navigation }) => {
 
 
 
-  const handleCode = (code) => {
+  const handleCode = (code, setScanned) => {
+    console.log("code is" + code)
 
+    if(code){
+      dispatch(loadingActions.startLoading())
+      var selection = trainings.filter((training) => {
+        var Sgroup = undefined;
+        training.groups.forEach((group) => {
+          if (group.code === code) {
+            console.log(group);
+            Sgroup = group;
+          }
+        });
+        return Sgroup !== undefined;
+      });
+      if (Array.isArray(selection) && selection.length) {
+        console.log("got into this if");
+        var selectgroup = selection[0].groups.filter((group) => {
+          return group.code === code;
+        });
+
+        selectgroup = selectgroup[0]
+        dispatch(loadingActions.stopLoading());
+        if (!selectgroup.evaluated) {
+          console.log("SELECTED GROUP IS : "+selectgroup)
+          dispatch(loadingActions.startLoading());
+          dispatch(trainingActions.selectGroup(selectgroup));
+          navigation.navigate("Eval");
+        } else {
+          Alert.alert(
+            "Warning",
+            "Reevaluating deletes previous evaluations. Continue?",
+            [
+              {
+                text: "Cancel",
+                onPress: () => {
+                  console.log("Cancel Pressed");
+                  navigation.goBack();
+                },
+                style: "cancel",
+              },
+              {
+                text: "Yes",
+                onPress: () => {
+                  dispatch(loadingActions.startLoading());
+                  dispatch(trainingActions.selectGroup(selectgroup));
+                  console.log("OK Pressed");
+                  evalService
+                    .deleteAssessmentTrainer({
+                      gbtId: selectgroup.gbtId,
+                      UserId: user.id,
+                    })
+                    .then(
+                      () => {
+                        navigation.navigate("Eval");
+                      },
+                      (error) => {
+                        console.log(error);
+                      }
+                    );
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      }  else {
+        dispatch(loadingActions.stopLoading());
+        console.log("stopped loading")
+        setScanned(false);        
+      }      
+    } else {
+      dispatch(loadingActions.stopLoading());
+      console.log("stopped loading")
+      setScanned(false);       
+    } 
   }
 
   return (
@@ -43,33 +119,7 @@ const SearchScreen = ({ trainings, user, navigation }) => {
                 dispatch(loadingActions.stopLoading());
               }
             );
-            //code part
-            const code = navigation.getParam("code");
-            console.log("code is" + code)
-            if(code){
-              setTerm(code);
-              console.log("set term as" + term)
-              var selection = trainings.filter((training) => {
-                var Sgroup = undefined;
-                training.groups.forEach((group) => {
-                  if (group.code === code) {
-                    console.log(group);
-                    Sgroup = group;
-                  }
-                });
-                return Sgroup !== undefined;
-              });
-              if (Array.isArray(selection) && selection.length) {
-                var selectgroup = selection[0].groups.filter((group) => {
-                  return group.code === code;
-                });
-                var clone = JSON.parse(JSON.stringify(selection));
-                clone[0].groups = selectgroup;
-                setselectedTraining(clone);
-              } else {
-                setselectedTraining([]);
-              }        
-            }
+            
           }}
           onDidFocus={(payload) => {}}
           onWillBlur={(payload) => {}}
@@ -77,7 +127,7 @@ const SearchScreen = ({ trainings, user, navigation }) => {
         />
         <SearchBar
           qrpressed={() => {
-            navigation.navigate("QRScanner", {back: "Search"})
+            navigation.navigate("QRScanner", {handleCode : handleCode})
           }}
           term={term}
           onTermChange={(newTerm) => {

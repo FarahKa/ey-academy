@@ -13,10 +13,10 @@ const List = ({ training, role }) => {
   const toggleStuff = () => {
     if (toggle) {
       setToggle(false);
-      setName("chevron-up");
+      setName("chevron-down");
     } else {
       setToggle(true);
-      setName("chevron-down");
+      setName("chevron-up");
     }
   };
 
