@@ -18,10 +18,10 @@ const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
   const dispatch = useDispatch();
 
   const handleCode = (code, setScanned) => {
-    console.log("code is" + code)
+    console.log("code is" + code);
 
-    if(code){
-      dispatch(loadingActions.startLoading())
+    if (code) {
+      dispatch(loadingActions.startLoading());
       var selection = trainings.filter((training) => {
         var Sgroup = undefined;
         training.groups.forEach((group) => {
@@ -38,10 +38,10 @@ const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
           return group.code === code;
         });
 
-        selectgroup = selectgroup[0]
+        selectgroup = selectgroup[0];
         dispatch(loadingActions.stopLoading());
         if (!selectgroup.evaluated) {
-          console.log("SELECTED GROUP IS : "+selectgroup)
+          console.log("SELECTED GROUP IS : " + selectgroup);
           dispatch(loadingActions.startLoading());
           dispatch(peerReviewActions.selectConsultantPR(selectgroup));
           navigation.navigate("PeerReview");
@@ -65,10 +65,10 @@ const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
                   dispatch(peerReviewActions.selectConsultantPR(selectgroup));
                   console.log("OK Pressed");
                   evalService
-                  .deletePeerReview({
-                    gbtId: selectgroup.gbtId,
-                    UserId: user.id,
-                  })
+                    .deletePeerReview({
+                      gbtId: selectgroup.gbtId,
+                      UserId: user.id,
+                    })
                     .then(
                       () => {
                         navigation.navigate("PeerReview");
@@ -83,18 +83,17 @@ const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
             { cancelable: false }
           );
         }
-      }  else {
+      } else {
         dispatch(loadingActions.stopLoading());
-        console.log("stopped loading")
-        setScanned(false);        
-      }      
+        console.log("stopped loading");
+        setScanned(false);
+      }
     } else {
       dispatch(loadingActions.stopLoading());
-      console.log("stopped loading")
-      setScanned(false);       
-    } 
-  }
-
+      console.log("stopped loading");
+      setScanned(false);
+    }
+  };
 
   return (
     <ThemeComponent>
@@ -114,12 +113,9 @@ const PeerReviewSearchScreen = ({ trainings, user, navigation }) => {
           }}
         />
         <SearchBar
-
-qrpressed={() => {
-  navigation.navigate("QRScanner", { handleCode: handleCode });
-}}
-
-
+          qrpressed={() => {
+            navigation.navigate("QRScanner", { handleCode: handleCode });
+          }}
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
@@ -127,7 +123,7 @@ qrpressed={() => {
               var Sgroup = undefined;
               training.groups.forEach((group) => {
                 if (group.code === newTerm) {
-                  console.log(group)
+                  console.log(group);
                   Sgroup = group;
                 }
               });
@@ -152,7 +148,7 @@ qrpressed={() => {
             data={selectedTraining}
             keyExtractor={(training) => training.id}
             renderItem={({ item }) => {
-              console.log(item)
+              console.log(item);
               return <ListPR training={item} />;
             }}
           />

@@ -19,6 +19,7 @@ const colors = {
     DIMMER: "rgba(0,0,0,0.6)",
     S_DIMMER: "rgba(0,0,0,0.9)",
     GREEN: "#449100",
+    YELLOW: "#ffd22e",
   };
   
   export default colors;

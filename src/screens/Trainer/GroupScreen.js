@@ -19,6 +19,8 @@ import { connect } from "react-redux";
 import { withNavigation, NavigationEvents } from "react-navigation";
 import { evalService } from "../../services/evalService";
 import { loadingActions } from "../../actions/loadingActions";
+import LittleButton from "../../components/LittleButton";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const GroupScreen = ({ navigation, user }) => {
   const [label, setLabel] = useState("");
@@ -26,9 +28,9 @@ const GroupScreen = ({ navigation, user }) => {
 
   useEffect(() => {
     if (item.evaluated) {
-      setLabel("Reevaluate " + item.name);
+      setLabel("Reevaluate");
     } else {
-      setLabel("Evaluate " + item.name);
+      setLabel("Evaluate");
     }
   }, []);
 
@@ -40,53 +42,6 @@ const GroupScreen = ({ navigation, user }) => {
     <ThemeComponent>
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <View style={styles.container}>
-          <ButtonComponent
-            label={label}
-            onPress={() => {
-              if (!item.evaluated) {
-                dispatch(loadingActions.startLoading());
-                dispatch(trainingActions.selectGroup(item));
-                navigation.navigate("Eval");
-              } else {
-                Alert.alert(
-                  "Warning",
-                  "Reevaluating deletes previous evaluations. Continue?",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => {
-                        console.log("Cancel Pressed");
-                      },
-                      style: "cancel",
-                    },
-                    {
-                      text: "Yes",
-                      onPress: () => {
-                        dispatch(loadingActions.startLoading());
-                        dispatch(trainingActions.selectGroup(item));
-                        console.log("OK Pressed");
-                        evalService
-                          .deleteAssessmentTrainer({
-                            gbtId: item.gbtId,
-                            UserId: user.id,
-                          })
-                          .then(
-                            () => {
-                              navigation.navigate("Eval");
-                            },
-                            (error) => {
-                              console.log(error);
-                            }
-                          );
-                      },
-                    },
-                  ],
-                  { cancelable: false }
-                );
-              }
-            }}
-          />
-
           <FlatList
             data={item.consultants}
             keyExtractor={(member) => member.id}
@@ -102,6 +57,72 @@ const GroupScreen = ({ navigation, user }) => {
               );
             }}
           />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              justifySelf:"flex-end",
+              marginBottom: 10,
+            }}
+          >
+            <LittleButton
+              color={colors.DARK_GREY}
+              textColor={colors.SILVER}
+              label="Back"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+
+            <LittleButton
+              color={colors.YELLOW}
+              textColor={colors.DARK_GREY}
+              label={label}
+              onPress={() => {
+                if (!item.evaluated) {
+                  dispatch(loadingActions.startLoading());
+                  dispatch(trainingActions.selectGroup(item));
+                  navigation.navigate("Eval");
+                } else {
+                  Alert.alert(
+                    "Warning",
+                    "Reevaluating deletes previous evaluations. Continue?",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => {
+                          console.log("Cancel Pressed");
+                        },
+                        style: "cancel",
+                      },
+                      {
+                        text: "Yes",
+                        onPress: () => {
+                          dispatch(loadingActions.startLoading());
+                          dispatch(trainingActions.selectGroup(item));
+                          console.log("OK Pressed");
+                          evalService
+                            .deleteAssessmentTrainer({
+                              gbtId: item.gbtId,
+                              UserId: user.id,
+                            })
+                            .then(
+                              () => {
+                                navigation.navigate("Eval");
+                              },
+                              (error) => {
+                                console.log(error);
+                              }
+                            );
+                        },
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }
+              }}
+            />
+          </View>
         </View>
       </SafeAreaView>
     </ThemeComponent>
@@ -112,6 +133,9 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     marginTop: 20,
+    alignContent: "space-between",
+    justifyContent: "space-between",
+    flex:1
   },
   group: {
     fontWeight: "bold",

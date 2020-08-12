@@ -21,9 +21,9 @@ const ListPR = ({ training, navigation, user }) => {
   const [label, setLabel] = useState("");
   useEffect(() => {
     if (training.groups[0].evaluated) {
-      setLabel("Reevaluate this group");
+      setLabel("Reevaluate my group");
     } else {
-      setLabel("Evaluate this group");
+      setLabel("Evaluate my group");
     }
   }, []);
 
@@ -57,7 +57,10 @@ const ListPR = ({ training, navigation, user }) => {
             }}
           />
           <View style={{marginHorizontal:10}}>
-          <ButtonComponent label={label} onPress={() => {
+          <ButtonComponent label={label}
+          color={colors.YELLOW}
+          
+          onPress={() => {
                   if (!training.groups[0].evaluated) {
                     dispatch(loadingActions.startLoading());
                     dispatch(peerReviewActions.selectConsultantPR(training.groups[0]));
