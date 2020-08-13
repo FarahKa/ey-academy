@@ -1,10 +1,28 @@
 import { combineReducers } from "redux";
-import {attendance} from './attendanceReducer';
-import {authentication} from './authenticationReducer';
-import {trainings, selectGroup, trainingsJury, selectGroupJury} from './trainingReducer';
-import {templateTrainer, criteria, templateJury, criteriaJury, criteriaPeer, templatePeer} from './evalReducer';
-import{trainingsPR, selectConsultantPR} from "./peerReviewReducer"
-import {loading} from './loadingReducer';
+import { attendance } from "./attendanceReducer";
+import { authentication } from "./authenticationReducer";
+import {
+  trainings,
+  selectGroup,
+  trainingsJury,
+  selectGroupJury,
+} from "./trainingReducer";
+import {
+  templateTrainer,
+  criteria,
+  templateJury,
+  criteriaJury,
+  criteriaPeer,
+  templatePeer,
+} from "./evalReducer";
+import { trainingsPR, selectConsultantPR } from "./peerReviewReducer";
+import { loading } from "./loadingReducer";
+import {
+  trainingsF,
+  selectTrainingF: selectTrainingF,
+  templateF,
+  questions,
+} from "./feedbackReducer";
 
 //#region initial trainings
 
@@ -177,7 +195,7 @@ import {loading} from './loadingReducer';
 //             ],
 //           },
 //         ],
-      
+
 //     },
 //     {
 //         title: "Formation 2",
@@ -469,22 +487,25 @@ import {loading} from './loadingReducer';
 //   return state;
 // };
 
-
 export default combineReducers({
   templateTrainer: templateTrainer,
-  templateJury:templateJury,
-  authentication:authentication,
+  templateJury: templateJury,
+  authentication: authentication,
   trainings: trainings,
   selectGroup: selectGroup,
-  selectGroupJury:selectGroupJury,
-  trainingsJury:trainingsJury,
-  attendance:attendance,
-  criteria:criteria,
-  criteriaJury:criteriaJury,
-  loading:loading,
+  selectGroupJury: selectGroupJury,
+  trainingsJury: trainingsJury,
+  attendance: attendance,
+  criteria: criteria,
+  criteriaJury: criteriaJury,
+  loading: loading,
 
-  trainingsPR : trainingsPR,
-  selectConsultantPR : selectConsultantPR,
-  criteriaPeer : criteriaPeer,
-  templatePeer: templatePeer
+  trainingsPR: trainingsPR,
+  selectConsultantPR: selectConsultantPR,
+  criteriaPeer: criteriaPeer,
+  templatePeer: templatePeer,
+  trainingsF: trainingsF,
+  selectTrainingF: selectTrainingF,
+  templateF: templateF,
+  questions: questions,
 });
