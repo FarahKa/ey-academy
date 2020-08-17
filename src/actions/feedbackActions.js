@@ -7,8 +7,9 @@ import { evalService } from "../services/evalService";
 
 export const feedbackActions = {
     getTrainingsF,
-    selectTrainingF,
-    clearTrainingF
+    selectGroupF,
+    clearGroupF,
+    getTemplateFeedback
   };
 
 
@@ -38,19 +39,19 @@ function getTrainingsF(userId) {
   }
   
   
-  function selectTrainingF(training) {
+  function selectGroupF(group) {
     return (dispatch) => {
       dispatch({
-        type: "TRAINING_SELECT_F",
-        training:training
+        type: "GROUP_SELECT_F",
+        group:group
       });
     };
   }
   
-  function clearTrainingF() {
+  function clearGroupF() {
     return (dispatch) => {
       dispatch({
-        type: "TRAINING_CLEAR_F"
+        type: "GROUP_CLEAR_F"
       });
     };
   }

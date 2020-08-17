@@ -38,7 +38,7 @@ const HomeScreen = ({ trainings }) => {
           </View>
           <View style={styles.menu}>
             <MenuItem icon="users" title="My Groups" to="" />
-            <MenuItem icon="smile" title="Feedback" to="" />
+            <MenuItem icon="smile" title="Feedback" to="FeedbackSearch" />
             <MenuItem icon="log-out" title="Log Out" to="Auth" />
           </View>
         </View>

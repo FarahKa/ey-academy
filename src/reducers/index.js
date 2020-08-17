@@ -19,7 +19,7 @@ import { trainingsPR, selectConsultantPR } from "./peerReviewReducer";
 import { loading } from "./loadingReducer";
 import {
   trainingsF,
-  selectTrainingF: selectTrainingF,
+  selectGroupF,
   templateF,
   questions,
 } from "./feedbackReducer";
@@ -505,7 +505,7 @@ export default combineReducers({
   criteriaPeer: criteriaPeer,
   templatePeer: templatePeer,
   trainingsF: trainingsF,
-  selectTrainingF: selectTrainingF,
+  selectGroupF: selectGroupF,
   templateF: templateF,
   questions: questions,
 });

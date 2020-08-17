@@ -21,16 +21,16 @@ export function trainingsF(state = initialState, action) {
   }
 }
 
-export function selectTrainingF(training = {}, action) {
+export function selectGroupF(group = {}, action) {
   switch (action.type) {
-    case "TRAINING_SELECT_F": {
-      return action.training;
+    case "GROUP_SELECT_F": {
+      return action.group;
     }
-    case "TRAINING_CLEAR_F": {
+    case "GROUP_CLEAR_F": {
       return {};
     }
     default:
-      return training;
+      return group;
   }
 }
 

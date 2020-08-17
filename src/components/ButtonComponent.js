@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     height: 22,
+    fontSize:15,
   }
 });
 
