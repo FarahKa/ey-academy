@@ -18,7 +18,6 @@ function getTrainingsPR(userId) {
       return new Promise((resolve, reject) => {
         trainingService.getTrainingsPR(userId).then(
           (trainings) => {
-            console.log(trainings);
             dispatch({
               type: "TRAININGS_SUCCESS_PR",
               trainings: trainings,

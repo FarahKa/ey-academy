@@ -11,6 +11,11 @@ export const evalService = {
   getTemplatePR,
   deletePeerReview,
   submitAssessmentPR,
+
+
+  getTemplateFeedback,
+  submitAssessmentF,
+  deleteFeedback,
 };
 
 function getTemplateTrainer() {
@@ -23,6 +28,10 @@ function getTemplateTrainer() {
 
 function getTemplateJury() {
   return eyAcademy.get("/mobile/templateJury");
+}
+
+function getTemplateFeedback() {
+  return eyAcademy.get("/mobile/templateFeedback").then((response) => response.data, (error) => error);
 }
 
 function getTemplatePR() {
@@ -52,6 +61,10 @@ function submitAssessmentPR(request){
   return eyAcademy.post("/mobile/submitAssessmentPR", request);
 }
 
+function submitAssessmentF(request){
+  return eyAcademy.post("/mobile/submitAssessmentF", request);
+}
+
 function deleteAssessmentTrainer(request) {
   return eyAcademy.post("/mobile/deleteAssessment", request);
 }
@@ -62,4 +75,8 @@ function deleteAssessmentJury(request) {
 
 function deletePeerReview(request){
   return eyAcademy.post("/mobile/deletePeerReview", request);
+}
+
+function deleteFeedback(request){
+  return eyAcademy.post("/mobile/deleteFeedback", request);
 }

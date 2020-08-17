@@ -28,6 +28,7 @@ import PeerReviewSearchScreen from "./src/screens/Consultant/PeerReviewSearchScr
 import PeerReviewScreen from "./src/screens/Consultant/PeerReviewScreen";
 import QRScanner from "./src/screens/QRScanner";
 import FeedbackSearchScreen from "./src/screens/Consultant/FeedbackSearchScreen";
+import FeedbackScreen from "./src/screens/Consultant/FeedbackScreen";
 
 const store = configureStore();
 
@@ -51,6 +52,7 @@ const navigator = createStackNavigator(
     QRScanner: QRScanner,
 
     FeedbackSearch: FeedbackSearchScreen,
+    Feedback : FeedbackScreen
 
   },
   {

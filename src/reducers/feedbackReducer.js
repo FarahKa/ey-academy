@@ -1,6 +1,5 @@
 const initialState = { fetching: false, trainings: [] };
 
-
 export function trainingsF(state = initialState, action) {
   switch (action.type) {
     case "TRAININGS_REQUEST_F":
@@ -34,55 +33,95 @@ export function selectGroupF(group = {}, action) {
   }
 }
 
-export function templateF(state = initialState, action) {
-    switch (action.type) {
-      case "GET_TEMPLATE_F":
-        return state;
-      case "TEMPLATE_SUCCESS_F":
-        return {
-          form: action.form,
-          error: "",
-        };
-      case "TEMPLATE_FAILURE_F":
-        return { form: {}, error: action.error };
-      default:
-        return state;
-    }
+export function templateF(state = { form: [], fetching: false }, action) {
+  switch (action.type) {
+    case "GET_TEMPLATE_F":
+      return state;
+    case "TEMPLATE_SUCCESS_F":
+      return {
+        form: action.form,
+        error: "",
+      };
+    case "TEMPLATE_FAILURE_F":
+      return { form: [], error: action.error };
+    default:
+      return state;
   }
+}
 
-  export function questions(state = [], action) {
-    switch (action.type) {
-      case "ADD_QUESTION_F":
+export function answers(state = [], action) {
+  switch (action.type) {
+    case "ADD_ANSWER_F": {
+      console.log("add answer f");
+      if (action.type === "text") {
+        console.log("text type");
         var missing = state.filter(function (question) {
-            //CHECK IF ID IS RIGHT
-          return question.Id !== action.question.Id;
+          return question.QuestionId !== action.question.QuestionId;
         });
         missing = [...missing, action.question];
-        console.log("new critera:");
+        return missing;
+      } else {
+        var missing = state.filter(function (question) {
+          return question.QuestionId !== action.question.QuestionId;
+        });
+
+        var tochange = state.filter(function (question) {
+          return question.QuestionId === action.question.QuestionId;
+        });
+        tochange.forEach((answer) => {
+          if (answer.AnswerChoice === action.question.AnswerChoice) {
+            answer.Cheked = 1;
+          } else {
+            answer.Cheked = 0;
+          }
+        });
+
+        missing = [...missing, ...tochange];
+        console.log("new answers:");
         console.log(missing);
         return missing;
-  
-      case "REFRESH_QUESTIONS":
-        console.log("using sections to make new questions list");
-        var crit = [];
-        console.log(action.sections)
-        action.sections.forEach((section) => {
-            //TO CHECK DB STUFF
-          section.questions.forEach((question) => {
+      }
+    }
+
+    case "REFRESH_ANSWERS":
+      console.log("using sections to make new answers list");
+      var crit = [];
+      console.log(action.sections);
+      action.sections.forEach((section) => {
+        section.questions.forEach((question) => {
+          var answers = [
+            "Strongly agree",
+            "Agree",
+            "Disagree",
+            "Strongly disagree",
+          ];
+          if (question.type === "combo") {
+            answers.forEach((answer) => {
+              crit = [
+                ...crit,
+                {
+                  QuestionId: question.id,
+                  AnswerChoice: answer,
+                  Cheked: 0,
+                },
+              ];
+            });
+          } else {
             crit = [
               ...crit,
               {
-                Id: question.Id,
-                NoteFA: 0,
-                comment: "",
+                QuestionId: question.id,
+                AnswerChoice: "",
+                Cheked: 0,
               },
             ];
-          });
+          }
         });
-        console.log(JSON.stringify(crit))
-        return crit;
-  
-      default:
-        return state;
-    }
+      });
+      console.log(JSON.stringify(crit));
+      return crit;
+
+    default:
+      return state;
   }
+}

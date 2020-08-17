@@ -21,7 +21,6 @@ function getTrainingsF(userId) {
       return new Promise((resolve, reject) => {
         trainingService.getTrainingsF(userId).then(
           (trainings) => {
-            console.log(trainings);
             dispatch({
               type: "TRAININGS_SUCCESS_F",
               trainings: trainings,
@@ -69,13 +68,14 @@ function getTemplateFeedback() {
       return new Promise((resolve, reject) => {
         evalService.getTemplateFeedback().then(
           (response) => {
-            dispatch({ type: TEMPLATE_SUCCESS_F, form: response.data });
+            console.log(response)
+            dispatch({ type: "TEMPLATE_SUCCESS_F", form: response });
             resolve(response.data);
           },
   
           (error) => {
             console.log(error)
-            dispatch({ type: TEMPLATE_FAILURE_F, form: {}, error: error });
+            dispatch({ type: TEMPLATE_FAILURE_F, form: [], error: error });
             reject(error)
           }
         );
