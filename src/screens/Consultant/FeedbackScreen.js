@@ -11,13 +11,9 @@ import { useDispatch, useSelector, connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { withNavigation } from "react-navigation";
 import ThemeComponent from "../../components/ThemeComponent";
-import { evalActions } from "../../actions/evalActions";
-import Theme from "../../components/form/ThemeComponent";
 import colors from "../../config/colors";
-//import { feedbackService } from "../../services/feedbackService";
 import { loadingActions } from "../../actions/loadingActions";
 import QuestionF from "../../components/QuestionF";
-import MemberCardPR from "../../components/prlist/MemberCardPR";
 import { evalService } from "../../services/evalService";
 import { feedbackActions } from "../../actions/feedbackActions";
 import Light from "../../components/LightComponent";
@@ -32,17 +28,18 @@ const FeedbackScreen = ({ navigation, form, group, answers, user }) => {
       dispatch(feedbackActions.getTemplateFeedback()).then(
         (response) => {
           dispatch(loadingActions.stopLoading());
-          dispatch({ type: "REFRESH_ANSWERS_F", sections: response });
+          console.log("response is:" + response);
+          dispatch(feedbackActions.updateAnswers(response));
         },
         (error) => dispatch(loadingActions.stopLoading())
       );
     } else {
       dispatch(loadingActions.stopLoading());
-      dispatch({ type: "REFRESH_ANSWERS_F", sections: form });
+      dispatch(feedbackActions.updateAnswers(form));
 
       console.log("refreshed answers = " + answers);
+      console.log("end refresh")
     }
-    console.log(form)
   }, []);
 
   function handleSubmitPress() {
@@ -164,8 +161,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const answers = state.answers;
+  console.log("AAAAAAAAAAAAAAAAAAAAAA")
+  console.log(answers);
+  console.log("fin mapstate aaaa")
   const { form } = state.templateF;
-  console.log(form);
   const group = state.selectGroupF;
   const { user } = state.authentication;
   return { form, group, answers, user };

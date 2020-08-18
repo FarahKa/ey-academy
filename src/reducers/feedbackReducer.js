@@ -53,23 +53,26 @@ export function answers(state = [], action) {
   switch (action.type) {
     case "ADD_ANSWER_F": {
       console.log("add answer f");
-      if (action.type === "text") {
+      if (action.cellType === "text") {
         console.log("text type");
         var missing = state.filter(function (question) {
-          return question.QuestionId !== action.question.QuestionId;
+          return question.QuestionId !== action.answer.QuestionId;
         });
-        missing = [...missing, action.question];
+        if (action.answer.AnswerChoice === "") {
+          action.answer.Cheked = 0;
+        }
+        missing = [...missing, action.answer];
         return missing;
       } else {
         var missing = state.filter(function (question) {
-          return question.QuestionId !== action.question.QuestionId;
+          return question.QuestionId !== action.answer.QuestionId;
         });
 
         var tochange = state.filter(function (question) {
-          return question.QuestionId === action.question.QuestionId;
+          return question.QuestionId === action.answer.QuestionId;
         });
         tochange.forEach((answer) => {
-          if (answer.AnswerChoice === action.question.AnswerChoice) {
+          if (answer.AnswerChoice === action.answer.AnswerChoice) {
             answer.Cheked = 1;
           } else {
             answer.Cheked = 0;
@@ -77,16 +80,12 @@ export function answers(state = [], action) {
         });
 
         missing = [...missing, ...tochange];
-        console.log("new answers:");
-        console.log(missing);
         return missing;
       }
     }
 
-    case "REFRESH_ANSWERS":
-      console.log("using sections to make new answers list");
+    case "REFRESH_ANSWERS_F":
       var crit = [];
-      console.log(action.sections);
       action.sections.forEach((section) => {
         section.questions.forEach((question) => {
           var answers = [
@@ -118,7 +117,6 @@ export function answers(state = [], action) {
           }
         });
       });
-      console.log(JSON.stringify(crit));
       return crit;
 
     default:

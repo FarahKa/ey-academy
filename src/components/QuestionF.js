@@ -5,6 +5,7 @@ import Dark from "../components/DarkComponent";
 import { AirbnbRating } from "./rating/src/index";
 import FormTextInput from "./FormTextInputComponent";
 import colors from "../config/colors";
+import { feedbackActions } from "../actions/feedbackActions";
 
 const QuestionF = ({ question }) => {
   const [rating, setRating] = useState(0);
@@ -15,29 +16,26 @@ const QuestionF = ({ question }) => {
   function handleRatingGiven(rating) {
     setRating(rating);
     console.log("setRating : rating is : " + answers[rating - 1]);
-    dispatch({
-      type: "ADD_ANSWER_F",
-      question: {
+    
+    var answer ={
         QuestionId: question.id,
         AnswerChoice: answers[rating - 1],
-        Cheked: 0,
-      },
-      type: "combo",
-    });
+        Cheked: 1,
+      } 
+
+    dispatch(feedbackActions.updateAnswer(answer, "combo"));
     console.log('dispatch is done');
   }
 
   function handleCommentSubmit() {
     console.log("comment : " + comment);
-    dispatch({
-      type: "ADD_ANSWER_F",
-      question: {
-        QuestionId: question.id,
-        AnswerChoice: comment,
-        Cheked: 1,
-      },
-      type: "text",
-    });
+
+    var answer ={
+      QuestionId: question.id,
+      AnswerChoice: comment,
+      Cheked: 1,
+    } 
+    dispatch(feedbackActions.updateAnswer(answer, "text"));
   }
 
   return (
