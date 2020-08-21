@@ -23,6 +23,7 @@ import {
   templateF,
   answers,
 } from "./feedbackReducer";
+import {plannings} from "./planningReducer";
 
 
 
@@ -49,4 +50,6 @@ export default combineReducers({
   selectGroupF: selectGroupF,
   templateF: templateF,
   answers: answers,
+
+  plannings : plannings,
 });

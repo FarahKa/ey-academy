@@ -32,7 +32,7 @@ const HomeScreen = ({ trainings }) => {
             <MenuItem icon="message-square" title="Peer Review" to="PeerReviewSearch" />
           </View>
           <View style={styles.menu}>
-            <MenuItem icon="clock" title="Schedule" to="" />
+            <MenuItem icon="clock" title="Schedule" to="Planning" />
             <LogoMenuItem />
             <MenuItem icon="settings" title="Settings" to=""/>
           </View>
