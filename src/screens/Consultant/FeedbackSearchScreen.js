@@ -103,7 +103,8 @@ const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
             console.log("will focus");
             dispatch({ type: "CLEAR_CRITERIA_F" });
             dispatch(feedbackActions.getTrainingsF(user.id)).then(
-              () => {
+              (trainings) => {
+                console.log(trainings);
                 dispatch(loadingActions.stopLoading());
               },
               () => {

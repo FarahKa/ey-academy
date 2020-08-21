@@ -47,10 +47,12 @@ const FeedbackScreen = ({ navigation, form, group, answers, user }) => {
     dispatch(loadingActions.startLoading());
     const send = {
       Answers: answers,
-      TCAId: form.TCAId,
       UserId: user.id,
-      GroupTrainingId: group.gbtId,
+      TrainingId: group.id,
+      Date: new Date(),
     };
+    console.log("sending :")
+    console.log(group)
 
     evalService.submitAssessmentF(send).then(
       (response) => {
@@ -161,9 +163,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const answers = state.answers;
-  console.log("AAAAAAAAAAAAAAAAAAAAAA")
-  console.log(answers);
-  console.log("fin mapstate aaaa")
   const { form } = state.templateF;
   const group = state.selectGroupF;
   const { user } = state.authentication;

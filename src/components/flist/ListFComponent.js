@@ -21,7 +21,7 @@ const ListF = ({ training, navigation, user }) => {
 
   const [label, setLabel] = useState("");
   useEffect(() => {
-    if (training.groups[0].evaluated) {
+    if (training.evaluated) {
       setLabel("Give feedback again?");
     } else {
       setLabel("Give feedback!");
