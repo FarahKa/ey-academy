@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Alert, Text } from "react-native";
+import { FlatList, Alert, Text, StyleSheet, View } from "react-native";
 import SearchBar from "../components/SearchBar";
 import { connect, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,6 +11,7 @@ import { loadingActions } from "../actions/loadingActions";
 import ListF from "../components/flist/ListFComponent";
 import Light from "../components/LightComponent";
 import Dark from "../components/DarkComponent";
+import Seance from "../components/SeanceComponent";
 
 const PlanningScreen = ({ plannings, user, navigation }) => {
   const [term, setTerm] = useState("");
@@ -19,7 +20,7 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
 
   const getH = (date) => {
 
-    format = new Date(date);
+    var format = new Date(date);
     console.log(date + "\n" + format + "\n" + format.getUTCHours())
     return format.getUTCHours();
   };
@@ -82,9 +83,9 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
         {Array.isArray(selectedPlanning) && selectedPlanning.length ? (
           <FlatList
             ListHeaderComponent={
-              <Light>
-                <Text>Selected event:</Text>
-              </Light>
+              <View style={styles.background}>
+              <Text style={styles.title}>Selected Event:</Text>
+            </View>
             }
             data={selectedPlanning}
             keyExtractor={(planning) => planning.id}
@@ -94,9 +95,9 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
           />
         ) : (
           <>
-            <Light>
-              <Text>Upcoming:</Text>
-            </Light>
+            <View style={styles.background}>
+              <Text style={styles.title}>Upcoming:</Text>
+            </View>
             <FlatList
               data={plannings.filter((planning) => {
                 var start = new Date(planning.startDate);
@@ -104,21 +105,19 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
                 return start >= now;
+              }).sort((a, b) => {
+                return a.startDate > b.startDate               
               })}
               keyExtractor={(planning) => planning.id}
               renderItem={({ item }) => {
                 return (
-                  <Dark>
-                    <Text style={{color:colors.MISCHKA}}>
-                      {item.name}, {item.location} {`\n`} De {getH(item.startDate)}h à {getH(item.endDate)}h
-                    </Text>
-                  </Dark>
+                  <Seance planning={item}/>
                 );
               }}
             />
-            <Light>
-              <Text>History:</Text>
-            </Light>
+            <View style={styles.background}>
+              <Text style={styles.title}>History:</Text>
+            </View>
             <FlatList
               data={plannings.filter((planning) => {
                 var start = new Date(planning.startDate);
@@ -126,15 +125,13 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
                 return start < now;
+              }).sort((a, b) => {
+                return a.startDate < b.startDate               
               })}
               keyExtractor={(planning) => planning.id}
               renderItem={({ item }) => {
                 return (
-                  <Dark>
-                    <Text style={{color:colors.MISCHKA}}>
-                      {item.name}, {item.location} {`\n`} De {getH(item.startDate)}h à {getH(item.endDate)}h
-                    </Text>
-                  </Dark>
+                  <Seance planning={item}/>
                 );
               }}
             />
@@ -144,6 +141,29 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
     </ThemeComponent>
   );
 };
+
+ const styles= StyleSheet.create({
+  background: {
+    marginTop: 5,
+    //marginBottom: 5,
+    backgroundColor: colors.MISCHKA,
+    height: 40,
+    //borderRadius: 3,
+    marginHorizontal: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  title: {
+    //fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 15,
+    //marginBottom: 5,
+    textTransform: "uppercase",
+    color: colors.DARK_GREY,
+  },
+
+})
 
 const mapStateToProps = (state) => {
   const { plannings } = state.plannings;
