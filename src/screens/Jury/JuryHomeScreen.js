@@ -27,7 +27,7 @@ const JuryHomeScreen = () => {
             <MenuItem icon="settings" title="My Profile" to="" />
           </View>
           <View style={styles.menu}>
-            <MenuItem icon="clock" title="Schedule" to="" />
+            <MenuItem icon="clock" title="Schedule" to="PlanningEval" />
             <MenuItem
               icon="log-out"
               title="Log Out"

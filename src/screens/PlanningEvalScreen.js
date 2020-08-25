@@ -12,18 +12,14 @@ import ListF from "../components/flist/ListFComponent";
 import Light from "../components/LightComponent";
 import Dark from "../components/DarkComponent";
 import Seance from "../components/SeanceComponent";
+import SeanceJ from "../components/SeanceJComponent";
 
-const PlanningScreen = ({ plannings, user, navigation }) => {
+const PlanningEvalScreen = ({ plannings, user, navigation }) => {
   const [term, setTerm] = useState("");
   const [selectedPlanning, setselectedPlanning] = useState([]);
   const dispatch = useDispatch();
 
-  const getH = (date) => {
 
-    var format = new Date(date);
-    console.log(date + "\n" + format + "\n" + format.getUTCHours())
-    return format.getUTCHours();
-  };
 
   const handleCode = (code, setScanned) => {
     console.log("code is" + code);
@@ -31,17 +27,16 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
     if (code) {
       dispatch(loadingActions.startLoading());
       var selection = plannings.filter((planning) => {
-        return planning.qrCode === code;
+        return planning.code === code;
       });
       if (Array.isArray(selection) && selection.length) {
         setselectedPlanning(selection);
-        
       } else {
         setselectedPlanning([]);
       }
       dispatch(loadingActions.stopLoading());
-      navigation.navigate("Planning")
       console.log("stopped loading");
+      navigation.navigate("PlanningEval")
       setScanned(false);
     }
   };
@@ -70,9 +65,11 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
+            console.log(term);
             var selection = plannings.filter((planning) => {
-              return planning.qrCode === newTerm;
+              return planning.code === newTerm;
             });
+            console.log(selectedPlanning);
             if (Array.isArray(selection) && selection.length) {
               setselectedPlanning(selection);
             } else {
@@ -92,7 +89,7 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
             data={selectedPlanning}
             keyExtractor={(planning) => planning.id}
             renderItem={({ item }) => {
-              return <ListF planning={item} />;
+              return <SeanceJ planning={item} />;
             }}
           />
         ) : (
@@ -102,18 +99,18 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
             </View>
             <FlatList
               data={plannings.filter((planning) => {
-                var start = new Date(planning.startDate);
+                var start = new Date(planning.startEvalDate);
                 start.setHours(0, 0, 0, 0);
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
                 return start >= now;
               }).sort((a, b) => {
-                return a.startDate > b.startDate               
+                return a.startEvalDate > b.startEvalDate               
               })}
               keyExtractor={(planning) => planning.id}
               renderItem={({ item }) => {
                 return (
-                  <Seance planning={item}/>
+                  <SeanceJ planning={item}/>
                 );
               }}
             />
@@ -122,18 +119,18 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
             </View>
             <FlatList
               data={plannings.filter((planning) => {
-                var start = new Date(planning.startDate);
+                var start = new Date(planning.startEvalDate);
                 start.setHours(0, 0, 0, 0);
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
                 return start < now;
               }).sort((a, b) => {
-                return a.startDate < b.startDate               
+                return a.startEvalDate < b.startEvalDate               
               })}
               keyExtractor={(planning) => planning.id}
               renderItem={({ item }) => {
                 return (
-                  <Seance planning={item}/>
+                  <SeanceJ planning={item}/>
                 );
               }}
             />
@@ -173,4 +170,4 @@ const mapStateToProps = (state) => {
   return { plannings, user };
 };
 
-export default withNavigation(connect(mapStateToProps)(PlanningScreen));
+export default withNavigation(connect(mapStateToProps)(PlanningEvalScreen));

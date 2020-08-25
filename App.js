@@ -30,6 +30,7 @@ import QRScanner from "./src/screens/QRScanner";
 import FeedbackSearchScreen from "./src/screens/Consultant/FeedbackSearchScreen";
 import FeedbackScreen from "./src/screens/Consultant/FeedbackScreen";
 import PlanningScreen from "./src/screens/PlanningScreen";
+import PlanningEvalScreen from "./src/screens/PlanningEvalScreen";
 
 const store = configureStore();
 
@@ -56,6 +57,7 @@ const navigator = createStackNavigator(
     Feedback : FeedbackScreen,
 
     Planning : PlanningScreen,
+    PlanningEval : PlanningEvalScreen,
 
   },
   {
