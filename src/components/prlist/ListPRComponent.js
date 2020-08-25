@@ -52,7 +52,7 @@ const ListPR = ({ training, navigation, user }) => {
             renderItem={({ item }) => {
               return (
 
-                <MemberCard item={item} />
+                <MemberCard item={item}  />
               );
             }}
           />

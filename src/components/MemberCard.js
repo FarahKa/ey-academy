@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { images } from "../../api/ey-academy";
 import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../config/colors";
+import { imageService } from "../services/imageService";
 
 const MemberCard = ({ item }) => {
-  const [image, setImage] = useState("https://i.ytimg.com/vi/xRZB5KBLdOA/maxresdefault.jpg");
+  const [image, setImage] = useState("../../assets/placeholder.jpg");
 
-  const imageService = () => {
-    images.get("/?inc=picture").then(
+
+  useEffect(() => {
+    imageService.getProfilePicture(item.id).then(
       (response) => {
-        setImage(response.data.results[0].picture.medium);
+        setImage(`data:image/${response.fileType.replace(".", "")};base64,${response.dataFiles}`);
       },
       (error) => setImage("../../assets/placeholder.jpg")
     );
-  };
-
-  useEffect(() => {
-    imageService();
     console.log(image);
   }, []);
+
   const imageB = require("../../assets/placeholder.jpg");
   return (
     <View style={styles.container}>

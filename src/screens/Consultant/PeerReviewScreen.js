@@ -88,7 +88,7 @@ const PeerReviewScreen = ({ navigation, form, group, criteria, user }) => {
             console.log(consultant)
             return (
               <View>
-                <MemberCardPR item={consultant} />
+                <MemberCardPR item={consultant}  />
                 <FlatList
                   data={form.categories}
                   keyExtractor={(category) => category.id}

@@ -52,7 +52,7 @@ const GroupScreen = ({ navigation, user }) => {
                 //     navigation.navigate("MemberAssessment", { item: item });
                 //   }}
                 // >
-                <MemberCard item={item} />
+                <MemberCard item={item} userId={user.id} />
                 // </TouchableOpacity>
               );
             }}

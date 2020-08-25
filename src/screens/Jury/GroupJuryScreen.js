@@ -42,7 +42,7 @@ const GroupJuryScreen = ({ navigation, user }) => {
                 //     navigation.navigate("MemberAssessment", { item: item });
                 //   }}
                 // >
-                <MemberCard item={item} />
+                <MemberCard item={item}  />
                 // </TouchableOpacity>
               );
             }}

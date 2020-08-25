@@ -65,7 +65,7 @@ const ListF = ({ training, navigation, user }) => {
             keyExtractor={(member) => member.id}
             renderItem={({ item }) => {
               return (
-                <MemberCard item={item} />
+                <MemberCard item={item}  />
               );
             }}
           />

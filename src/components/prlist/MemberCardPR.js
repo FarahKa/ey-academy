@@ -3,21 +3,19 @@ import { images } from "../../../api/ey-academy";
 import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../../config/colors";
 import { Feather } from "@expo/vector-icons";
+import { imageService } from "../../services/imageService";
 
 const MemberCardPR = ({ item }) => {
-  const [image, setImage] = useState("https://i.ytimg.com/vi/xRZB5KBLdOA/maxresdefault.jpg");
+  const [image, setImage] = useState("../../assets/placeholder.jpg");
 
-  const imageService = () => {
-    images.get("/?inc=picture").then(
-      (response) => {
-        setImage(response.data.results[0].picture.medium);
-      },
-      (error) => setImage("../../../assets/placeholder.jpg")
-    );
-  };
 
   useEffect(() => {
-    imageService();
+    imageService.getProfilePicture(item.id).then(
+      (response) => {
+        setImage(`data:image/${response.fileType.replace(".", "")};base64,${response.dataFiles}`);
+      },
+      (error) => setImage("../../assets/placeholder.jpg")
+    );
     console.log(image);
   }, []);
   return (
