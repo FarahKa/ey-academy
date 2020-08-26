@@ -51,7 +51,7 @@ const PlanningScreen = ({ plannings, user, navigation }) => {
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <NavigationEvents
           onWillFocus={(payload) => {
-            console.log("will focus");
+            console.log(user.role);
             dispatch(planningActions.getPlannings(user.id, user.role)).then(
               (plannings) => {
                 console.log(plannings);

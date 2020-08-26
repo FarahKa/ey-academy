@@ -35,21 +35,17 @@ const TrainerHomeScreen = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.menu}>
             <MenuItem icon="star" title="Marking" to="Search" />
-            <MenuItem icon="user-check" title="CheckIn Codes" to="" />
             <MenuItem />
 
             {/* <MenuItem icon="message-square" title="Messaging" to="" /> */}
           </View>
           <View style={styles.menu}>
             <MenuItem icon="clock" title="Schedule" to="Planning" />
-            <MenuItem icon="settings" title="My Profile" to="" />
             {/* <LogoMenuItem /> */}
             <MenuItem />
 
           </View>
           <View style={styles.menu}>
-            <MenuItem icon="users" title="My Groups" to="" />
-            <MenuItem icon="smile" title="Feedback" to="" />
             <MenuItem
               icon="log-out"
               title="Log Out"

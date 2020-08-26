@@ -31,6 +31,7 @@ import FeedbackSearchScreen from "./src/screens/Consultant/FeedbackSearchScreen"
 import FeedbackScreen from "./src/screens/Consultant/FeedbackScreen";
 import PlanningScreen from "./src/screens/PlanningScreen";
 import PlanningEvalScreen from "./src/screens/PlanningEvalScreen";
+import HomeBoth from "./src/screens/HomeBoth";
 
 const store = configureStore();
 
@@ -58,6 +59,8 @@ const navigator = createStackNavigator(
 
     Planning : PlanningScreen,
     PlanningEval : PlanningEvalScreen,
+
+    HomeBoth : HomeBoth,
 
   },
   {

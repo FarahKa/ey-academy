@@ -10,20 +10,27 @@ import { useDispatch } from "react-redux";
 
 const DeviceWidth = Dimensions.get("window").width;
 
-const MenuItem = ({ title, icon, navigation, to, before }) => {
-const dispatch = useDispatch();
+const MenuItem = ({ title, icon, navigation, to, before, user, role }) => {
+  const dispatch = useDispatch();
   return (
     <TouchableOpacity
-    onPress={() => {
-      if(to){
-       dispatch(loadingActions.startLoading());
-      if(before){
-        before();
-      }
-      navigation.navigate(to)
-      }
+      onPress={() => {
+        if (to) {
+          dispatch(loadingActions.startLoading());
+          if (before) {
+            before();
+          }
+          if (role) {
+            console.log("changing role to " + role)
 
-    }}>
+            var u = { ...user, role: role };
+            dispatch({ type:'USERS_LOGIN_SUCCESS', user : u });
+
+          }
+          navigation.navigate(to);
+        }
+      }}
+    >
       <View style={styles.square}>
         <Feather name={icon} style={styles.iconStyle} />
         <Text style={styles.text}>{title}</Text>

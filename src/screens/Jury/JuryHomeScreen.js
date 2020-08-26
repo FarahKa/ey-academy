@@ -24,7 +24,6 @@ const JuryHomeScreen = () => {
         <View style={styles.container}>
           <View style={styles.menu}>
             <MenuItem icon="star" title="Marking" to="SearchJury" />
-            <MenuItem icon="settings" title="My Profile" to="" />
           </View>
           <View style={styles.menu}>
             <MenuItem icon="clock" title="Schedule" to="PlanningEval" />

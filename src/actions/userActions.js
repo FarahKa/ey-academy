@@ -74,7 +74,11 @@ function login(email, password) {
         (user) => {
           console.log(user);
           AsyncStorage.setItem("user", JSON.stringify(user));
-          user = {...user, role : user.rolesName[0]}
+          if(user.rolesName.length === 1){
+            user = {...user, role : user.rolesName[0]}            
+          } else {
+            user = {...user, role : "both"}
+          }
           dispatch(success(user));
           resolve(user);
         },
