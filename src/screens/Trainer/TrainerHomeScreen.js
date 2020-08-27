@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import {
-  useFocusEffect,
-  NavigationActions,
-  withNavigation,
-  StackActions,
-} from "react-navigation";
-import { View, Dimensions, Text, StyleSheet, BackHandler } from "react-native";
+import React, { useEffect } from "react";
+import { withNavigation, NavigationEvents } from "react-navigation";
+import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuItem from "../../components/MenuItemComponent";
 import ThemeComponent from "../../components/ThemeComponent";
@@ -15,37 +10,35 @@ import { useDispatch } from "react-redux";
 import { loadingActions } from "../../actions/loadingActions";
 import { userActions } from "../../actions";
 
-const DeviceWidth = Dimensions.get("window").width;
-const TrainerHomeScreen = ({ navigation }) => {
+// const DeviceWidth = Dimensions.get("window").width;
+const TrainerHomeScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(loadingActions.stopLoading());
-    // navigation.dispatch(
-    //   StackActions.reset({
-    //     index: 0,
-    //     actions: [NavigationActions.navigate({ routeName: 'HomeTrainer' }),],
-    //   })
-    // );
     dispatch(loadingActions.stopLoading());
   }, []);
 
   return (
     <ThemeComponent>
+      <NavigationEvents
+        onWillFocus={() => {
+          dispatch(loadingActions.stopLoading());
+        }}
+      />
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <View style={styles.container}>
           <View style={styles.menu}>
+            <MenuItem />
             <MenuItem icon="star" title="Marking" to="Search" />
             <MenuItem />
-
-            {/* <MenuItem icon="message-square" title="Messaging" to="" /> */}
           </View>
           <View style={styles.menu}>
+            <MenuItem />
             <MenuItem icon="clock" title="Schedule" to="Planning" />
             {/* <LogoMenuItem /> */}
             <MenuItem />
-
           </View>
           <View style={styles.menu}>
+            <MenuItem />
             <MenuItem
               icon="log-out"
               title="Log Out"
@@ -55,6 +48,7 @@ const TrainerHomeScreen = ({ navigation }) => {
                 dispatch(userActions.logout());
               }}
             />
+            <MenuItem />
           </View>
         </View>
       </SafeAreaView>
@@ -74,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(TrainerHomeScreen);
+export default TrainerHomeScreen;

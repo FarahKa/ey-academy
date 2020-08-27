@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  withNavigation,
-} from "react-navigation";
-import { View, Dimensions, Text, StyleSheet, BackHandler } from "react-native";
+import { NavigationEvents } from "react-navigation";
+import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MenuItem from "../../components/MenuItemComponent";
 import ThemeComponent from "../../components/ThemeComponent";
@@ -20,13 +18,25 @@ const JuryHomeScreen = () => {
 
   return (
     <ThemeComponent>
+      <NavigationEvents
+        onWillFocus={() => {
+          dispatch(loadingActions.stopLoading());
+        }}
+      />
       <SafeAreaView style={[{ flex: 1 }, dimmer.dimmer]}>
         <View style={styles.container}>
           <View style={styles.menu}>
+            <MenuItem />
             <MenuItem icon="star" title="Marking" to="SearchJury" />
+            <MenuItem />
           </View>
           <View style={styles.menu}>
+            <MenuItem />
             <MenuItem icon="clock" title="Schedule" to="PlanningEval" />
+            <MenuItem />
+          </View>
+          <View style={styles.menu}>
+            <MenuItem />
             <MenuItem
               icon="log-out"
               title="Log Out"
@@ -36,15 +46,8 @@ const JuryHomeScreen = () => {
                 dispatch(userActions.logout());
               }}
             />
-
-
+            <MenuItem />
           </View>
-          {/* <View style={styles.menu}>
-            <MenuItem icon="users" title="My Groups" to="" />
-            <MenuItem icon="smile" title="Feedback" to="" />
-            <MenuItem/>
-
-          </View> */}
         </View>
       </SafeAreaView>
     </ThemeComponent>
@@ -63,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(JuryHomeScreen);
+export default JuryHomeScreen;
