@@ -11,6 +11,7 @@ import { loadingActions } from "../../actions/loadingActions";
 import ListF from "../../components/flist/ListFComponent";
 import ButtonComponent from "../../components/ButtonComponent";
 import { evalService } from "../../services/evalService";
+import SearchBarSimple from "../../components/SearchBarSimple";
 
 const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
   const [term, setTerm] = useState("");
@@ -26,7 +27,6 @@ const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
         var Sgroup = undefined;
         training.groups.forEach((group) => {
           if (group.code === code) {
-            console.log(group);
             Sgroup = group;
           }
         });
@@ -113,10 +113,10 @@ const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
             );
           }}
         />
-        <SearchBar
-          qrpressed={() => {
-            navigation.navigate("QRScanner", { handleCode: handleCode });
-          }}
+        <SearchBarSimple
+          // qrpressed={() => {
+          //   navigation.navigate("QRScanner", { handleCode: handleCode });
+          // }}
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
@@ -128,7 +128,8 @@ const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
                   Sgroup = group;
                 }
               });
-              return Sgroup !== undefined;
+              var nameT = training.name.slice(0, newTerm.length).toLowerCase() === newTerm.toLowerCase();
+              return Sgroup !== undefined || nameT;
             });
             if (Array.isArray(selection) && selection.length) {
               setselectedTraining(selection);
@@ -144,7 +145,6 @@ const FeedbackSearchScreen = ({ trainings, user, navigation }) => {
             data={selectedTraining}
             keyExtractor={(training) => training.id}
             renderItem={({ item }) => {
-              console.log(item);
               return <ListF training={item} />;
             }}
           />

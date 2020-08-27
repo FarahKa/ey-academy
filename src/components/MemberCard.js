@@ -6,13 +6,19 @@ import { imageService } from "../services/imageService";
 const MemberCard = ({ item }) => {
   const [image, setImage] = useState("../../assets/placeholder.jpg");
 
-
   useEffect(() => {
     imageService.getProfilePicture(item.id).then(
       (response) => {
-        setImage(`data:image/${response.fileType.replace(".", "")};base64,${response.dataFiles}`);
+        if (response.fileType) {
+          setImage(
+            `data:image/${response.fileType.replace(".", "")};base64,${response.dataFiles}`
+          );
+        }
       },
-      (error) => setImage("../../assets/placeholder.jpg")
+      (error) => {
+        console.log(error);
+        setImage("../../assets/placeholder.jpg");
+      }
     );
     console.log(image);
   }, []);

@@ -133,7 +133,8 @@ const JurySearchScreen = ({ trainings, user, navigation }) => {
                   Sgroup = group;
                 }
               });
-              return Sgroup !== undefined;
+              var nameT = training.name.slice(0, newTerm.length).toLowerCase() === newTerm.toLowerCase();
+              return Sgroup !== undefined || nameT;
             });
             if (Array.isArray(selection) && selection.length) {
               var selectgroup = selection[0].groups.filter((group) => {

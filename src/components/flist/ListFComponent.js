@@ -42,7 +42,7 @@ const ListF = ({ training, navigation, user }) => {
   return (
     <View>
       <TouchableOpacity style={styles.background} onPress={toggleStuff}>
-        <Text style={styles.title}>{training.name}</Text>
+        <Text style={styles.title}>{training.trainingName}</Text>
         <Feather style={styles.icon} name={name}/>
       </TouchableOpacity>
       {toggle ? (

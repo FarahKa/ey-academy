@@ -13,6 +13,7 @@ import Light from "../components/LightComponent";
 import Dark from "../components/DarkComponent";
 import Seance from "../components/SeanceComponent";
 import SeanceJ from "../components/SeanceJComponent";
+import SearchBarSimple from "../components/SearchBarSimple";
 
 const PlanningEvalScreen = ({ plannings, user, navigation }) => {
   const [term, setTerm] = useState("");
@@ -58,22 +59,29 @@ const PlanningEvalScreen = ({ plannings, user, navigation }) => {
             );
           }}
         />
-        <SearchBar
-          qrpressed={() => {
-            navigation.navigate("QRScanner", { handleCode: handleCode });
-          }}
+        <SearchBarSimple
+          // qrpressed={() => {
+          //   navigation.navigate("QRScanner", { handleCode: handleCode });
+          // }}
           term={term}
           onTermChange={(newTerm) => {
             setTerm(newTerm);
-            console.log(term);
-            var selection = plannings.filter((planning) => {
-              return planning.code === newTerm;
-            });
-            console.log(selectedPlanning);
-            if (Array.isArray(selection) && selection.length) {
-              setselectedPlanning(selection);
-            } else {
+            if (newTerm === "") {
               setselectedPlanning([]);
+            } else {
+              var selection = plannings.filter((planning) => {
+                var nameT =
+                  planning.training.trainingName
+                    .slice(0, newTerm.length)
+                    .toLowerCase() === newTerm.toLowerCase();
+
+                return planning.qrCode === newTerm || nameT;
+              });
+              if (Array.isArray(selection) && selection.length) {
+                setselectedPlanning(selection);
+              } else {
+                setselectedPlanning([]);
+              }
             }
           }}
           onTermSubmit={() => {}}
@@ -98,6 +106,7 @@ const PlanningEvalScreen = ({ plannings, user, navigation }) => {
               <Text style={styles.title}>Upcoming:</Text>
             </View>
             <FlatList
+             style={{flex : 1}}
               data={plannings.filter((planning) => {
                 var start = new Date(planning.startEvalDate);
                 start.setHours(0, 0, 0, 0);
@@ -118,6 +127,7 @@ const PlanningEvalScreen = ({ plannings, user, navigation }) => {
               <Text style={styles.title}>History:</Text>
             </View>
             <FlatList
+            style={{flex : 1}}
               data={plannings.filter((planning) => {
                 var start = new Date(planning.startEvalDate);
                 start.setHours(0, 0, 0, 0);
