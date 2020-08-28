@@ -4,7 +4,9 @@ export const trainingService = {
   getTrainings,
   getTrainingsJury,
   getTrainingsPR,
-  getTrainingsF
+  getTrainingsF,
+  getDocuments,
+  getDocument
 };
 
 function getTrainings(userId) {
@@ -21,4 +23,12 @@ function getTrainingsPR(userId) {
 
 function getTrainingsF(userId) {
   return eyAcademy.get(`/mobile/getTrainingsF/${userId}`).then(response => response.data, error => error)
+}
+
+function getDocuments(userId) {
+  return eyAcademy.get(`/mobile/getDocuments/${userId}`).then(response => response.data, error => error)
+}
+
+function getDocument(docId) {
+  return eyAcademy.get(`/mobile/getFileDocument/${docId}`).then(response => response.data, error => error)
 }

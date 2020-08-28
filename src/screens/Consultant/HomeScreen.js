@@ -38,7 +38,7 @@ const HomeScreen = () => {
               title="Peer Review"
               to="PeerReviewSearch"
             />
-            <MenuItem />
+            <MenuItem icon="file" title="Documents" to="Documents" />
           </View>
           <View style={styles.menu}>
             <MenuItem icon="clock" title="Schedule" to="Planning" />
