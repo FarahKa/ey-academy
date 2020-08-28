@@ -21,13 +21,20 @@ const MenuItem = ({ title, icon, navigation, to, before, user, role }) => {
             before();
           }
           if (role) {
-            console.log("changing role to " + role)
+            console.log("changing role to " + role);
 
             var u = { ...user, role: role };
-            dispatch({ type:'USERS_LOGIN_SUCCESS', user : u });
-
+            dispatch({ type: "USERS_LOGIN_SUCCESS", user: u });
           }
-          navigation.navigate(to);
+          if (to === "Auth") {
+            const resetAction = StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: to })],
+            });
+            navigation.dispatch(resetAction);
+          } else {
+            navigation.navigate(to);
+          }
         }
       }}
     >
