@@ -11,7 +11,7 @@ const ListDocs = ({ training }) => {
 
   const getDate = (str) => {
       date = new Date(str);
-      return date.getUTCDate() + "/" + (date.getUTCMonth() + 1 ) + "/" + date.getUTCYear(); 
+      return date.getUTCDate() + "/" + (date.getUTCMonth() + 1 ) + "/" + date.getYear(); 
   }
 
   const icons = {
