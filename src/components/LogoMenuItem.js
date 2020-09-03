@@ -43,9 +43,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
-  const { trainings } = state;
-  return { trainings: trainings.trainings };
-};
 
 export default withNavigation(LogoMenuItem);

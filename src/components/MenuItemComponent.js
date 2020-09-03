@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import colors from "../config/colors";
-import { withNavigation } from "react-navigation";
+import { withNavigation, StackActions, NavigationActions } from "react-navigation";
 
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
