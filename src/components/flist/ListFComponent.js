@@ -39,13 +39,23 @@ const ListF = ({ training, navigation, user }) => {
     }
   };
 
+  var end = new Date(training.endDate);
+  end.setHours(0, 0, 0, 0);
+  console.log(end);
+  var now = new Date();
+  now.setHours(0, 0, 0, 0);
+  console.log(now);
+  var past = end <= now;
+  console.log(past)
+
   return (
     <View>
       <TouchableOpacity style={styles.background} onPress={toggleStuff}>
         <Text style={styles.title}>{training.name}</Text>
+        {!past ? <Feather style={styles.icon} name={"clock"}/> : null}
         <Feather style={styles.icon} name={name}/>
       </TouchableOpacity>
-      {toggle ? (
+      {toggle && past ? (
         <View style={styles.card}>
           <Dark><Text style={{color:colors.MISCHKA, alignSelf:"center"}}>Trainers:</Text></Dark>
           <FlatList
