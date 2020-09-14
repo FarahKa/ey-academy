@@ -12,6 +12,9 @@ import { trainingService } from "../services/trainingsService";
 import SearchBarSimple from "../components/SearchBarSimple";
 import ListDocs from "../components/ListDocs";
 
+//Pour le moment, les documents sont retournés mais pas téléchargés
+//Il faudra, au lieu d'utiliser le controller qui renvoie le fichier
+//Utiliser le lien du serveur de fichiers avec filesystem, l'expo cli.
 
 const DocumentScreen = ({ user }) => {
   const [term, setTerm] = useState("");

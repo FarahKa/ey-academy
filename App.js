@@ -34,6 +34,11 @@ import PlanningEvalScreen from "./src/screens/PlanningEvalScreen";
 import HomeBoth from "./src/screens/HomeBoth";
 import DocumentScreen from "./src/screens/DocumentScreen";
 
+/*
+Todo: Faire que les trainings qui apparaissent pour être jugés sont seulement 
+ceux dont la date est dépassée dans les controllers.
+*/
+
 const store = configureStore();
 
 const navigator = createStackNavigator(
