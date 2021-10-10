@@ -17,5 +17,6 @@ npm i
 ```
 npm start
 ```
+4) Use the "expo" app to scan the QR code and test the app on your own mobile device.
 
 
